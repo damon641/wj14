@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "770139849016",
+    "firebase_url": "https://swiss-poker.firebaseio.com",
+    "project_id": "swiss-poker",
+    "storage_bucket": "swiss-poker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770139849016:android:75824fe303cab805",
+        "android_client_info": {
+          "package_name": "com.mopik.Swisspoker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770139849016-l0maal5npplhl4pfb2ku3ae06c29f1nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsgiDyEqAf0swfxYFEG5cegvo7UWOlzq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770139849016-l0maal5npplhl4pfb2ku3ae06c29f1nb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "770139849016-6ppg2pie8n2vp8v9pnvqhmqc3jbkda97.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.swisspoker",
+                "app_store_id": "1462869167"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

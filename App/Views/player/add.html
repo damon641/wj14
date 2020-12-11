@@ -1,0 +1,236 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <section class="content-header">
+            <h1>Player Table </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li href="/player">Player</li>
+                {% if player %}
+                <li class="active">Edit Player</li>
+                {% else %}
+                <li class="active">Add Player</li>
+                {% endif %}
+            </ol>
+        </section>
+        <!-- /Title -->
+
+        <section class="content">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                {% if player %}
+                                <h6 class="panel-title txt-dark">Edit Player</h6>
+                                {% else %}
+                                <h6 class="panel-title txt-dark">Add Player</h6>
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        {% if player %}
+                                        <form method="POST" action="/playerEdit/{{player._id}}" name="adduser" class="form-horizontal">
+                                            {% else %}
+                                            <form method="POST" action="/addPlayer" name="adduser" class="form-horizontal">
+                                                {% endif %}
+                                                <table border="0" class="table display  pb-30">
+                                                    <div class="col-sm-6">
+                                                        <div class="panel-wrapper collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="username">Username:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control" id="username" placeholder="Enter username" required name="username" value="{{player.username}}" data-validation="length alphanumeric" data-validation-length="" data-validation-error-msg="Username is required" onkeyup="return forceLower(this);">
+                                                                    </div>
+                                                                </div>
+                                                                {% if player %}
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="pwd_hr">Password:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="password" class="form-control" id="password" placeholder="Enter password" data-minlength="0" name="password" data-validation="length" data-validation-length="min0">
+                                                                    </div>
+                                                                </div>
+                                                                {% else %}
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="pwd_hr">Password:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="password" class="form-control" id="password" placeholder="Enter password" data-minlength="6" name="password" data-validation="length" data-validation-length="min6">
+                                                                    </div>
+                                                                </div>
+                                                                {% endif %}
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="username">Firstname:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control" id="firstname" placeholder="Enter firstname" required name="firstname" value="{{player.firstname}}" data-validation="length alphanumeric" data-validation-length="" data-validation-error-msg="Firstname is required">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="username">Lastname:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control" id="lastname" placeholder="Enter lastname" required name="lastname" value="{{player.lastname}}" data-validation="length alphanumeric" data-validation-length="" data-validation-error-msg="Lastname is required">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="panel-wrapper collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="mobile">Mobile:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control" id="mobile" placeholder="Enter mobile" required="" name="mobile" value="{{player.mobile}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="email">Email:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="email" class="form-control" {{ "readonly disabled" if player else "" }} placeholder="Enter email" required name="email" id="email" value="{{player.email}}" data-validation="email">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="email">Gender:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <select class="form-control" name="gender" id="gender">
+																			<option value="Male" {{ "selected" if player.gender=='Male' else "" }} >Male</option>
+																			<option value="Female" {{ "selected" if player.gender=='Female' else "" }} >Female</option>
+																		</select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="accountNumber">Bank Account:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control" id="accountNumber" placeholder="Enter Bank Account" required name="accountNumber" value="{{player.accountNumber}}" data-validation="length alphanumeric" data-validation-length="" data-validation-error-msg="Bank Account is required">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="display:none;">
+                                                                    <label class="control-label mb-10 col-sm-2" for="email">Is Bot:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <select class="form-control" name="bot" id="bot">
+																			<option value="false" {{ "selected" if player.isBot==false else "" }} >No</option>
+																			<option value="true" {{ "selected" if player.isBot==true else "" }} >Yes</option>
+
+																		</select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <tr>
+														<td colspan="2">
+															<div class="pull-right">
+																<input type="submit" class="btn btn-success btn-flat" value="Submit">
+															<a href="/player" class="btn btn-danger btn-flat">Cancel</a>
+															</div>
+														</td>
+													</tr> -->
+                                                </table>
+                                                <div class="box-footer">
+                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
+                                                    <a href="/player" class="btn btn-danger float-right">Cancel</a>
+                                                </div>
+                                            </form>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="table-responsive">
+							    {% if player %}
+									<form method="POST" action="/playerEdit/{{player._id}}" name="adduser">
+						        {% else %}
+									<form method="POST" action="/addPlayer" name="adduser">
+						        {% endif %}
+
+									<table border="0" class="table display  pb-30">
+										<tr>
+											<td width="50%">Username</td>
+											<td><input type="text" class="form-control" required name="username" id="username" value="{{player.username}}"></td>
+										</tr>
+										{% if player %}
+										{% else %}
+										<tr>
+											<td width="50%">Password</td>
+											<td><input type="text" class="form-control" name="password" id="password" data-minlength="6">
+											</td>
+
+										</tr>
+										{% endif %}
+										<tr>
+											<td width="50%">Firstname</td>
+											<td><input type="text" class="form-control" required name="firstname" id="firstname" value="{{player.firstname}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Lastname</td>
+											<td><input type="text" class="form-control" required name="lastname" id="lastname" value="{{player.lastname}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Mobile</td>
+											<td><input type="text" class="form-control" required name="mobile" id="mobile" value="{{player.mobile}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Email</td>
+											<td><input type="text" class="form-control" {{ "readonly disabled" if player else "" }}  required name="email" id="email" value="{{player.email}}"></td>
+										</tr>
+										<tr>
+											<td width="50%">Gender</td>
+											<td>
+												<select class="form-control" name="gender" id="gender">
+													<option value="Male" {{ "selected" if player.gender=='Male' else "" }} >Male</option>
+													<option value="Female" {{ "selected" if player.gender=='Female' else "" }} >Female</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%">Is Bot</td>
+											<td>
+												<select class="form-control" name="bot" id="bot">
+													<option value="yes" {{ "selected" if player.status=='yes' else "" }} >Yes</option>
+													<option value="no" {{ "selected" if player.status=='no' else "" }} >No</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<input type="submit" class="btn btn-success btn-lg" value="submit">
+												<a href="/player" class="btn btn-info btn-lg">Cancel</a>
+											</td>
+										</tr>
+									</table>
+								</form>
+
+							   </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /Row -->
+    </div>
+</div>
+
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function() {
+        var host = window.location.origin;
+    });
+
+    function forceLower(strInput) {
+        strInput.value = strInput.value.toLowerCase();
+    }
+</script>
+{% endblock %}

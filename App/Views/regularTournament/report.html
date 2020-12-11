@@ -1,0 +1,230 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+
+		<!-- Title -->
+		<section class="content-header">
+		    <h1>Regular Tournament Profile</h1>
+		    <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+		        <li class="active" href="/regular-tournament">Regulat Tournament</li>
+		        <li class="active" href="/regular-tournament">Report</li>
+		    </ol>
+		</section>
+		<!-- /Title -->
+		{% include "partition/notification.html" %}
+			
+		<section class="invoice">
+		  <!-- title row -->
+		  <div class="row">
+		    <div class="col-xs-12">
+
+		      <h2 class="page-header">
+		        <i class="fa fa-gamepad"></i> {{reg_tournament.name}}
+		        <small class="pull-right">Total Player Registered: <b>{{reg_tournament.players.length}}</b></small>
+		      </h2>
+		      <h4 style="text-align: center;color: red">Tournament Status: {{reg_tournament.status}}</h4>
+		    </div>
+		    <!-- /.col -->
+		  </div>
+		  <!-- info row -->
+		  <div class="row invoice-info">
+		    <div class="col-sm-4 invoice-col">
+		      <address>
+		        <b>Registration Start Time:</b> {{reg_tournament_date.register_date}} <br>
+		        <b>Entry Fee:</b> {{reg_tournament.entry_fee}}<br>
+		        <b>Buy In:</b> {{reg_tournament.buy_in}}<br>
+		         <b style="color:red">Winners Count:</b> {{reg_tournament.tournamentWinners.length}}<br>
+		      </address>
+		    </div>
+		    <div class="col-sm-4 invoice-col">
+		      <address>
+		        <b>Tournament Start Time:</b> {{reg_tournament_date.tournament_date}} <br>
+		        <b>Min Players:</b> {{reg_tournament.min_players}}<br>
+		         <b>Max Players:</b> {{reg_tournament.max_players}}<br>
+		         <b style="color:red">Loosers Count:</b> {{reg_tournament.tournamentLosers.length}}<br>
+		      </address>
+		    </div>
+		    <div class="col-sm-4 invoice-col">
+		      <address>
+		        <b>Total Time of Tournament:</b> {{player.chips}} <br>
+		        <b>Rebuy Time:</b> {{reg_tournament.rebuy_time}} 
+		      </address>
+		    </div>
+		   
+		    
+		  </div>
+
+		
+		  <!-- /.row -->
+
+		</section>
+
+		<section class="content" style="min-height: 0px !important;">
+			<div class="box box-info">
+			  <div class="box-header with-border">
+			    <h3 class="box-title">Registered Players</h3>
+
+			    <div class="box-tools pull-right">
+			      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+			      </button>
+			      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+			    </div>
+			  </div>
+			  <!-- /.box-header -->
+			  <div class="box-body">
+			    <div class="table-responsive">
+			      <table class="table no-margin" id="playerTable">
+			        <thead>
+			        <tr>
+			        	<th>Username</th>
+						<th>Email</th>
+						<th>Chips</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        
+			        </tbody>
+			      </table>
+			    </div>
+			    <!-- /.table-responsive -->
+			  </div>
+			 
+			</div>
+		</section>
+
+		<section class="content" style="min-height: 0px !important;">
+			<div class="box box-info">
+			  <div class="box-header with-border">
+			    <h3 class="box-title">Rooms</h3>
+			 
+			    <div class="box-tools pull-right">
+			      <span class="label label-danger">Total Game Played: {{gameCount}}</span>
+			      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+			      </button>
+			      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+			    </div>
+			  </div>
+			  <!-- /.box-header -->
+			  <div class="box-body">
+			    <div class="table-responsive">
+			      <table class="table no-margin" id="roomTable">
+			        <thead>
+			        <tr>
+			        	<th>Room Id</th>
+						<th>Room Name</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        
+			        </tbody>
+			      </table>
+			    </div>
+			    <!-- /.table-responsive -->
+			  </div>
+			 
+			</div>
+		</section>
+
+		<section class="content" style="min-height: 0px !important;">
+			<div class="box box-info">
+			  <div class="box-header with-border">
+			    <h3 class="box-title">Winners</h3>
+			    
+			    <div class="box-tools pull-right">
+			      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+			      </button>
+			      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+			    </div>
+			  </div>
+			  <!-- /.box-header -->
+			  <div class="box-body">
+			    <div class="table-responsive">
+			      <table class="table no-margin" id="winnerTable">
+			        <thead>
+			        <tr>
+			        	<th>Name</th>
+						<th>Chips Won</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        	{% for winner in reg_tournament.tournamentWinners %}
+			        	<tr>
+			        		<td>{{ winner.username }}</td>
+			        		<td>{{ winner.winningChips }}</td>
+			        	</tr>
+			        	{% endfor %}
+			        </tbody>
+			      </table>
+			    </div>
+			    <!-- /.table-responsive -->
+			  </div>
+			 
+			</div>
+		</section>	
+
+	</div>
+</div>
+			
+
+			
+		
+			
+
+{% endblock %}
+
+{% block Jscript %}
+<script>
+	$('#playerTable').DataTable({
+		"oLanguage": {
+			"sSearch": "Search Email"
+		},
+		"processing": true,
+		"serverSide": true,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 10,
+		"ajax": "/regular-tournament/{{reg_tournament._id}}/getPlayers",
+		"dom": 'Bfrtip',
+		"buttons":[
+		            'csv', 'excel'
+		 ],
+		"columns": [
+	
+			{ "data": "username" },
+			{ "data": "email" },
+			{ "data": "chips" },
+			
+		]
+	});
+
+	$('#roomTable').DataTable({
+		"processing": true,
+		"serverSide": true,
+		"ordering": false,
+		"autoWidth": false,
+		"pageLength": 10,
+		"searching": false,
+		"ajax": "/regular-tournament/{{reg_tournament._id}}/getRooms",
+		"dom": 'Bfrtip',
+		"buttons":[
+		            'csv', 'excel'
+		 ],
+		"columns": [
+	
+			//{ "data": "_id" },
+			{ "data": "_id",
+				render: function(data, type,row){
+					return '<a href="/regular-tournament/room/'+row._id+'">'+row._id+'</a>'
+				}
+			},
+			{ "data": "name" },
+			
+		]
+	});
+</script>
+{% endblock %}

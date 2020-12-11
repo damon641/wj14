@@ -1,0 +1,172 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <section class="content-header">
+            <h1>In-App Purchase table</h1>
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb">
+                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Add In-App Purchase</li>
+            </ol>
+            <!-- /Breadcrumb -->
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Add In-App Purchase</h6>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        {% if inAppPurchase %}
+                                        <form method="POST" action="/inAppPurchase/edit/{{inAppPurchase.id}}" class="form-horizontal" enctype="multipart/form-data" id="tableForm">
+                                            {% else %}
+                                            <form method="POST" action="/inAppPurchase/add" class="form-horizontal" enctype="multipart/form-data" id="tableForm">
+                                                {% endif %}
+                                                <table border="0" class="table display  pb-30">
+                                                    <div class="col-sm-12">
+                                                        <div class="panel-wrapper collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="in_app_purchase_id">In-app Purchase Id:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" name="in_app_purchase_id" id="in_app_purchase_id" placeholder="Enter In-app Purchase Id" name="Purchase" value="{{inAppPurchase.in_app_purchase_id}}" data-validation-allowing=" " data-validation-error-msg="Purchase Id is required"
+                                                                            required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="title">Title:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" id="title" placeholder="Enter In-app Purchase Id" name="title" value="{{inAppPurchase.title}}" data-validation="letternumeric" data-validation-allowing=" " data-validation-error-msg="Title is required">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="description">Description:</label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea name="description" id="description" data-validation="required" data-validation-error-msg=" Description is required" rows="5" cols="84">
+																			{{inAppPurchase.description}}
+																		</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="price">Price:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" id="price" data-validation="number" data-validation-allowing="float" placeholder="Enter Price" name="price" value="{{inAppPurchase.price}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="chips">Chips:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" id="chips" data-validation="number" data-validation-allowing="float" placeholder="Enter Chips" name="chips" value="{{inAppPurchase.chips}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="purchase_type">Purchase Type:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="purchase_type" id="normal" value="normal" {{ "checked" if inAppPurchase.purchase_type !='special' else ''}}>
+                                                                            <label class="form-check-label" for="normal">Normal</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="purchase_type" id="special" value="special" {{ "checked" if inAppPurchase.purchase_type=='special' else ''}}>
+                                                                            <label class="form-check-label" for="special">Special</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="start_date">Start Date:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type='text' required="required" class="form-control" name="start_date" id="start_date" placeholder="Start Date" data-date-format="YYYY-MM-DD HH:mm" value="{{start_date}}" data-validation="required" data-validation-error-msg="Start Date is Required."
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="end_date">End Date:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type='text' required="required" class="form-control" name="end_date" id="end_date" placeholder="End Date" data-date-format="YYYY-MM-DD HH:mm" value="{{end_date}}" data-validation="required" data-validation-error-msg="End Date is Required." />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="status">Status:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <select class="form-control" name="status" id="status">
+																			<option value="active" {{ "selected" if inAppPurchase.status=='active' else "" }} >Active</option>
+																			<option value="inactive" {{ "selected" if inAppPurchase.status=='inactive' else "" }} >Inactive</option>
+																		</select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="image">Image:</label>
+                                                                    <div class="col-sm-6">
+                                                                        {% if inAppPurchase %}
+                                                                        <img src="/{{inAppPurchase.image}}" width="100px" height="100px">
+                                                                        <input type="file" class="form-control" id="image" name="image"> {% else %}
+                                                                        <input type="file" class="form-control" id="image" name="image" data-validation="length mime" data-validation-length="min1" data-validation-allowing="jpg, png, gif" data-validation-error-msg-mime="You can only upload images" data-validation-error-msg-length="Please uplaod Image">                                                                        {% endif %}
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <tr>
+                                                        <td colspan="2">
+                                                            <input type="submit" class="btn btn-success btn-flat" value="Submit" id="btnsubmit">
+                                                            <a href="/inapppurchase" class="btn btn-danger btn-flat" id="btncancel">Cancel</a>
+                                                        </td>
+                                                    </tr> -->
+                                                </table>
+                                                <div class="box-footer">
+                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
+                                                    <a href="/inapppurchase" class="btn btn-danger float-right">Cancel</a>
+                                                </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Row -->
+            </div>
+        </section>
+
+        {% endblock %} {% block Jscript %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var host = window.location.origin;
+                if (!$('#start_date').val() && !$('#end_date').val()) {
+                    $('#start_date , #end_date').datetimepicker({
+                        minDate: new Date()
+                    });
+                } else {
+                    $('#start_date, #end_date').datetimepicker();
+                }
+            });
+
+            $.validate({
+                form: '#tableForm',
+                onSuccess: function($form) {
+                    $('#btnsubmit').val('Please wait ...')
+                        .attr('disabled', 'disabled');
+                    $('#btncancel').hide();
+                }
+            });
+        </script>
+        {% endblock %}

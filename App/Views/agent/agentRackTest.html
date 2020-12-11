@@ -1,0 +1,227 @@
+{% extends "partition/layout.html" %}
+
+{% block body %}
+
+	<!-- Main Content -->
+	<div class="page-wrapper">
+		<div class="container-fluid">
+			<!-- Title -->
+			<section class="content-header">
+					<h1>Agent Rake Table</h1>
+					<ol class="breadcrumb">
+							<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+							<li class="active" href="/agents">Agents Rake</li>
+					</ol>
+			</section>
+			<!-- /Title -->
+			{% include "partition/notification.html" %}
+			<!-- Row -->
+			<section class="content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h4 class="panel-title txt-dark">Email: <b>{{agent.email}}</b> ( {{agentRole}} )</h4>
+								</div>
+								<div class="pull-right">
+									<h5>Total Rake Received: {{agentTotalRackReceived}}</h5>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="table-wrap">
+										<div class="table-responsive">
+											<table id="myTable" class="table table-bordered table-striped">
+												<thead>
+													<tr>
+														<th>Player Username</th>
+														<th>Game</th>
+														<th>Rake From</th>
+														<th>Rake To</th>
+														<th>Won</th>
+														<th>Commision(%)</th>
+														<th>Total Rake</th>
+														<th>created At</th>
+														<!-- <th>Action</th> -->
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>	
+		</div>
+	</div>
+	
+
+{% endblock %}
+
+{% block Jscript %}
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script>
+
+$(document).ready( function () {
+	var host = window.location.origin;
+	let ajaxUrl = host + "/test/agent/getAgentRackHistory/{{agentId}}";
+	$('#myTable').DataTable({
+		'dom': 'Bfrtip',
+        'buttons': [
+            'csv', 'excel'
+        ],
+		"paging":   false,
+        "ordering": false,
+        "info":     false,
+		//"pageLength": 10,
+		"ajax": ajaxUrl,
+		"columns": [
+			// { "data": "_id" },
+			{ "data": "player.username"},
+			{ "data": "gameNumber" },
+			{ "data": "rackFrom" },
+			{ "data": "rackTo" },
+			{ "data": "won" },
+			{ "data": "rackPercent" },
+			{ "data": "totalRack" },
+			{ "data": "createdAt",
+				render: function(data,type,row){
+				  let dt = new Date(row.createdAt);
+			      let date = dt.getDate();
+			      let month = parseInt(dt.getMonth()+1);
+			      let year = dt.getFullYear();
+			      let hours = dt.getHours();
+			      let minutes = dt.getMinutes();
+			      let ampm = hours >= 12 ? 'pm' : 'am';
+			      hours = hours % 12;
+			      hours = hours ? hours : 12;
+			      minutes = minutes < 10 ? '0'+ minutes : minutes;
+			      let createdAt = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
+			      return createdAt;
+			 	}
+			},
+			/*{
+				"data": "action",
+				render : function(data, type, row){
+					return '<a href="/agentEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit" title="Edit Agent"><i class="fa fa-edit" aria-hidden="true"></i></button></a><button type="button" name="active" id="'+row._id+'" class="btn btn-success btn-xs agentActive btn-rounded">'+row.status+'</i></button><a href="/agent/rack/'+row._id+'" class="btn btn-info btn-xs btn-rounded" title="Rack History"><i class="fa fa-history" aria-hidden="true"></i></a>'
+		
+				}
+			}*/
+		]
+	});
+
+	$(function() {
+		"use strict";
+
+		var SweetAlert = function() {};
+
+		SweetAlert.prototype.init = function() {
+
+			//Parameter
+			$('body').on('click', '.delete', function(e){
+				var id = $(this).attr('id');
+				var thisElement = this;
+					swal({
+							title: "Are you sure?",
+							text: "You will not be able to recover this Agent!",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#e69a2a",
+							confirmButtonText: "Yes, delete it!",
+							cancelButtonText: "No, cancel plx!",
+							closeOnConfirm: false,
+							closeOnCancel: false
+					}, function(isConfirm){
+							if (isConfirm) {
+								$.ajax({
+									type: 'POST',
+									url: host + "/agent/getAgentDelete",
+									data: {id: id},
+									success: function(resultData) {
+										// alert(resultData)
+										console.log(resultData);
+										if (resultData == 'success') {
+											$(thisElement).parent().parent().hide(700);
+											swal("Deleted!", "Your imaginary file has been deleted.", "success");
+										}else {
+												alert("Something went wrong")
+										}
+										// alert("Save Complete")
+									}
+								});
+									swal("Deleted!", "Agent Deleted Succesfully.", "success");
+							} else {
+									swal("Cancelled", "Agent Not Deleted)", "error");
+							}
+					});
+					return false;
+			});
+
+
+			// Active & Deactive
+
+			$('body').on('click', '.agentActive', function(e){
+					var id = $(this).attr('id');
+					var thisElement = this;
+						swal({
+								title: "Are you sure?",
+								text: "Do you want to update the status?",
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#e69a2a",
+								confirmButtonText: "Yes, Update it!",
+								cancelButtonText: "No, cancel pls!",
+								closeOnConfirm: false,
+								closeOnCancel: false
+						}, function(isConfirm){
+								if (isConfirm) {
+									$.ajax({
+										type: 'POST',
+										url: host + "/agent/active",
+										data: {id: id},
+										success: function(resultData , data) {
+											console.log(data);
+											if (resultData == 'success') {
+												//location.reload();
+												var changeText = 'active';
+												if( $(thisElement).parent().parent().find('td  .agentActive').text() == 'active' ){
+													changeText = 'Block';
+												}
+												console.log( $(thisElement).parent().parent().find('td .agentActive').text(changeText) );
+												//$(thisElement).parent().parent().hide(700);
+												//swal("Update!", "Player Status Updated Successfully..", "success");
+											}else {
+													alert("Something went wrong")
+											}
+											
+										}
+									});
+										swal("Success!", "Agent Status Updated Succesfully.", "success");
+								} else {
+										swal("Cancelled", "Agent Status not Updated)", "error");
+								}
+						});
+						return false;
+			});
+
+	
+		},
+		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+		$.SweetAlert.init();
+	});
+
+	
+} );
+
+</script>
+{% endblock %}

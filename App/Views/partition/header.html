@@ -1,0 +1,156 @@
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="/" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">
+    <img src="http://18.225.32.71/dist/img/Head_logo.png" class="img-circle brand-image elevation-3" alt="Agent Image"
+      width="50px" height="50px">
+  </span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><img class="brand-img brand-image img-circle elevation-3"
+      src="http://18.225.32.71/dist/img/head_logo.png" alt="ToGo Poker" width="50px" height="50px" /></span>
+        <span class="brand-text font-weight-light"> BYTE <span style="color: #dc3545;">POKER</span></span>
+    </a>
+    <!-- <a href="/" class="brand-link">
+    <img src="http://18.224.137.228/dist/img/logo.png" class="img-circle brand-image elevation-3" alt="Agent Image" width="50px" height="50px">
+    <span class="brand-text font-weight-light"> ToGo Poker</span>
+</a> -->
+    <input value="{{App.maintenanceMode}}" hidden type="text" id="maintenanceMode">
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    {% if Agent.isTransferAllow == true or Agent.isTransferAllow == "true" %}
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-exchange" style="color:green;"></i>
+                    </a>
+                    <!-- <button  type="button" class="dropdown-toggle btn btn-success btn-flat btn-sm transf-mony" data-toggle="dropdown">Transfer</button> -->
+                    {% endif %}
+                    <ul class="dropdown-menu dropdown-menu-right">
+
+                        <li class="user-footer">
+                            <form>
+                                <div class="row">
+                                    <div class="col-lg-12 text-left">
+                                        <div class="form-group">
+                                            <label class="control-label text-black">Enter Chips</label>
+                                            <input type="number" id="userChips" name="userChips" class="form-control" min="0.01" step="1" max="{{Agent.rake_chips}}" placeholder="Chips amount should be under {{(Agent.rake_chips).toFixed(2)}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <input type="submit" class="btn btn-primary-main btn-block transferChips " onclick="transferChips()" name="Transfer" value="Transfer">
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                {% if App.maintenanceMode %}
+                <li style="padding: 0 40px; top: 5px; color: #000000;">
+                    <span>Maintenance Mode </span>
+                    <div style="text-align: center; background-color: green;">
+                        <span> ON </span>
+                    </div>
+                </li>
+                {% endif %}
+
+
+
+
+
+                <!-- User Account: style can be found in dropdown.less -->
+                {% if Agent.isSuperAdmin == true %}
+                <li>
+                    <a href="javascript:void(0);">
+          {% if Agent.extraRakeChips %}
+          <span class=""> Admin Rake Account [ <span id="rootChips">{{(Agent.extraRakeChips).toFixed(2)}}</span>
+            ]</span>
+          {%else%}
+          <span class="">Admin Rake Account [ <span id="rootChips">000</span> ]</span>
+          {%endif%}
+        </a>
+                </li>
+                {%endif%} {% if App.maintenanceMode %}
+                <li style="padding: 0 40px; top: 5px; color: #ffffff;">
+                    <span>Maintenance Mode </span>
+                    <div style="text-align: center; background-color: green;">
+                        <span> ON </span>
+                    </div>
+                </li>
+                {% endif %}
+
+
+                <li class="dropdown user user-menu">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user-circle" style="color: #dc3545;"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                        <!-- User image -->
+                        <li class="user-header">
+                            <a href="#" class="dropdown-item dropdown-footer">
+                                <!-- Message Start -->
+                                <div class="media">
+                                    <div class="media-body">
+                                        {% if session.role == 'admin'%}
+                                        <img src="/profile/{{session.avatar}}" class="img-size-50 img-circle" alt="User Image" width="50px" height="50px"> {%else%}
+                                        <img src="/profile/agents/{{session.avatar}}" class="img-size-50 img-circle" alt="Agent Image" width="50px" height="50px"> {%endif%}
+                                    </div>
+                                </div>
+                                <p class="text-sm">{{session.name}}</p>
+                                <p class="text-sm text-muted">{{(Agent.chips).toFixed(2)}}</p>
+                                <!-- Message End -->
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="user-header">
+                            <a href="javascript:void(0);" class="dropdown-item dropdown-footer">
+                            {% if Agent.rake_chips %}
+                            <span class="">Rake Account [ <span id="rootChips">{{(Agent.rake_chips).toFixed(2)}}</span>
+                                ]</span>
+                            {%else%}
+                            <span class="">Rake Account [ <span id="rootChips">000</span> ]</span>
+                            {%endif%}
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="user-header">
+                            {% if session.role == 'admin'%}
+                            <a href="/profile"><i class="fa fa-user-circle"></i> My Profile</a> {%else%}
+                            <a href="/agent/profile"><i class="fa fa-user-circle"></i> My Profile</a> {%endif%}
+                        </li>
+                        <hr>
+                        <li class="user-header">
+                            <a href="/logout" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out"></i> Sing
+              Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+<script src="/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script>
+    var Mode = $("#maintenanceMode").val();
+    console.log(Mode)
+    if ($('body').find('.navbar').length > 0) {
+        if (Mode == "true") {
+            $('.navbar').addClass('hedarModeColor');
+        } else {
+            $('.navbar').removeClass('hedarModeColor');
+        }
+
+    }
+</script>

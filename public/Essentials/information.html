@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BytePOker - Information</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<body>
+    <section>
+        <div class="account-overview">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="page-title">Information</h2>
+                        <a href="index.html" class="back_btn"><i class="fa fa fa-angle-left"></i>Back</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="cash-account">
+                                    <ul>
+                                        <li> Username : <span id="username"></span></li>
+                                        <li> Phone Number :<span id="mobile"></span></li>
+                                        <li> Your Id : <span id="accountNumber"></span></li>
+                                        <li><span class="btn-chnge"><a href="javascript:void(0);" class="btn-comn" data-toggle="modal" data-target="#requst_change">Request to Change</a></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="requst_change" class="modal fade" role="dialog">
+        <div class="modal-dialog custm_modal">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Request to change</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Title:</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="title" class="form-control" placeholder="Enter Title">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Description:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" rows="2" placeholder="Enter Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Your Id:</label>
+                            <div class="col-sm-10">
+                                <input id="yourId" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">&nbsp;</label>
+                            <div class="col-sm-10">
+                                <button onclick="handleSubmit()" type="button" class="btn-comn p-lr-15" data-dismiss="modal">Submit</button>
+                                <button type="button" class="btn-comn p-lr-15" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const person = JSON.parse(window.localStorage.getItem('user'));
+            $("#username").text(person.username)
+            $("#accountNumber").text(person.accountNumber)
+            $("#mobile").text(person.mobile)
+        })
+
+        function handleSubmit() {
+            const host = window.location.origin;
+            const title = $("#title").val()
+            const description = $("#description").val()
+            const yourId = $("#yourId").val()
+            document.getElementById("myForm").reset();
+            $.ajax({
+                type: 'POST',
+                url: host + '/updateAccountNumber',
+                data: {
+                    title: title,
+                    description: description,
+                    accountNumber: yourId
+                },
+                success: function(resultData) {
+                    console.log(resultData);
+                    if (resultData.status == 'success') {
+                        //   $(thisElement).parent().parent().hide(700);
+                        swal('Done', resultData.message, 'success');
+                        // window.location.reload();
+                    } else if (resultData.status == 'failed') {
+                        swal('Alert', resultData.message, 'error');
+                    } else if (resultData.status == 'expired') {
+                        swal('Alert', resultData.message, 'info');
+                        window.localStorage.removeItem('user');
+                    }
+                },
+            });
+        }
+    </script>
+</body>
+
+</html>

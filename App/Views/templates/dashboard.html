@@ -1,0 +1,605 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+<!-- Breadcrumb -->
+<section class="content-header">
+    <h1>
+        {{App.name}}
+        <small>Version 2.1.0</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+<!-- /Title -->
+{% include "partition/notification.html" %}
+<!-- Row -->
+
+<!-- /Main Content -->
+<section class="content">
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <!-- OVERVIEW -->
+                <div class="panel panel-headline">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6 player_box">
+                                        <div class="metric effect5">
+                                            <span class="icon"><i class="fa fa-user-circle"
+                                                    aria-hidden="true"></i></span>
+                                            <p>
+                                                <span class="number">{{totalOnlinePlayers}}</span>
+                                                <span class="title">Active Online Players</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 player_box">
+                                        <div class="metric">
+                                            <span class="icon"><i class="fa fa-life-ring" aria-hidden="true"></i></span>
+                                            <p>
+                                                <span class="number">{{totalGamePlayed}}</span>
+                                                <span class="title">Total Game Played</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 player_box">
+                                        <div class="metric">
+                                            <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                                            <p>
+                                                <span class="number">{{totalRunningGame}} / {{totalPlayingPly}}</span>
+                                                <span class="title">Active Game / Active Player</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 player_box">
+                                        <div class="metric">
+                                            <span class="icon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
+                                            <p>
+                                                <span class="number">{{toalPlayer}}</span>
+                                                <span class="title">Total Playes</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <center>
+                                        <h3>Game Usage</h3>
+                                    </center>
+                                    <!-- <div class="panel-heading-home">
+
+
+                                        </centre>
+                                    </div> -->
+                                    <div class="panel-body">
+                                        <div class="box-body table-responsive p-0">
+                                            <table class="table table-striped table-valign-middle">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="game_usage">Android</td>
+                                                        <td class="game_usage pull-right text-green"><i class="fa fa-angle-up chartAndroid">
+                                                                0%
+                                                            </i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="game_usage">IOS</td>
+                                                        <td class="game_usage pull-right text-blue"><i class="fa fa-angle-up chartIos">
+                                                                0%
+                                                            </i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="game_usage">Other</td>
+                                                        <td class="game_usage  pull-right text-red"><i class="fa fa-angle-up chartOther">
+                                                                0%
+                                                            </i></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <ul class="nav nav-pills nav-stacked">
+                                    <li>
+                                        <a href="#">Android
+                                            <span class="pull-right text-green">
+                                                <i class="fa fa-angle-up chartAndroid">
+                                                    0%
+                                                </i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">IOS
+                                            <span class="pull-right text-blue">
+                                                <i class="fa fa-angle-up chartIos">
+                                                    0%
+                                                </i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Other
+                                            <span class="pull-right text-red">
+                                                <i class="fa fa-angle-up chartOther">
+                                                    0%
+                                                </i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Game Overview (Games vs Time)</h3>
+                        <div class="box-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-center">
+                                    <strong>Game Played By User from: {{chartStartDate}} - {{chartEndDate}} </strong>
+                                </p>
+                                <div class="chart">
+                                    <canvas id="monthlyPlayedGameChart" style="height: 180px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <!-- OVERVIEW -->
+                        <div class="panel panel-headline">
+                            <div class="panel-body panel-body-home">
+                                <div class="row">
+                                    <div class="panel-heading-home">
+                                        <h3 class="panel-title">Newly Joined Players</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="box-body table-responsive p-0">
+                                            <table class="table table-striped table-valign-middle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Player Name</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {%for player in latestPalyer %}
+                                                    <tr>
+                                                        <td><img src="dist/img/user.png" class="img-circle img-size-32 mr-3" alt="User Image"><span class="users-list-name">{{player.username}} </span></td>
+                                                        <td><span class="users-list-date">{{player.createdAtFormated}}</span>
+                                                        </td>
+                                                    </tr>
+                                                    {%endfor%}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a href="/player">View All Player</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <!-- OVERVIEW -->
+                        <div class="panel panel-headline">
+                            <div class="panel-body panel-body-home">
+                                <div class="row">
+                                    <div class="panel-heading-home">
+                                        <h3 class="panel-title">Players Ranking</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="box-body table-responsive p-0">
+                                            <table class="table table-striped table-valign-middle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Player Name</th>
+                                                        <th>Chips</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for player in topPlayers %}
+                                                    <tr>
+                                                        <td><img src="dist/img/user.png" class="img-circle img-size-32 mr-3" alt="User Image"><a class="users-list-name">{{player.username}}</a></td>
+                                                        <td><span class="users-list-date">{{player.chips}} Chips</span>
+                                                        </td>
+                                                    </tr>
+                                                    {%endfor%}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a href="/player">View All Player</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <!-- OVERVIEW -->
+                        <div class="panel panel-headline">
+                            <div class="panel-body panel-body-home">
+                                <div class="row">
+                                    <div class="panel-heading-home">
+                                        <h3 class="panel-title">Recently Played Games</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered " id="myTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Game Number</th>
+                                                        <th>smallBlind</th>
+                                                        <th>bigBlind</th>
+                                                        <th>status</th>
+                                                        <th>Pot</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a href="/game">View All History</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Game Usage</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-8"> -->
+            <div class="chart-responsive">
+                <canvas id="gameUsages" height="150" style="display: none;"></canvas>
+            </div>
+            <!-- </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> -->
+        </div>
+    </div>
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="pull-right hidden-xs">
+        <b>Version</b> 2.1.0
+    </div>
+    <strong>Copyright &copy; 2020 <a href="#">Byte Poker</a>.</strong> All rights reserved.
+</footer>
+<!-- /Footer -->
+
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function() {
+
+        var host = window.location.origin;
+
+        $('#myTable').DataTable({
+            // "scrollX": true,
+            "searching": false,
+            "ajax": host + "/game/history",
+            "columns": [{
+                "data": "gameNumber"
+            }, {
+                "data": "smallBlind"
+            }, {
+                "data": "bigBlind"
+            }, {
+                "data": "status"
+            }, {
+                "data": "pot"
+            }]
+        });
+
+
+        var host = window.location.origin;
+        if ($('#monthlyPlayedGameChart').length > 0) {
+            // Get context with jQuery - using jQuery's .get() method.
+            var GameCanvas = $('#monthlyPlayedGameChart').get(0).getContext('2d');
+            // This will get the first returned node in the jQuery collection.
+            $.ajax({
+                type: 'GET',
+                url: host + "/dashboardChart/getMonthlyPlayedGameChart",
+                success: function(res) {},
+                complete: function(data) {
+                    var gameConfig = {
+                        type: 'line',
+                        data: {
+                            labels: data.responseJSON.dateArray,
+                            datasets: [{
+                                label: 'Game Played By Player',
+                                backgroundColor: "#3b8bba",
+                                borderColor: "rgba(60,141,188,0.8)",
+                                data: data.responseJSON.dailyGamePlayedArray,
+                                fill: true,
+                            }],
+                        },
+                        options: {
+                            display: false,
+                            responsive: true,
+                            legend: {
+                                //position: 'top',
+                                display: false,
+                            },
+                        }
+                    };
+                    var chart = new Chart(GameCanvas, gameConfig)
+                }
+            })
+        }
+
+        // Platform Chart
+
+        if ($('#gameUsages').length > 0) {
+            $.ajax({
+                type: 'GET',
+                url: host + "/dashboardChart/getGameUsageChart",
+                success: function(res) {},
+                complete: function(data) {
+
+                    var pieChartCanvas = $('#gameUsages').get(0).getContext('2d');
+
+                    let webCount = 0;
+                    let androidCount = 0;
+                    let iosCount = 0;
+                    console.log(data.responseJSON.webCount);
+                    if (data.responseJSON.android.length > 0) {
+                        androidCount = data.responseJSON.android[0].count
+                    };
+                    if (data.responseJSON.ios.length > 0) {
+                        iosCount = data.responseJSON.ios[0].count
+                    };
+                    if (data.responseJSON.webCount) {
+                        webCount = data.responseJSON.webCount.count
+                    };
+                    /* if ( ('android' in data.responseJSON)) {
+                        androidCount=data.responseJSON.android[0].percentage 
+                    }
+                     if ( ('ios' in data.responseJSON)) {
+                        iosCount=data.responseJSON.ios[0].percentage
+                    } */
+                    $('.chartAndroid').html(androidCount);
+                    $('.chartIos').html(iosCount);
+                    $('.chartOther').html(webCount);
+
+                    var config = {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                data: [
+
+                                    androidCount,
+                                    iosCount,
+                                    webCount,
+                                ],
+                                backgroundColor: [
+                                    "#00a65a",
+                                    "#0000FF",
+                                    "#FF0000",
+                                ],
+                            }],
+                            labels: [
+                                'Android',
+                                'IOS',
+                                'Other'
+                            ]
+                        },
+                        options: {
+                            display: false,
+                            responsive: true,
+                            legend: {
+                                //position: 'top',
+                                display: false,
+                            },
+                            animation: {
+                                animateScale: false,
+                                animateRotate: true,
+                                animationSteps: 100,
+                                animationEasing: 'easeOutBounce',
+                            },
+                            segmentShowStroke: true,
+                            segmentStrokeColor: '#fff',
+                            segmentStrokeWidth: 1,
+                            percentageInnerCutout: 50, // This is 0 for Pie charts
+                            maintainAspectRatio: false,
+                            tooltipTemplate: '<%=value %> <%=label%> users'
+                        }
+                    };
+
+                    var myDoughnutChart = new Chart(pieChartCanvas, config);
+
+
+                }
+            })
+        }
+
+
+
+        // Memory Usage Chart
+
+        //
+        /*let ctx = $('#memoryUsage').get(0).getContext('2d');
+
+			let data = {
+						labels: ['Start'],
+						datasets: [{
+							data: [0],
+							label: 'RSS',
+							backgroundColor: '#ff6600',
+							fill: false,
+						},
+						{
+							data: [0],
+							label: 'HEAP',
+							backgroundColor: '#4543b5',
+							fill: false
+						}]
+			}
+
+			
+			let optionsAnimations = { 
+				animation: false,
+			}
+			let chart = new Chart(ctx, {
+				type: 'line',
+				data: data,
+				options: optionsAnimations
+			})
+	 
+			const socket = io(host);
+			 
+			socket.emit('dashboardconnection',"Hi Server")
+		 	socket.on('live_memory', function (responce) {
+				var length = data.labels.length
+	          	if (length >= 60) {
+		            data.datasets[0].data.shift();
+					data.datasets[1].data.shift();
+		            data.labels.shift()
+	          	}
+
+				data.labels.push(moment().format('mm:ss'))
+				data.datasets[0].data.push(responce.rss);
+				data.datasets[1].data.push(responce.heap)
+				chart.update()  
+			})  */
+
+        // Platform Chart
+        /*
+        		if( $('#gameUsages').length > 0 ){
+        		  $.ajax({
+        		    type: 'GET',
+        		    url :host + "/dashboardChart/getGameUsageChart",
+        		    success:function(res){
+        		    },
+        		    complete: function(data){
+        		      
+        		      var pieChartCanvas = $('#gameUsages').get(0).getContext('2d');
+        		     
+        		      let webCount=0;
+        		      let androidCount=0;
+        		      let iosCount=0;
+
+        		      //if(data.responseJSON.android.length > 0){ androidCount=data.responseJSON.android[0].count };
+        		      //if(data.responseJSON.ios.length > 0){iosCount=data.responseJSON.ios[0].count };
+        		      if ( ('android' in data.responseJSON)) {
+        		          androidCount=data.responseJSON.android[0].count 
+        		      }
+        		       if ( ('ios' in data.responseJSON)) {
+        		          iosCount=data.responseJSON.ios[0].count
+        		      }
+        				$('.chartAndroid').html(androidCount+'%');
+        				$('.chartIos').html(iosCount+'%');
+
+
+        	     	    var config = {
+        	     	      	type: 'doughnut',
+        	     	      	data: {
+        	     	      		datasets: [{
+        	     	      			data: [
+        	     	      				webCount,
+        	     	      				androidCount,
+        	     	      				iosCount,
+        	     	      			],
+        	     	      			backgroundColor: [
+        	     	      				"#f56954",
+        	     	      				"#00a65a",
+        	     	      				"#f39c12"
+        	     	      			],
+        	     	      		}],
+        	     	      		labels: [
+        	     	      			'Web',
+        	     	      			'Android',
+        	     	      			'IOS',
+        	     	      		]
+        	     	      	},
+        	     	      	options: {
+        	     	      		display: false,
+        	     	      		responsive: true,
+        	     	      		legend: {
+        	     	      			//position: 'top',
+        	     	      			display: false,
+        	     	      		},
+        	     	      		animation: {
+        	     	      			animateScale: false,
+        	     	      			animateRotate: true,
+        	     	      			animationSteps : 100,
+        	     	      			animationEasing : 'easeOutBounce',
+        	     	      		},
+        	     	      		segmentShowStroke    : true,
+        	     	        	segmentStrokeColor   : '#fff',
+        	     	       		segmentStrokeWidth   : 1,
+        	     	        	percentageInnerCutout: 50, // This is 0 for Pie charts
+        	     	        	maintainAspectRatio  : false,
+        	     	      		tooltipTemplate      : '<%=value %> <%=label%> users'
+        	     	      	}
+        	     	    };
+
+        	           	var myDoughnutChart = new Chart(pieChartCanvas, config );
+        		     
+
+        		    }
+        		  })
+        		}  
+        */
+    });
+</script>
+
+{% endblock %}

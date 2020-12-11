@@ -1,0 +1,212 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <section class="content-header">
+            <h1>In-App Purchase</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">In-App Purchase</li>
+            </ol>
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">In-App Purchase</h6>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/inAppPurchase/add"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add New In-app Purchase</button></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <input type="hidden" id="gameType" name="gameType">
+                                        <table id="myTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>In-app Id</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Chips</th>
+                                                    <th>Type</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>In-app Id</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Chips</th>
+                                                    <th>Type</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% endblock %} {% block Jscript %}
+    <script>
+        $(document).ready(function() {
+            var host = window.location.origin;
+            $('#myTable').DataTable({
+                "oLanguage": {
+                    "sSearch": "Search By Name"
+                },
+                // "scrollX": true,
+                "processing": true,
+                "serverSide": true,
+                // "searching": false,
+                "ordering": false,
+                "autoWidth": false,
+                "pageLength": 25,
+                "ajax": host + "/inAppPurchase/getInAppPurchase",
+                "columns": [
+                    // { "data": "_id" },
+                    {
+                        "data": "image",
+                        render: function(data, type, row) {
+                            return '<img height="100px" width="100px" src="/' + row.image + '"></img>'
+                        }
+                    }, {
+                        "data": "in_app_purchase_id"
+                    }, {
+                        "data": "title"
+                    }, {
+                        "data": "price"
+                    }, {
+                        "data": "chips"
+                    }, {
+                        "data": "purchase_type"
+                    }, {
+                        "data": "start_date",
+                        render: function(data, type, row) {
+                            let dt = new Date(row.start_date);
+                            let date = dt.getDate();
+                            let month = parseInt(dt.getMonth() + 1);
+                            let year = dt.getFullYear();
+                            let hours = dt.getHours();
+                            let minutes = dt.getMinutes();
+                            let ampm = hours >= 12 ? 'pm' : 'am';
+                            hours = hours % 12;
+                            hours = hours ? hours : 12;
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            let start_date = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
+                            return start_date;
+                        }
+                    }, {
+                        "data": "end_date",
+                        render: function(data, type, row) {
+                            let dt = new Date(row.end_date);
+                            let date = dt.getDate();
+                            let month = parseInt(dt.getMonth() + 1);
+                            let year = dt.getFullYear();
+                            let hours = dt.getHours();
+                            let minutes = dt.getMinutes();
+                            let ampm = hours >= 12 ? 'pm' : 'am';
+                            hours = hours % 12;
+                            hours = hours ? hours : 12;
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            let end_date = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
+                            return end_date;
+                        }
+                    }, {
+                        "data": "status"
+                    }, {
+                        "data": "action",
+                        render: function(data, type, row) {
+                            return '<a href="/inAppPurchase/edit/' + row._id + '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+                        }
+                    }
+                ]
+            });
+
+            $(function() {
+                "use strict";
+
+                var SweetAlert = function() {};
+
+                SweetAlert.prototype.init = function() {
+
+                        //Parameter
+                        $('body').on('click', '.delete', function(e) {
+                            var id = $(this).attr('id');
+                            var thisElement = this;
+                            swal({
+                                title: "Are you sure?",
+                                text: "You will not be able to recover this In-app Purchase Code!",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#e69a2a",
+                                confirmButtonText: "Yes, delete it!",
+                                cancelButtonText: "No, cancel plx!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm) {
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: host + "/inAppPurchase/delete",
+                                        data: {
+                                            id: id
+                                        },
+                                        success: function(resultData) {
+                                            // alert(resultData)
+                                            console.log(resultData);
+                                            if (resultData == 'success') {
+                                                $(thisElement).parent().parent().hide(700);
+                                                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                                            } else {
+                                                alert("Something went wrong")
+                                            }
+                                            // alert("Save Complete")
+                                        }
+                                    });
+                                    swal("Deleted!", "In-app Purchase Code Deleted Succesfully.", "success");
+                                } else {
+                                    swal("Cancelled", "In-app Purchase Code Not Deleted)", "error");
+                                }
+                            });
+                            return false;
+                        });
+
+                    },
+                    $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+                $.SweetAlert.init();
+            });
+
+        });
+    </script>
+    {% endblock %}

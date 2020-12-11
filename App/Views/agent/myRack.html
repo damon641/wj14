@@ -1,0 +1,344 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Title -->
+        <section class="content-header">
+            <h1>Rake History Table</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active" href="/agents">Rake History</li>
+            </ol>
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h4 class="panel-title txt-dark">Rake History</h4>
+                            </div>
+                            <div class="pull-right">
+                                <h5>Total Rake Received: <span id="total_rack">{{agentTotalRackReceived}}</span></h5>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="row" style="margin-top: 10px;margin-left: 20px;">
+                                <div class="col-md-3">
+                                    <input type="hidden" id="is_datefilter" value="0">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="reservation" name="range" placeholder="Select Range">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table id="myTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Player Username</th>
+                                                    <th>Game</th>
+                                                    <th>Rake From</th>
+                                                    <th>Rake To</th>
+                                                    <!-- <th>Won</th> -->
+                                                    <th>In</th>
+                                                    <th>Commission(%)</th>
+                                                    <th>Total Rake</th>
+                                                    <th>Created At</th>
+                                                    <!-- <th>Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Player Username</th>
+                                                    <th>Game</th>
+                                                    <th>Rake From</th>
+                                                    <th>Rake To</th>
+                                                    <!-- <th>Won</th> -->
+                                                    <th>In</th>
+                                                    <th>Commission(%)</th>
+                                                    <th>Total Rake</th>
+                                                    <th>Created At</th>
+                                                    <!-- <th>Action</th> -->
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function() {
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+        $('#reservation').daterangepicker({
+
+            locale: {
+                format: "YYYY-MM-DD"
+            },
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'ALL': [],
+                // 'This Month': [moment().startOf('month'), moment().endOf('month')],
+                // 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        });
+
+        var host = window.location.origin;
+        let ajaxUrl = host + "/getMyRackHistory";
+        datatableDraw(ajaxUrl);
+
+        function datatableDraw(ajaxUrl) {
+            $('#myTable').DataTable({
+                "oLanguage": {
+                    "sSearch": "Search Game"
+                },
+                "processing": true,
+                "destroy": true,
+                "serverSide": true,
+                "ordering": false,
+                "autoWidth": false,
+                "pageLength": 10,
+                //"ajax": ajaxUrl,
+                ajax: {
+                    "type": "GET",
+                    "url": ajaxUrl,
+                    "dataSrc": function(json) {
+                        $('#total_rack').html(parseFloat(json.totalRack).toFixed(2))
+                        console.log("json.totalRack: ", json.totalRack);
+                        return json.data;
+                    }
+                },
+                "columns": [
+                    // { "data": "_id" },
+                    {
+                        "data": "username",
+                        render: function(data, type, row) {
+                            return row.username = row.player != undefined ? row.player.username :
+                                row.username ? row.username : "-";
+                        }
+                    }, {
+                        "data": "gameNumber"
+                    }, {
+                        "data": "rackFrom"
+                    }, {
+                        "data": "rackTo"
+                    }, {
+                        "data": "won",
+                        render: function(data, type, row) {
+                            return row.won = row.won != undefined ? row.won : "-"
+                        }
+                    }, {
+                        "data": "rackPercent"
+                    }, {
+                        "data": "totalRack"
+                    }, {
+                        "data": "createdAt",
+                        render: function(data, type, row) {
+                            let dt = new Date(row.createdAt);
+                            let date = dt.getDate();
+                            let month = parseInt(dt.getMonth() + 1);
+                            let year = dt.getFullYear();
+                            let hours = dt.getHours();
+                            let minutes = dt.getMinutes();
+                            let ampm = hours >= 12 ? 'pm' : 'am';
+                            hours = hours % 12;
+                            hours = hours ? hours : 12;
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            let createdAt = year + '/' + month + '/' + date + ' ' + hours + ':' +
+                                minutes + ' ' + ampm;
+                            return createdAt;
+                        }
+                    },
+                    /*{
+					"data": "action",
+					render : function(data, type, row){
+						return '<a href="/agentEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit" title="Edit Agent"><i class="fa fa-edit" aria-hidden="true"></i></button></a><button type="button" name="active" id="'+row._id+'" class="btn btn-success btn-xs agentActive btn-rounded">'+row.status+'</i></button><a href="/agent/rack/'+row._id+'" class="btn btn-info btn-xs btn-rounded" title="Rack History"><i class="fa fa-history" aria-hidden="true"></i></a>'
+			
+					}
+				}*/
+                ]
+            });
+        }
+        $(function() {
+            "use strict";
+
+            var SweetAlert = function() {};
+
+            SweetAlert.prototype.init = function() {
+
+                    //Parameter
+                    $('body').on('click', '.delete', function(e) {
+                        var id = $(this).attr('id');
+                        var thisElement = this;
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this Agent!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#e69a2a",
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel plx!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + "/agent/getAgentDelete",
+                                    data: {
+                                        id: id
+                                    },
+                                    success: function(resultData) {
+                                        // alert(resultData)
+                                        console.log(resultData);
+                                        if (resultData == 'success') {
+                                            $(thisElement).parent().parent()
+                                                .hide(700);
+                                            swal("Deleted!",
+                                                "Your imaginary file has been deleted.",
+                                                "success");
+                                        } else {
+                                            alert("Something went wrong")
+                                        }
+                                        // alert("Save Complete")
+                                    }
+                                });
+                                swal("Deleted!", "Agent Deleted Succesfully.", "success");
+                            } else {
+                                swal("Cancelled", "Agent Not Deleted)", "error");
+                            }
+                        });
+                        return false;
+                    });
+
+
+                    // Active & Deactive
+
+                    $('body').on('click', '.agentActive', function(e) {
+                        var id = $(this).attr('id');
+                        var thisElement = this;
+                        swal({
+                            title: "Are you sure?",
+                            text: "Do you want to update the status?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#e69a2a",
+                            confirmButtonText: "Yes, Update it!",
+                            cancelButtonText: "No, cancel pls!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + "/agent/active",
+                                    data: {
+                                        id: id
+                                    },
+                                    success: function(resultData, data) {
+                                        console.log(data);
+                                        if (resultData == 'success') {
+                                            //location.reload();
+                                            var changeText = 'active';
+                                            if ($(thisElement).parent()
+                                                .parent().find(
+                                                    'td  .agentActive')
+                                                .text() == 'active') {
+                                                changeText = 'Block';
+                                            }
+                                            console.log($(thisElement).parent()
+                                                .parent().find(
+                                                    'td .agentActive')
+                                                .text(changeText));
+                                            //$(thisElement).parent().parent().hide(700);
+                                            //swal("Update!", "Player Status Updated Successfully..", "success");
+                                        } else {
+                                            alert("Something went wrong")
+                                        }
+
+                                    }
+                                });
+                                swal("Success!", "Agent Status Updated Succesfully.",
+                                    "success");
+                            } else {
+                                swal("Cancelled", "Agent Status not Updated)", "error");
+                            }
+                        });
+                        return false;
+                    });
+
+
+                },
+                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+            $.SweetAlert.init();
+        });
+
+        $('.ranges ul li').click(function() {
+            dateType = $(this).text();
+            if ($(this).text() != "Custom Range") {
+                $('#is_datefilter').val('1');
+                setTimeout(function() {
+                    if (dateType == "ALL") {
+                        var fullUrl = host + "/getMyRackHistory";
+                    } else {
+                        var date = $('#reservation').val().split(' - ');
+                        var isDatefilter = $('#is_datefilter').val();
+                        var fullUrl = host + "/getMyRackHistory" + '?is_datefilter=' +
+                            isDatefilter + '&start_date=' + date[0] + '&end_date=' + date[1] +
+                            '&dateType=' + dateType;
+                    }
+
+                    datatableDraw(fullUrl);
+                }, 500)
+
+            } else {
+                $('#is_datefilter').val('0');
+            }
+        });
+
+        $('.range_inputs .applyBtn').click(function() {
+            $('#is_datefilter').val('1');
+            setTimeout(function() {
+                var date = $('#reservation').val().split(' - ');
+                var isDatefilter = $('#is_datefilter').val();
+                var fullUrl = host + "/getMyRackHistory" + '?is_datefilter=' + isDatefilter +
+                    '&start_date=' + date[0] + '&end_date=' + date[1] + '&dateType=' + dateType;
+                datatableDraw(fullUrl);
+            }, 500)
+        });
+        $('.range_inputs .cancelBtn').click(function() {
+            $('#is_datefilter').val('0');
+        });
+    });
+</script>
+{% endblock %}

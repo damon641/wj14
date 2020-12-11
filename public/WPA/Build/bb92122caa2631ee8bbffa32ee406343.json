@@ -1,0 +1,19 @@
+{
+    "companyName": "Pokerscript",
+    "productName": "Byte Poker",
+    "productVersion": "1.0",
+    "dataUrl": "9d8025edba378c5ed15c904839c6c7b2.unityweb",
+    "asmCodeUrl": "fd92c3bf250cc97ad4b27a7bb45a21a4.unityweb",
+    "asmMemoryUrl": "67f72f7566fb15edce43b0756c64e560.unityweb",
+    "asmFrameworkUrl": "ef463eaaadaded6ae7ce4ce53d1f8233.unityweb",
+    "asmSymbolsUrl": "19eef6897d332e45e2652d8aadfff4d7.unityweb",
+    "TOTAL_MEMORY": 268435456,
+    "graphicsAPI": ["WebGL 1.0"],
+    "webglContextAttributes": { "preserveDrawingBuffer": false },
+    "splashScreenStyle": "Dark",
+    "backgroundColor": "#231F20",
+    "cacheControl": { "default": "must-revalidate" },
+    "developmentBuild": false,
+    "multithreading": false,
+    "unityVersion": "2019.2.17f1"
+}

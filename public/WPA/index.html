@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Byte Poker</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/9b952195ab79ef94f0feaae8cbb8d8ac.js"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/bb92122caa2631ee8bbffa32ee406343.json", {
+            onProgress: UnityProgress,
+            Module: {
+                backgroundColor: "#000000 "
+            }
+        });
+    </script>
+    <style media="screen">
+        html {
+            background-color: black;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body onresize="reCalculateCanvas()">
+
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<script>
+    let html = '<div class="webgl-content">\
+    <div id="gameContainer"></div>';
+    $('body').html(html);
+    $('canvas').attr('style', 'position: absolute');
+    $('canvas, .webgl-content, #gameContainer').attr('style', 'width: 100%; height: 100%;')
+    let isFullScreen = false;
+
+    function reCalculateCanvas() {
+        console.log("in reCalculateCanvas");
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        $('canvas, .webgl-content, #gameContainer').attr('style', 'width: 100%; height: 100%;')
+        if (window.innerWidth != screen.width && window.innerHeight != screen.height) {
+            $('#webglFullScreen').show();
+        }
+
+        if (isFullScreen != true) {
+            $('#fullScreen').show();
+        }
+        setTimeout(function() {
+
+            if (isMobile != false) {
+                if (window.innerHeight > window.innerWidth) {
+                    alert("Please rotate your device in landscape mode.")
+                    $('canvas').attr('style', '-webkit-transform: translate(-50%, -50%) rotate(90deg); position: absolute; width:100vh; height:100vw; transform: translate(-50%, -50%) rotate(90deg) ;  top:50%; left:50%;');
+                    // if(navigator.userAgent.match(/Android/i)){
+                    //   screen.orientation.lock('landscape-primary');
+                    // }
+                } else {
+                    $('canvas, .webgl-content, #gameContainer').attr('style', 'width: 100%; height: 100%;')
+                }
+            }
+        }, 100)
+
+    }
+
+    if (navigator.userAgent.match(/Android/i)) {
+        // $('body').append('<input type="image" src="/webgl/tran-button.png" id="fullScreen" alt="Submit" width="100%" height="100%" style=" position: fixed;left: 0px;top: 0px; z-index: 999;">');
+        //     var doc = window.document;
+        //     var docEl = doc.documentElement;
+        //     var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+        //     if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+        //       $('#fullScreen').show();
+        //       $('#fullScreen').on('click',function(){
+        //         console.log("in fullScreen clicked event");
+        //         $('#fullScreen').hide();
+        //         requestFullScreen.call(docEl);
+        //         $('canvas, .webgl-content, #gameContainer').attr('style', 'width: 100%; height: 100%;')
+        //         let isFullScreen = true;
+        //       });
+        //     }
+    } else if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+        window.scrollTo(0, 1)
+    } else {
+        //$('body').append('<input type="image" src="/webgl/fullScreen.png" onclick="openFullscreen();" id="webglFullScreen" alt="Submit" width="40px" height="40px" style="right:300px;top:25px;position:absolute;z-index: 999;">');
+    }
+
+    // function openFullscreen() {
+    //   $('#webglFullScreen').hide();
+    //   if (document.documentElement.requestFullscreen) {
+    //     document.documentElement.requestFullscreen();
+    //   } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+    //     document.documentElement.mozRequestFullScreen();
+    //   } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    //     document.documentElement.webkitRequestFullscreen();
+    //   } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+    //     document.documentElement.msRequestFullscreen();
+    //   }
+    //   $('canvas, .webgl-content, #gameContainer').attr('style', 'width: 100%; height: 100%;')
+    // }
+
+    $(document).ready(function() {
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile != false) {
+            if (window.innerHeight > window.innerWidth) {
+                alert("Please rotate your device in landscape mode.")
+                $('canvas').attr('style', '-webkit-transform: translate(-50%, -50%) rotate(90deg); position: absolute; width:100vw; height:100vh; transform: translate(-50%, -50%) rotate(90deg) ;  top:50%; left:50%;');
+                // if(navigator.userAgent.match(/Android/i)){
+                //   screen.orientation.lock('landscape-primary');
+                // }
+            }
+        }
+        window.onbeforeunload = function(e) {
+            var e = e || window.event;
+            console.log("e", e);
+            var msg = "Do you really want to leave this page?"
+            console.log("msg", msg);
+
+            // For IE and Firefox
+            if (e) {
+                console.log("e.returnValue", e.returnValue);
+                // e.returnValue = msg;
+            }
+            console.log("window.event", window.event);
+            // For Safari / chrome
+            e.preventDefault();
+            return true;
+        };
+
+        let Width = window.innerWidth;
+        let Height = window.innerHeight;
+
+        if (Width < Height) {
+            let newWidth = Height;
+            Height = Width;
+            Width = newWidth;
+        }
+
+        $("#gameContainer").css({
+            "width": Width + "px",
+            "height": Height + "px"
+        });
+
+    });
+
+
+    function requestGameData() {
+        console.log("requestGameData External Function Called");
+        var searchParams = new URLSearchParams(window.location.search);
+        var token = searchParams.get('token');
+        var uid = searchParams.get('u');
+        var language = searchParams.get('lang');
+        console.log("get token : ", token);
+        if ((token == null || token == "") && (uid == null || uid == "")) {
+            var dataForWebGL = {
+                message: "fail",
+                token: null,
+                playerId: null
+            };
+        } else {
+            var dataForWebGL = {
+                message: "success",
+                token: token,
+                playerId: uid
+            };
+        }
+
+        dataForWebGL = JSON.stringify(dataForWebGL);
+        console.log("SendMessage :", dataForWebGL);
+        gameInstance.SendMessage("UIManager", "ReceiveGameData", dataForWebGL);
+        gameInstance.SendMessage("UIManager", "ChangeLanguage", language);
+        window.history.replaceState(null, null, "/webgl/");
+    }
+
+    function requestExitGame() {
+        window.location.href = window.location.origin + '/webgl/logout.html';
+    }
+
+    function requestUrlOpen(url) {
+        var openUrl = window.open(url, '_blank');
+    }
+</script>

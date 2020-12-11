@@ -1,0 +1,255 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Title -->
+        <section class="content-header">
+            <h1>Poker Table</h1>
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb">
+                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Poker Table</li>
+            </ol>
+            <!-- /Breadcrumb -->
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Poker Table</h6>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/table/add"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Table</button></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10 col-sm-3" for="email">Table Type :</label>
+                                        <div class="col-sm-8">
+                                            <select name="pokerTables" id="pokerTables" class="form-control">
+													<option value="omaha">Omaha</option>
+													<option value="texas"selected>Texas</option>
+												</select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <input type="hidden" id="gameType" name="gameType" value="{{type}}">
+                                        <input type="hidden" id="tableType" name="gameType" value="{{tableType}}">
+                                        <table id="myTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Name</th>
+                                                    <th>Small <br> Blind</th>
+                                                    <th>Big <br> Blind</th>
+                                                    <th>Min <br> Players</th>
+                                                    <th>Max <br> Players</th>
+                                                    <th>Min <br> BuyIn</th>
+                                                    <th>Max <br> BuyIn</th>
+                                                    <th>Type</th>
+                                                    <th>isCashGame</th>
+                                                    <th>Status</th>
+                                                    <th>Limit</th>
+                                                    <th>Table Privacy</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Name</th>
+                                                    <th>Small <br> Blind</th>
+                                                    <th>Big <br> Blind</th>
+                                                    <th>Min <br> Players</th>
+                                                    <th>Max <br> Players</th>
+                                                    <th>Min <br> BuyIn</th>
+                                                    <th>Max <br> BuyIn</th>
+                                                    <th>Type</th>
+                                                    <th>isCashGame</th>
+                                                    <th>Status</th>
+                                                    <th>Limit</th>
+                                                    <th>Table Privacy</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% endblock %} {% block Jscript %}
+<script>
+    var orderTable = "";
+    var tableType = $('#pokerTables').val();
+    var texasId = $('#gameType').val();
+    var host = window.location.origin;
+    let ajaxUrl = host + "/cashgames/getCashGamePoker/" + texasId + '/' + tableType;
+    $(document).ready(function() {
+        var host = window.location.origin;
+        var texasId = $('#gameType').val();
+    });
+    $('#pokerTables').change(function() {
+        var tableType = $('#pokerTables').val();
+        var texasId = $('#gameType').val();
+        var host = window.location.origin;
+        let ajaxUrl = host + "/cashgames/getCashGamePoker/" + texasId + '/' + tableType;
+        console.log(ajaxUrl, 'pokerTables')
+        orderTable.ajax.url(ajaxUrl).load();
+    });
+    datatableDraw(ajaxUrl);
+    $(function() {
+        "use strict";
+        var SweetAlert = function() {};
+        SweetAlert.prototype.init = function() {
+                //Parameter
+                $('body').on('click', '.delete', function(e) {
+                    var id = $(this).attr('id');
+                    var thisElement = this;
+                    swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover this Table!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#e69a2a",
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel plx!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'POST',
+                                url: host + "/cashgames/CashPokerDelete",
+                                data: {
+                                    id: id
+                                },
+                                success: function(resultData) {
+                                    // alert(resultData)
+                                    console.log(resultData);
+                                    if (resultData == 'success') {
+                                        $(thisElement).parent().parent().hide(700);
+                                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                                    } else {
+                                        alert("Something went wrong")
+                                    }
+                                    // alert("Save Complete")
+                                }
+                            });
+                            swal("Deleted!", "Table Deleted Succesfully.", "success");
+                            ResetData()
+
+                        } else {
+                            swal("Cancelled", "Table Not Deleted)", "error");
+                        }
+                    });
+                    return false;
+                });
+            },
+            $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+        $.SweetAlert.init();
+    });
+
+    function ResetData() {
+        var host = window.location.origin;
+        var texasId = $('#gameType').val();
+        var tableType = $('#pokerTables').val();
+        let ajaxUrl = host + "/cashgames/getCashGamePoker/" + texasId + '/' + tableType;
+        orderTable.ajax.url(ajaxUrl).load();
+    }
+
+    function datatableDraw(ajaxUrl) {
+        console.log("datatableDraw URL: " + ajaxUrl);
+        var host = window.location.origin;
+        var texasId = $('#gameType').val();
+        var tableType = $('#pokerTables').val();
+        orderTable = $('#myTable').DataTable({
+            "oLanguage": {
+                "sSearch": "Search Name"
+            },
+            // "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            // "searching": false,
+            "ordering": false,
+            "autoWidth": false,
+            "pageLength": 25,
+            "bDestroy": true,
+            "ajax": ajaxUrl,
+            "columns": [{
+                "data": "tableNumber"
+            }, {
+                "data": "name"
+            }, {
+                "data": "smallBlind"
+            }, {
+                "data": "bigBlind"
+            }, {
+                "data": "minPlayers"
+            }, {
+                "data": "maxPlayers"
+            }, {
+                "data": "minBuyIn"
+            }, {
+                "data": "maxBuyIn"
+            }, {
+                "data": "gameType"
+            }, {
+                "data": "isCashGame"
+            }, {
+                "data": "status"
+            }, {
+                "data": "limit",
+                render: function(data, type, row) {
+
+                    if (data == 'limit') {
+                        return 'Limit';
+                    } else if (data == 'no_limit') {
+                        return 'No Limit';
+                    } else if (data == 'pot_limit') {
+                        return 'Pot Limit';
+                    } else if (data == 'Hi-Lo') {
+                        return 'Hi-Lo No Limit';
+                    } else if (data == 'Hi-Lo-pot_limit') {
+                        return 'Hi-Lo Pot Limit';
+                    } else if (data == 'Hi-Lo-limit') {
+                        return 'Hi-Lo Limit';
+                    }
+                }
+            }, {
+                "data": "tablePrivacy"
+            }, {
+                "data": "action",
+                render: function(data, type, row) {
+                    return '</a> <button type="button" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+                        // <a href="/cashgames/stacksEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                        // return '<a href="/userEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash" aria-hidden="true"></i></button> '
+                }
+            }]
+
+        });
+    }
+</script>
+{% endblock %}

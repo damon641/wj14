@@ -1,0 +1,504 @@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <!-- sidebar menu: style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree" style="margin-left: 5px;">
+            <!-- <li class="header">MAIN NAVIGATION</li> -->
+            {% if session.role == 'admin'%}
+            <li class="{{classActive}}">
+                <a href="/">
+                    <i class="fa fa-television" style="color:#77a4f7"></i> <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="{{cashTexasActive}}">
+                <a href="/table">
+                    <i class="fa fa-list-alt" style="color: #d074f7"></i><span> Table Manager</span>
+                </a>
+            </li>
+
+            <li class="{{cashTexasActive}}">
+                <a href="/currency">
+                    <i class="fa fa-usd" style="color: #00f8e3"></i><span> Currency Management</span>
+                </a>
+            </li>
+            <!-- <li class="{{notificationActive}}">
+                <a href="/notification">
+                    <i class="fa fa-bell mr-20"></i>
+                    <span> Notification</span>
+                </a>
+            </li> -->
+            <li class="treeview {{PlayerMenu}}">
+                <a href="#">
+                    <i class="fa fa-users" style="color: #28a745"></i>
+                    <span>Player Management</span>
+                    <span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+					</span>
+                </a>
+
+                <ul class="treeview-menu" style="margin-left: 20px;">
+                    <li class=" {{playerActive}}">
+                        <a href="/player">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> My Players
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li>
+                    <li class=" {{myPlayerActive}}">
+                        <a href="/allPlayers">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> All Players
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li>
+                    <!-- <li class=" {{acctReqActive}}">
+                        <a href="/accountNumberUpdateRequest">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> A/C Update Request
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </li>
+            <li class="treeview {{AgentMenu}}">
+                <a href="#">
+                    <i class="fa fa-user-secret" style="color: #28a745"></i>
+                    <span>Agent Management</span>
+                    <span class="pull-right-container">
+						<i class="fa fa-angle-left pull-right"></i>
+					</span>
+                </a>
+
+                <ul class="treeview-menu" style="margin-left: 20px;">
+                    <li class=" {{agentActive}}">
+                        <a href="/agents">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> My Agent
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li>
+                    <li class=" {{allAgentActive}}">
+                        <a href="/allagents">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> All Agent
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li>
+                    <li class=" {{myRackActive}}">
+                        <a href="/my-rack-history">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> My Rake
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li>
+                    <li class=" {{myChipsTransactionsActive}}">
+                        <a href="/my-chips-transactions">
+                            <i class="fa fa-circle" style="color: #40f069;font-size: 0.8em"></i> My Chips History
+                            <span class="pull-right-container">
+								<i class="pull-right"></i>
+							</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- <li class="nav-item {{tournamentActive}}">
+                <a href="/regular-tournament" class="nav-link">
+                   
+                    <i class="nav-icon fa fa-shield" style="color:#e3ff69"></i><span> Tourney Manager</span>
+                </a>
+            </li> -->
+            <li class="nav-item {{stackActive}}">
+                <a href="/cashgames/stacks" class="nav-link">
+                    <i class="fa fa-pie-chart nav-icon" style="color: #f3962c"></i><span> Stacks Planner</span>
+                </a>
+            </li>
+            <li class="treeview {{pricepoolManagementMenu}}">
+                <a href="#">
+                    <i class="fa fa-usd nav-icon" style="color: #ff9999"></i><span> Prize Pools</span>
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class=" {{regularPricepoolActive}}">
+                        <a href="/price-pool/regulartournament">
+                            <i class="fa fa-circle" style="color: #ff9999;font-size: 0.8em"></i> Regular Tournament
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{sngPricepoolActive}}">
+                        <a href="/price-pool/sngtournament">
+                            <i class="fa fa-circle" style="color: #ff9999;font-size: 0.8em"></i> Sit & Go Tournament
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item {{allGameHistory}}">
+                <a href="/game" class="nav-link">
+                    <i class="fa fa-history nav-icon" style="color: #fc0000"></i><span> Game History</span>
+                </a>
+            </li>
+            <li class="treeview {{reportMenu}}">
+                <a href="#">
+                    <i class="fa fa-file" style="color: #007bff"></i>
+                    <span>Reports</span>
+
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class=" {{selfActive}}">
+                        <a href="/selfReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Self Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{agentActive}}">
+                        <a href="/agentReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Agents Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{playerActive}}">
+                        <a href="/playerReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Player Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{playerOldactive}}">
+                        <a href="/playerOldReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Player Old Report
+                            <span class="pull-right-container">
+											<i class="pull-right"></i>
+										</span>
+                        </a>
+                    </li>
+                    <li class=" {{allUsersChips}}">
+                        <a href="/allUsersChips">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> All Chips Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{systemChips}}">
+                        <a href="/systemChips">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> System Chips Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{errorReports}}">
+                        <a href="/errorReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Error Reports Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{errorReportValidation}}">
+                        <a href="/errorReportValidation">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Error Reports Validation
+                            <span class="pull-right-container">	
+										<i class="pull-right"></i>	
+									</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item {{maintenanceActive}}">
+                <a href="/maintenance" class="nav-link">
+                    <i class="fa fa-map-signs nav-icon" style="color: #dc3545"></i><span> Maintenance</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{blockedIpActive}}">
+                <a href="/blockedIp" class="nav-link">
+                    <i class="fa fa-exclamation-circle nav-icon" style="color: #ffe607"></i><span> Blocked
+						Ip</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{settingActive}}">
+                <a href="/settings" class="nav-link">
+                    <!-- <i class="fas fa-cog"></i> -->
+                    <i class="nav-icon fa fa-cog" style="color:#6f42c1"></i><span> Settings</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{RakeCapActive}}">
+                <a href="/cashgames/rakecap" class="nav-link">
+                    <i class="fa fa-usd nav-icon" style="color: #ff9999" style="color: #ff9999"></i><span> Rake Manager</span>
+                </a>
+            </li>
+
+            <li class="treeview {{GameManagementMenu}}">
+                <a href="#">
+                    <i class="nav-icon fa fa-shield" style="color:#e3ff69"></i><span>Game Management</span>
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class=" {{tournamentActive}}">
+                        <a href="/regular-tournament">
+                            <i class="fa fa-circle" style="color: #e3ff69;font-size: 0.8em"></i> Regular Tournament
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{sngTournamentActive}}">
+                        <a href="/sng-tournament">
+                            <i class="fa fa-circle" style="color: #e3ff69;font-size: 0.8em"></i> Sit & Go Tournament
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{blindLevelsActive}}">
+                        <a href="/blindLevels">
+                            <i class="fa fa-circle" style="color: #e3ff69;font-size: 0.8em"></i> Blind Levels
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="{{promocodeActive}}">
+                <a href="/promocode">
+                    <i class="fa fa-barcode mr-20" style="color: #ffffff"></i>
+                    <span> Promocode</span>
+                </a>
+            </li>
+            <!-- <li class="{{newsActive}}">
+                <a href="/news">
+                    <i class="fa fa-newspaper-o mr-20"></i>
+                    <span> News</span>
+                </a>
+            </li> -->
+            <li class="{{withdrawActive}}">
+                <a href="/withdraw">
+                    <i class="fa fa-credit-card mr-20" style="color: #f86d4a"></i></i>
+                    <span> Withdraw</span>
+                    <span class="pull-right-container">
+              					<span id="withdrawNotification" class="label label-primary pull-right"></span>
+                    </span>
+                </a>
+            </li>
+            <li class="{{depositActive}}">
+                <a href="/deposit-receipt">
+                    <i class="fa fa-money mr-20" style="color: #b84af8"></i>
+                    <span> Deposit Receipt</span>
+                    <span class="pull-right-container">
+								<span id="depositNotification" class="label label-primary pull-right"></span>
+                    </span>
+                </a>
+            </li>
+            <li class="{{inAppPurchaseActive}}">
+                <a href="/inapppurchase">
+                    <i class="fa fa-newspaper-o mr-20" style="color: #4acff8"></i>
+                    <span> In-app Purchase</span>
+                </a>
+            </li>
+            {% endif %} {% if session.role != 'admin' %}
+            <li class="{{playerActive}}">
+                <a href="/player">
+                    <i class="fa fa-users mr-20" style="color: #7bf84a"></i>
+                    <span>
+							Player Master
+							<!-- {% if countObject.latestPlayerCount != 0  %}
+								<i class="fa fa-bell-o" style="font-size: 20px; float: right; color: red">
+									<span class="badge badge-danger">{{countObject.latestPlayerCount}}</span>
+                    </i>
+
+
+                    {% endif %} --></span>
+                </a>
+            </li>
+            {% if session.role != 'agent'%}
+            <li class="treeview {{AgentMenu}}">
+                <a href="#">
+                    <i class="fa fa-user-secret" style="color: #f84a4a"></i>
+                    <span>Agent Management</span>
+                    <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class="{{agentActive}}">
+                        <a href="/agents">
+                            <i class="fa fa-user-secret mr-20" style="color: #f84a4a;font-size: 0.8em"></i>
+                            <span> Agents</span>
+                        </a>
+                    </li>
+                    <li class=" {{myRackActive}}">
+                        <a href="/my-rack-history">
+                            <i class="fa fa-circle" style="color: #f84a4a;font-size: 0.8em"></i> My Rake
+                            <span class="pull-right-container">
+											<i class="pull-right"></i>
+										</span>
+                        </a>
+                    </li>
+                    <li class=" {{myChipsTransactionsActive}}">
+                        <a href="/my-chips-transactions">
+                            <i class="fa fa-circle" style="color: #f84a4a;font-size: 0.8em"></i> My Chips History
+                            <span class="pull-right-container">
+											<i class="pull-right"></i>
+										</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {#
+            <li class="treeview {{reportMenu}}">
+                <a href="#">
+                    <i class="fa fa-file" style="color: #007bff"></i>
+                    <span>Reports</span>
+                    <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=" {{selfactive}}">
+                        <a href="/selfReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Self Report
+                            <span class="pull-right-container">
+											<i class="pull-right"></i>
+										</span>
+                        </a>
+                    </li>
+                    <li class=" {{agentactive}}">
+                        <a href="/agentReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Agents Report
+                            <span class="pull-right-container">
+											<i class="pull-right"></i>
+										</span>
+                        </a>
+                    </li>
+                    <li class=" {{playeractive}}">
+                        <a href="/playerReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Player Report
+                            <span class="pull-right-container">
+											<i class="pull-right"></i>
+										</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            #} {% endif %} {% if session.role == 'childAgent'%}
+            <li class=" {{myRackActive}}">
+                <a href="/my-rack-history">
+                    <i class="fa fa-money" style="color: #28a745"></i>
+                    <span>My Rake</span>
+                </a>
+            </li>
+            <li class=" {{myChipsTransactionsActive}}">
+                <a href="/my-chips-transactions">
+                    <i class="fa fa-microchip" style="color: #ff0505"></i> My Chips History
+                    <span class="pull-right-container">
+									<i class="pull-right"></i>
+								</span>
+                </a>
+            </li>
+            {% if session.level != 100%}
+            <li class="{{agentActive}}">
+                <a href="/agents">
+                    <i class="fa fa-user-secret mr-20" style="color: #6f42c1"></i>
+                    <span> Agents</span>
+                </a>
+            </li>
+            {%endif%}
+
+            <ul class="treeview-menu">
+
+                <li class=" {{myRackActive}}">
+                    <a href="/my-rack-history">
+                        <i class="fa fa-circle-o"></i> My Rake
+                        <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                    </a>
+                </li>
+                <li class=" {{myChipsTransactionsActive}}">
+                    <a href="/my-chips-transactions">
+                        <i class="fa fa-circle-o"></i> My Chips History
+                        <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                    </a>
+                </li>
+            </ul>
+            </li>
+            {#
+            <li class="treeview {{reportmanu}}">
+                <a href="#">
+                    <i class="fa fa-file" style="color: #007bff"></i>
+                    <span>Reports</span>
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class=" {{selfactive}}">
+                        <a href="/selfReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Self Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{agentactive}}">
+                        <a href="/agentReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Agents Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                    <li class=" {{playeractive}}">
+                        <a href="/playerReports">
+                            <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Player Report
+                            <span class="pull-right-container">
+										<i class="pull-right"></i>
+									</span>
+                        </a>
+                    </li>
+                </ul>
+            </li> #} {% endif %} {% endif %}
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

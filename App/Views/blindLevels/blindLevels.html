@@ -1,0 +1,378 @@
+{% extends "partition/layout.html" %} {% block body %}
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Title -->
+        <section class="content-header">
+            <h1>Blind Levels</h1>
+            <ol class="breadcrumb">
+                <li><a href="/backend"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Blind Levels</li>
+            </ol>
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <div class="flash-msg" style="display: none;">
+        </div>
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Blind Levels</h6>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-primary btn-md langSeting"><i class="fa fa-plus"></i>&nbsp;Add New Blind Levels</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <table id="myTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="colSetClass">Name</th>
+                                        <th class="colSetClass">Levels</th>
+                                        <th class="colSetClass">minBlind</th>
+                                        <th class="colSetClass">maxBlind</th>
+                                        <th class="colSetClassNew">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bodySetWordWrap">
+                                    {% for items in blindLevels %}
+                                    <tr>
+                                        <td class="colSetClass">{{ items.blindLevelName }}</td>
+                                        <td class="colSetClass">{{ items.blindLevels[0].level }}</td>
+                                        <td class="colSetClass">{{ items.blindLevels[0].minBlind }}</td>
+                                        <td class="colSetClass">{{ items.blindLevels[0].maxBlind }}</td>
+                                        <td class="colSetClassNew">
+                                            <button type="button" class="btn btn-warning btn-xs btn-rounded editLangWord" name="edit" title="Edit Word" data-id="{{ items._id }}"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-danger btn-xs btn-rounded deleteLangWord" name="delete" title="Delete Word" data-id="{{ items._id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="colSetClass">Name</th>
+                                        <th class="colSetClass">Levels</th>
+                                        <th class="colSetClass">minBlind</th>
+                                        <th class="colSetClass">maxBlind</th>
+                                        <th class="colSetClassNew">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add modal start -->
+            <div class="modal fade" id="addNewWordModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post" action="/addBlindLevels">
+                            <div class="panel panel-default card-view">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Add New Levels</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary-main btn-md addnewlang"><i class="fa fa-plus"></i>&nbsp;Add Level</button>
+                                    </div><br><br>
+                                    <input type="text" name="blindLevelName" class="inputSetClass" placeholder="Enter Blind Level Name" required>
+                                    <table class="table table-borderless lang-table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Level</th>
+                                                <th></th>
+                                                <th>Minimum Blind</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Maximum Blind</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="langField">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="text-right hide formBtn">
+                                        <button class="btn btn-danger removeRow" type="button">Remove</button>&nbsp; &nbsp;
+                                        <button class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Add modal end -->
+            <!-- Edit modal start -->
+            <div class="modal fade" id="editWordModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form action="">
+                            <div class="panel panel-default card-view">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Edit Blind Levels</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary btn-md editnewlang"><i class="fa fa-plus"></i>&nbsp;Edit Level</button>
+                                    </div><br><br>
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Level</th>
+                                                <th></th>
+                                                <th>Minimum Blind</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Maximum Blind</th>
+                                                <th></th>
+                                                <th>Delete</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="lanBody" id="editField">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="text-right">
+                                        <button class="btn btn-info" id="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Edit modal end -->
+        </section>
+    </div>
+</div>
+<style>
+    .inputSetClass {
+        width: 100%;
+        padding: 12px 12px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    .colSetClass {
+        width: 22% !important;
+        display: inline-block;
+    }
+    
+    .colSetClassNew {
+        width: 10% !important;
+        display: inline-block;
+    }
+    
+    .bodySetWordWrap {
+        word-wrap: break-word;
+    }
+</style>
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function() {
+
+        $('.langSeting').on('click', function() {
+            $('#addNewWordModal').modal('show');
+        });
+
+        $('.editLangWord').on('click', function() {
+
+            var host = window.location.origin;
+            let id = $(this).attr('data-id');
+            $.post(host + '/blindLevelsEdit', 'id=' + id, function(res) {
+
+                if (res && res.status === 'success') {
+                    $('.lanBody').empty();
+                    for (let i = 0; i < res.editBlindLevelsData.blindLevels.length; i++) {
+                        let newHtml = `<tr class="newRow">
+                              <td><input type="hidden" class="inputSetClass" name="id" value="` + res.editBlindLevelsData._id + `">
+                                  <input type="hidden" class="inputSetClass" name="levelId" value="` + res.editBlindLevelsData.blindLevels[i].levelId + `">
+                              </td>
+                              <td><input type="number" name="level" min="1" class="inputSetClass" placeholder="level" readonly value="` + res.editBlindLevelsData.blindLevels[i].level + `"></td>
+                              <td></td>
+                              <td><input type="number" name="minBlind" step="any" min="0.1" class="inputSetClass" placeholder="minBlind" required value="` + res.editBlindLevelsData.blindLevels[i].minBlind + `"></td>
+                              <td></td>
+                              <td></td>
+                              <td><input type="number" name="maxBlind" step="any" min="0.1" class="inputSetClass" placeholder="maxBlind" required value="` + res.editBlindLevelsData.blindLevels[i].maxBlind + `"></td>
+                              <td></td>
+                              <td><button class="btn btn-danger btn-xs btn-rounded remove inputSetClass" title="Delete Word" newId="` + res.editBlindLevelsData._id + `" data-particular-id="` + res.editBlindLevelsData.blindLevels[i].levelId + `"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                           </tr>`;
+                        $('.lanBody').append(newHtml);
+                        $('#editWordModal').modal('show');
+                    }
+                }
+            });
+        });
+
+        $('#submit').click(function() {
+            var host = window.location.origin;
+            let arr = [];
+            $.ajax({
+                type: 'POST',
+                url: host + "/updateBlindLevels",
+                data: $("form").serialize(),
+                success: function(res) {}
+            });
+        });
+        window.history.replaceState(null, null, "/blindLevels");
+
+        $('.editnewlang').on('click', function() {
+            $('.lanBody').append('<tr class="newRow"><td></td><td><input type="number" name="level" min="1" class="inputSetClass" placeholder="level" required ></td><td></td><td><input type="number" name="minBlind" step="any" min="0.1" class="inputSetClass minblind" placeholder="Minimum Blind" required ></td><td></td><td></td><td><input type="number" name="maxBlind" name="maxBlind" step="any" min="0.1" class="inputSetClass maxblind" placeholder="Maximum Blind" required ></td><td></td></tr>');
+        });
+
+        $('.addnewlang').on('click', function() {
+            $('#langField').append('<tr class="newRow"><td></td><td><input type="number" name="level" min="1" class="inputSetClass" placeholder="level" required ></td><td></td><td><input type="number" name="minBlind" step="any" min="0.1" class="inputSetClass minblind" placeholder="Minimum Blind" required ></td><td></td><td></td><td><input type="number" name="maxBlind" name="maxBlind" step="any" min="0.1" class="inputSetClass maxblind" placeholder="Maximum Blind" required ></td><td></td></tr>');
+
+            if ($('.formBtn').hasClass('hide')) {
+                $('.formBtn').removeClass('hide');
+            }
+        });
+
+        $('.removeRow').on('click', function() {
+            if ($('.lang-table').find('.newRow').length) {
+
+                let trCnt = $('.lang-table').find('.newRow').length;
+                trCnt = parseInt(trCnt) - 1;
+                $('.lang-table').find('.newRow').eq(trCnt).remove();
+
+                if (trCnt <= 0) {
+                    $('.formBtn').addClass('hide');
+                }
+            }
+        });
+
+
+        $('.deleteLangWord').on('click', function(e) {
+
+            var host = window.location.origin;
+            let id = $(this).attr('data-id');
+            var thisElement = this;
+            swal({
+                title: "Are you sure?",
+                text: "You will not able to recover this Blind Levels!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#e69a2a",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel pls!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: 'POST',
+                        url: host + "/blindLevelsDelete",
+                        data: {
+                            id: id
+                        },
+                        success: function(resultData) {
+                            if (resultData.status == 'success') {
+                                $(thisElement).parent().parent().hide(700);
+                                swal("Deleted!", "Your Blind Levels has been deleted.", "success");
+                            } else if (resultData.status == 'error') {
+                                swal("Warning!", resultData.msg, "warning");
+                            } else {
+                                swal("Error!", 'Something went wrong!', "error");
+                            }
+                        }
+                    });
+                } else {
+                    swal("Cancelled", "Blind Levels Not Deleted", "error");
+                }
+            });
+            return false;
+        });
+
+        $(function() {
+            "use strict";
+
+            var SweetAlert = function() {};
+            SweetAlert.prototype.init = function() {
+                    $('.lanBody').on('click', '.remove', function(e) {
+                        var host = window.location.origin;
+                        var parentId = $(this).attr('newId');
+                        var id = $(this).attr('data-particular-id');
+                        var thisElement = this;
+
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this Particular Blind Level!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#e69a2a",
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel plx!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + "/blindLevelsParticularDelete",
+                                    data: {
+                                        id: id,
+                                        parentId: parentId
+                                    },
+                                    success: function(res) {
+                                        let newHtml = '';
+                                        if (res.status == 'success') {
+                                            $('.lanBody').empty();
+                                            $(thisElement).parent().parent().hide(700);
+                                            swal("Deleted!", "Particular Blind Level has been deleted.", "success");
+
+                                            for (let i = 0; i < res.editBlindLevelsData.blindLevels.length; i++) {
+                                                newHtml = `<tr class="newRow">
+                              <td><input type="hidden" class="inputSetClass" name="id" value="` + res.editBlindLevelsData._id + `">
+                                  <input type="hidden" class="inputSetClass" name="levelId" value="` + res.editBlindLevelsData.blindLevels[i].levelId + `">
+                              </td>
+                              <td><input type="number" name="level" min="1" class="inputSetClass" placeholder="level" readonly value="` + res.editBlindLevelsData.blindLevels[i].level + `"></td>
+                              <td></td>
+                              <td><input type="number" name="minBlind" step="any" min="0.1" class="inputSetClass" placeholder="minBlind" required value="` + res.editBlindLevelsData.blindLevels[i].minBlind + `"></td>
+                              <td></td>
+                              <td></td>
+                              <td><input type="number" name="maxBlind" step="any" min="0.1" class="inputSetClass" placeholder="maxBlind" required value="` + res.editBlindLevelsData.blindLevels[i].maxBlind + `"></td>
+                              <td></td>
+                              <td><button class="btn btn-danger btn-xs btn-rounded remove inputSetClass" title="Delete Word" newId="` + res.editBlindLevelsData._id + `" data-particular-id="` + res.editBlindLevelsData.blindLevels[i].levelId + `"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                           </tr>`;
+                                                $('.lanBody').append(newHtml);
+                                            }
+                                            // $('.lanBody').replaceWith(newHtml);
+                                        } else {
+                                            alert("Something went wrong")
+                                        }
+                                    }
+
+                                });
+                                swal("Deleted!", "Particular Blind Level Deleted Succesfully.", "success");
+                            } else {
+                                swal("Cancelled", "Particular Blind Level Not Deleted)", "error");
+                            }
+                        });
+                        return false;
+                    });
+
+                },
+                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+            $.SweetAlert.init();
+        });
+
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,250 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <section class="content-header">
+            <h1>System Reports</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> Dashboard</a>
+                </li>
+                <li class="active">System Reports</li>
+            </ol>
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">System Reports</h6>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- ==================================== -->
+                        <div class="panel-wrapper collapse in">
+                            <div class="row" style="padding: 10px;">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label mt-5 col-sm-4">Type :</label>
+                                        <div class="col-sm-8">
+                                            <select id="types" class="form-control ">
+												{%for type in types %}
+													<option value={{type.name}}>{{type.value}}</option>
+													{%endfor%}
+												</select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" name="agent" id="agent" value="{{Agent.role}}" hidden>
+                                        <input type="text" class="form-control pull-right" id="reservation" name="range" placeholder="Select Range">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <a id="submit" class=" addAcBtn ladda-button btn btn-success btn-sm">
+                                        <span>&nbsp;Submit</span></a>
+                                </div>
+                            </div>
+
+                            <div class="container" id="balance_div" style="display: none;">
+                                <div class="row" style="background-color: #d6d6d6;">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3">
+                                        <label>System Balance: </label> <span id="system_balance">0.00</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Total Balance: </label> <span id="total_balance">0.00</span>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <input type="hidden" id="gameType" name="gameType">
+                                        <table id="myTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date & Time</th>
+                                                    {#
+                                                    <th>Game Id</th> #}
+                                                    <th>Transaction Id</th>
+                                                    <th>From/To</th>
+                                                    <th>In</th>
+                                                    <th>Out</th>
+                                                    <th>Balance</th>
+                                                    <th>Type</th>
+                                                    <th>Remark</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                            <thead>
+                                                <tr>
+                                                    <th>Date & Time</th>
+                                                    {#
+                                                    <th>Game Id</th> #}
+                                                    <th>Transaction Id</th>
+                                                    <th>From/To</th>
+                                                    <th>In</th>
+                                                    <th>Out</th>
+                                                    <th>Balance</th>
+                                                    <th>Type</th>
+                                                    <th>Remark</th>
+                                                </tr>
+                                                </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% endblock %} {% block Jscript %}
+
+    <script>
+        $(document).ready(function() {
+            let agent = $('#agent').val()
+            var host = window.location.origin;
+            $('#myTable').dataTable({
+                "ordering": false,
+                "autoWidth": false,
+                "oLanguage": {
+                    "sSearch": "Transaction Id",
+                    "sEmptyTable": "No data available"
+                },
+                "pageLength": 100
+            });
+            today = new Date();
+            startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            startDate.setHours(00, 00, 00, 000);
+            endDate.setHours(23, 59, 59, 999);
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+            $('#reservation').daterangepicker({
+                locale: {
+                    format: "YYYY-MM-DD"
+                },
+                startDate: startDate,
+                endDate: endDate,
+                minDate: "2019-09-20"
+            });
+
+            $('body').on('click', '#submit', function() {
+                $('#myTable')
+                    .dataTable()
+                    .fnDestroy();
+                var date = $('#reservation')
+                    .val()
+                    .split(' - ');
+                let types = $('#types').val();
+                $('#myTable').DataTable({
+                    "oLanguage": {
+                        "sSearch": "Transaction Id"
+                    },
+                    "processing": true,
+                    "serverSide": true,
+                    "searching": true,
+                    "ordering": false,
+                    "autoWidth": false,
+                    "pageLength": 100,
+                    "ajax": {
+                        "type": "GET",
+                        "url": host + "/systemChips/getData?startDate=" + date[0] + "&endDate=" + date[1] + "&types=" + types,
+                        "dataSrc": function(json) {
+                            if (json.system_balance) {
+                                $('#system_balance').html(parseFloat(json.system_balance).toFixed(2));
+                            } else {
+                                $('#system_balance').html('0.00');
+                            }
+                            if (json.total_balance) {
+                                $('#total_balance').html(parseFloat(json.total_balance).toFixed(2));
+                            } else {
+                                $('#total_balance').html('0.00');
+                            }
+                            $('#balance_div').show();
+                            //console.log("json.openingData: ", json.openingData);
+                            //console.log("json.closingData: ", json.closingData);
+                            return json.data;
+                        }
+                    },
+                    "columns": [{
+                        "data": "createdAt",
+                        render: function(data, type, row) {
+                            let dt = new Date(row.createdAt);
+                            let date = dt.getDate();
+                            let month = parseInt(dt.getMonth() + 1);
+                            let year = dt.getFullYear();
+                            let hours = dt.getHours();
+                            let minutes = dt.getMinutes();
+                            let ampm = hours >= 12 ?
+                                'pm' :
+                                'am';
+                            hours = hours % 12;
+                            hours = hours ?
+                                hours :
+                                12;
+                            minutes = minutes < 10 ?
+                                '0' + minutes :
+                                minutes;
+                            let createdAt = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
+                            return createdAt;
+                        }
+                    }, {
+                        "data": "transactionNumber"
+                    }, {
+                        "data": "from"
+                    }, {
+                        "data": "in",
+                        render: function(data, type, row) {
+                            return row.in = row.in != undefined ?
+                                "<p style='color:green;'>" + parseFloat(row.in).toFixed(2) + "</p>" :
+                                "-";
+                        }
+                    }, {
+                        "data": "out",
+                        render: function(data, type, row) {
+                            return row.out = row.out != undefined ?
+                                "<p style='color:red;'>" + parseFloat(row.out).toFixed(2) + "</p>" :
+                                "-";
+                        }
+                    }, {
+                        "data": "afterBalance",
+                        render: function(data, type, row) {
+                            return row.afterBalance = row.afterBalance ?
+                                parseFloat(row.afterBalance).toFixed(2) :
+                                "-"
+                        }
+                    }, {
+                        "data": "type",
+                        render: function(data, type, row) {
+                            return row
+                                .type
+                                .charAt(0)
+                                .toUpperCase() + row
+                                .type
+                                .slice(1);
+                        }
+                    }, {
+                        "data": "remark"
+                    }]
+                });
+
+            });
+        });
+    </script>
+    {% endblock %}

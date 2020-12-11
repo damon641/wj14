@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BytePoker</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+<body>
+    <section>
+        <div class="account-overview">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 p-lr-0">
+                        <div class="header clearfix">
+                            <a href="javascipt:void(0);" class="logo">&nbsp;
+                  <img src="img/logo.png" alt="BytePoker" />
+                  <span
+                    >BytePoker</span
+                  ></a
+                >
+                <div class="float_right">
+                  <h4 id="username" class="comandText"></h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 Profiles">
+              <h4>My Account</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 m-e">
+              <ul class="sidebar-menu">
+                <li class="">
+                  <a href="information.html" id="main_bar"
+                    ><i class="fa fa-info-circle m-m" aria-hidden="true "></i
+                    >Information<i
+                      class="fa fa-angle-right"
+                      aria-hidden="true"
+                      id="main_clas"
+                    ></i
+                  ></a>
+                            </li>
+                            <li class="treeview active">
+                                <a href="deposit.html">
+                                    <i class="fa fa-google-wallet m-m" aria-hidden="true"></i
+                    >Deposit<i class="fa fa-angle-right" aria-hidden="true"></i
+                  ></a>
+                </li>
+                <li class="treeview">
+                  <a href="withdraw.html"
+                    ><i class="fa fa-money m-m" aria-hidden="true"></i
+                    >Withdraw<i class="fa fa-angle-right" aria-hidden="true"></i
+                  ></a>
+                </li>
+                <li class="treeview">
+                  <a href="change-password.html"
+                    ><i class="fa fa-key m-m" aria-hidden="true"></i>Change Password
+                                    <i class="fa fa-angle-right" aria-hidden="true"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const host = window.location.origin;
+        const searchParams = new URLSearchParams(window.location.search);
+		const token = searchParams.get('token');
+		console.log({token})
+        if (token) {
+          $.ajax({
+            type: 'GET',
+            url: host + '/essentials/' + token,
+            success: function (resultData) {
+              console.log(resultData);
+              if (resultData.success == 'success') {
+				const person = resultData.player
+				window.localStorage.setItem('user', JSON.stringify(person));
+				$("#username").text(person.username)
+                window.history.replaceState(
+                  null,
+                  null,
+                  '/Essentials/index.html'
+                );
+              } else if (resultData.fail == 'fail') {
+              }
+            },
+          });
+        } else {
+			const person = JSON.parse(window.localStorage.getItem('user'));
+			$("#username").text(person.username)
+		}
+      });
+    </script>
+  </body>
+</html>

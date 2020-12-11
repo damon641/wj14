@@ -1,0 +1,114 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <section class="content-header">
+            <h1>Promocode table</h1>
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb">
+                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Add Promocode</li>
+            </ol>
+            <!-- /Breadcrumb -->
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Add Promocode</h6>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        {% if promocode %}
+                                        <form method="POST" action="/promocode/edit/{{promocode.id}}" class="form-horizontal" enctype="multipart/form-data" id="tableForm">
+                                            {% else %}
+                                            <form method="POST" action="/promocode/add" class="form-horizontal" enctype="multipart/form-data" id="tableForm">
+                                                {% endif %}
+                                                <table border="0" class="table display  pb-30">
+                                                    <div class="col-sm-12">
+                                                        <div class="panel-wrapper collapse in">
+                                                            <div class="panel-body">
+                                                                <!-- <input type="hidden" name="id" value="{{stacks.id}}"> -->
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="name">Name:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" id="name" placeholder="Enter Promocode Name" name="name" value="{{promocode.name}}" data-validation="letternumeric" data-validation-allowing=" " data-validation-error-msg="Name is required">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="status">Status:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" id="status" placeholder="Enter Status" name="status" value="{{promocode.status}}" data-validation="letternumeric" data-validation-allowing=" " data-validation-error-msg="Status is required">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="code">Code:</label>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" class="form-control" id="code" placeholder="Enter Code" name="code" value="{{promocode.code}}" data-validation="letternumeric" data-validation-allowing=" " data-validation-error-msg="Promocode is required">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label mb-10 col-sm-2" for="image">Image:</label>
+                                                                    <div class="col-sm-6">
+                                                                        {% if promocode %}
+                                                                        <img src="/{{promocode.image}}" width="100px" height="100px">
+                                                                        <input type="file" class="form-control" id="image" name="image"> {% else %}
+                                                                        <input type="file" class="form-control" id="image" name="image" data-validation="length mime" data-validation-length="min1" data-validation-allowing="jpg, png, gif" data-validation-error-msg-mime="You can only upload images" data-validation-error-msg-length="Please uplaod Image">                                                                        {% endif %}
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <tr>
+														<td colspan="2">
+															<input type="submit" class="btn btn-success btn-flat" value="Submit" id="btnsubmit">
+															<a href="/promocode" class="btn btn-danger btn-flat" id="btncancel">Cancel</a>
+														</td>
+													</tr> -->
+                                                </table>
+                                                <div class="box-footer">
+                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
+                                                    <a href="/promocode" class="btn btn-danger float-right">Cancel</a>
+                                                </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Row -->
+            </div>
+        </section>
+
+        {% endblock %} {% block Jscript %}
+        <script>
+            $(document).ready(function() {
+                var host = window.location.origin;
+            });
+            $.validate({
+                form: '#tableForm',
+                onSuccess: function($form) {
+                    $('#btnsubmit').val('Please wait ...')
+                        .attr('disabled', 'disabled');
+                    $('#btncancel').hide();
+                }
+            });
+        </script>
+        {% endblock %}

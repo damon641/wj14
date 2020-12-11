@@ -1,0 +1,235 @@
+{% extends "partition/layout.html" %} {% block body %}
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <section class="content-header">
+            <h1>Regular Tournament </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Regular Tournament</li>
+            </ol>
+        </section>
+        <!-- /Title -->
+        {% include "partition/notification.html" %}
+        <!-- Row -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-heading">
+                            <div class="pull-left">
+                                <h6 class="panel-title txt-dark">Regular Tournament</h6>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/regular-tournament/addRegularTournament"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Tournament</button></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <input type="hidden" id="gameType" name="gameType">
+                                        <table id="myTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Speed</th>
+                                                    <th>Fee</th>
+                                                    <th>Status</th>
+                                                    <th>Starts In</th>
+                                                    <th>Registration Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Speed</th>
+                                                    <th>Fee</th>
+                                                    <th>Status</th>
+                                                    <th>Starts In</th>
+                                                    <th>Registration Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% endblock %} {% block Jscript %}
+    <script>
+        $(document).ready(function() {
+            var host = window.location.origin;
+            $('#myTable').DataTable({
+                "oLanguage": {
+                    "sSearch": "Search By Name"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ordering": false,
+                "autoWidth": false,
+                "pageLength": 25,
+                "ajax": host + "/regular-tournament/getRegularTournament",
+                "columns": [{
+                        "data": "name"
+                    }, {
+                        "data": "game_speed"
+                    }, {
+                        "data": "fee"
+                    }, {
+                        "data": "status"
+                    }, {
+                        "data": "startsIn",
+
+                        render: function(data, type, row) {
+
+                            /* var d = new Date();
+  var n = d.getUTCDate();
+  var t = d.getUTCHours();
+  var m = d.getUTCMinutes(); */
+
+                            var date1 = new Date();
+
+                            let utcDate1 = new Date(
+                                date1.getUTCFullYear(),
+                                date1.getUTCMonth(),
+                                date1.getUTCDate(),
+                                date1.getUTCHours(),
+                                date1.getUTCMinutes(),
+                                date1.getUTCSeconds()
+                            );
+
+                            console.log("UTC ->", utcDate1);
+
+
+                            var date2 = new Date(row.tournament_date_time); // 10:09 to
+
+                            let utcDate2 = new Date(
+                                date2.getUTCFullYear(),
+                                date2.getUTCMonth(),
+                                date2.getUTCDate(),
+                                date2.getUTCHours(),
+                                date2.getUTCMinutes(),
+                                date2.getUTCSeconds()
+                            );
+                            console.log("tournament date utc", utcDate2);
+                            if (utcDate1 >= utcDate2) {
+                                return "-";
+                            } else {
+                                var one_day = 1000 * 60 * 60 * 24;
+                                // Convert both dates to milliseconds
+                                var date1_ms = utcDate1.getTime();
+                                var date2_ms = utcDate2.getTime();
+                                console.log(date1_ms);
+                                console.log(date2_ms);
+                                // Calculate the difference in milliseconds
+                                var difference_ms = date2_ms - date1_ms;
+                                //take out milliseconds
+                                difference_ms = difference_ms / 1000;
+                                var seconds = Math.floor(difference_ms % 60);
+                                difference_ms = difference_ms / 60;
+                                var minutess = Math.floor(difference_ms % 60);
+                                difference_ms = difference_ms / 60;
+                                var hours = Math.floor(difference_ms % 24);
+                                var days = Math.floor(difference_ms / 24);
+                                return startsIn = days + ' Days, ' + hours + ' Hours, ' + minutess + ' Minutes';
+                            }
+                        }
+                    },
+
+                    {
+                        "data": "status",
+                        render: function(data, type, row) {
+                            var current = new Date();
+                            var registration_start = new Date(row.register_from_date_time);
+                            var tournamnet_start = new Date(row.tournament_date_time);
+                            if (current < registration_start) {
+                                return 'Not Started Yet'
+                            } else if (tournamnet_start < current) {
+                                return 'Closed'
+                            } else if (registration_start <= current) {
+                                return 'Started'
+                            }
+
+                        },
+                    },
+
+                    {
+                        "data": "action",
+                        render: function(data, type, row) {
+                            return '<a href="/regular-tournament/editRegularTournament/' + row._id + '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button><a href="/regular-tournament/report/' + row._id + '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="Report"><i class="fa fa-file " aria-hidden="true"></i></button></a>'
+                        }
+                    }
+                ]
+            });
+
+            $(function() {
+                "use strict";
+
+                var SweetAlert = function() {};
+                SweetAlert.prototype.init = function() {
+                        //Parameter
+                        $('body').on('click', '.delete', function(e) {
+                            var id = $(this).attr('id');
+                            var thisElement = this;
+                            swal({
+                                title: "Are you sure?",
+                                text: "You will not be able to recover this Tournament!",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#e69a2a",
+                                confirmButtonText: "Yes, delete it!",
+                                cancelButtonText: "No, cancel plx!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm) {
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: host + "/regular-tournament/delete",
+                                        data: {
+                                            id: id
+                                        },
+                                        success: function(resultData) {
+                                            // alert(resultData)
+                                            console.log(resultData);
+                                            if (resultData == 'success') {
+                                                $(thisElement).parent().parent().hide(700);
+                                                swal("Deleted!", "Tournament status is cancel and this tournament is deleted.", "success");
+                                            } else {
+                                                alert("Something went wrong")
+                                            }
+                                            // alert("Save Complete")
+                                        }
+                                    });
+                                    swal("Deleted!", "Tournament Already Canceled.", "success");
+                                } else {
+                                    swal("Cancelled", "Tournament Not Deleted", "error");
+                                }
+                            });
+                            return false;
+                        });
+
+                    },
+                    $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+                $.SweetAlert.init();
+            });
+
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    {% endblock %}
