@@ -198,7 +198,7 @@ router.post('/cashGames/RakeCapEdit/:id', Sys.App.Middlewares.Backend.Authentica
 
 // currency
 
-router.get('/currency', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Controllers.currencyController.currency);
+router.get('/currency', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Controllers.CurrencyController.currency);
 
 //vatsal code start
 
