@@ -1,5 +1,5 @@
   var Sys = require('../../Boot/Sys');
-  const moment = require('moment');
+
   module.exports = {
 
       currency: async function(req, res) {
@@ -9,7 +9,8 @@
                   Agent: req.session.details,
                   error: req.flash("error"),
                   success: req.flash("success"),
-                  rackActive: 'active',
+                  setting: await Sys.App.Services.SettingsServices.getSettingsData()
+                  
               };
               return res.render('currency/currency', data);
           } catch (e) {
@@ -27,20 +28,19 @@
               if (search != '') {
                   let capital = search;
                   query = {
-                      gameId: {
+                      currencyCode: {
                           $regex: '.*' + search + '.*'
                       }
                   };
               } else {
                   query = {};
               }
-              let rack = await Sys.App.Services.RackServices.getRackCount(query);
-              //let rack = rackC.length;
-              let data = await Sys.App.Services.RackServices.getRackDatatable(query, length, start);
+              let currency = await Sys.App.Services.CurrencyServices.getCurrencyCount(query);
+              let data = await Sys.App.Services.CurrencyServices.getCurrencyDatatable(query, length, start);
               var obj = {
                   'draw': req.query.draw,
-                  'recordsTotal': rack,
-                  'recordsFiltered': rack,
+                  'recordsTotal': currency,
+                  'recordsFiltered': currency,
                   'data': data
               };
               res.send(obj);
@@ -49,4 +49,38 @@
               return new Error('Error', e);
           }
       },
+
+      getLiveCurrencyData: async function(req, res) {
+        try {
+            let resp = await Sys.App.Services.CurrencyServices.getLiveCurrencyData();
+            if (resp === false) {
+                req.flash('error','Error while refreshing currency');    
+            } else {
+                req.flash('success','Currency refreshed successfully');
+            }            
+            return res.redirect('currency');    
+        } catch (e) {
+            console.log("Error", e);
+            return new Error('Error', e);
+        }
+    },
+
+    updateCurrencySetting: async function(req, res) {
+        try {
+            let settings = await Sys.App.Services.SettingsServices.getSettingsData({_id: req.body.id});
+        if (settings) {
+            await Sys.App.Services.SettingsServices.updateSettingsData({
+            _id: req.body.id
+            }, {
+            ratePerChip: req.body.ratePerChip
+            });
+        }
+
+        req.flash('success','Currency update successfully');
+        return res.redirect('currency');    
+        } catch (e) {
+            console.log("Error", e);
+            return new Error('Error', e);
+        }
+    }
   }

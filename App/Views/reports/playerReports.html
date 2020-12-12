@@ -73,11 +73,14 @@
                                         <div id="playerNevigation" style="font-weight: bold;font-size: 18px" class="col-md-12"></div>
                                         {% endif %}
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label>Opening Balance: </label> <span id="opening_balance">0.00</span>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label>Closing Balance: </label> <span id="closing_balance">0.00</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Amount: </label> <span id="amount">0.00</span>
                                     </div>
                                     <div class="col-md-3">
                                         {# <label>Total Balance: </label> <span id="total_balance">0.00</span> #}
@@ -194,6 +197,12 @@
                                 $('#total_balance').html(parseFloat(json.total_balance).toFixed(2));
                             } else {
                                 $('#total_balance').html('0.00');
+                            }
+
+                            if (json.amount) {
+                                $('#amount').html(json.amount);
+                            } else {
+                                $('#amount').html('0.00');
                             }
 
                             $('#balance_div').show();

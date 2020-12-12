@@ -32,7 +32,7 @@
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label mb-10 col-sm-3" for="email">Player Type :</label>
+                                        <label class="control-label mb-10 col-sm-3" for="email">Player Type : </label>
                                         <div class="col-sm-8">
                                             <select name="playerType" id="playerType" class="form-control">
 												<option value=true selected>Cash</option>
@@ -56,11 +56,11 @@
                                                     {#
                                                     <th>Email</th> #}
                                                     <th>Chips</th>
-                                                    <!-- <th>Amount</th> -->
+                                                    <th>Amount</th>
                                                     <th>Agent Name</th>
                                                     <!-- <th>Status</th> -->
                                                     <!-- <th>is Bot</th> -->
-                                                    <!-- <th>Country</th> -->
+                                                    <th>Country</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -75,11 +75,11 @@
                                                     {#
                                                     <th>Email</th> #}
                                                     <th>Chips</th>
-                                                    <!-- <th>Amount</th> -->
+                                                    <th>Amount</th>
                                                     <th>Agent Name</th>
                                                     <!-- <th>Status</th> -->
                                                     <!-- <th>is Bot</th> -->
-                                                    <!-- <th>Country</th> -->
+                                                    <th>Country</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </tfoot>
@@ -215,10 +215,34 @@
                             .toFixed(2)) + '</span>';
 
                     }
-                }, {
+                },{
+                    "data": "amount",
+                    render: function(data, type, row) {
+                        if (row.currency !== undefined) {
+                            var value = 0;
+                            "{% for item in currency %}"
+                            var curr = "{{item.currencyCode}}";
+                            if (curr == row.currency) {
+                                value = "{{ item.usdPerUnit }}";
+                            }
+                            "{% endfor %}"
+                            return '<span id="' + row._id + '">' + parseFloat(parseFloat(row.chips)
+                            * parseFloat("{{setting.ratePerChip}}") * parseFloat(value)).toFixed(2) + ' ' + row.currency +'</span>';
+                        } else {
+                            return '<span id="' + row._id + '">' + parseFloat(parseFloat(row.chips)
+                            * parseFloat("{{setting.ratePerChip}}")).toFixed(2) + ' USD</span>';    
+                        }
+                    }
+                },
+                {
                     "data": "agentName"
                 },
-
+                {
+                    "data": "country",
+                    render: function(data, type, row) {
+                        return row.country || '';
+                    }
+                },
                 {
                     "data": "action",
                     render: function(data, type, row) {

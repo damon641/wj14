@@ -7,7 +7,7 @@ module.exports = {
         poolSize: 10, // Maintain up to 10 socket connections
         // If not connected, return errors immediately rather than waiting for reconnect
         bufferMaxEntries: 0,
-        //replicaSet: 'rs0',
+        replicaSet: 'rs0',
         useNewUrlParser: true,
         //poolSize: 2,
         promiseLibrary: global.Promise
@@ -18,9 +18,9 @@ module.exports = {
         mongo: {
             host: 'localhost',
             port: 27017,
-            user: 'root',
+            user: '',
             password: '',
-            database: 'yufa-poker'
+            database: 'yufaPoker'
         }
 
     },

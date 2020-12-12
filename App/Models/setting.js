@@ -51,6 +51,10 @@ const SettingSchema = new Schema({
 				type: 'number',
 				default: 0
 			},
+			ratePerChip: {
+				type: 'string',
+				default: '0'
+			}
 			
 	},{ collection: 'setting' });
 mongoose.model('setting', SettingSchema);

@@ -22,14 +22,14 @@
                     <div class="panel panel-default card-view">
                         <div class="panel-heading">
                             <div class="pull-left">
-                                <h5 class="panel-title txt-dark">10 USD per Chip
+                                <h5 class="panel-title txt-dark">{{setting.ratePerChip}} USD per Chip
                                     <a data-toggle="modal" data-target="#responsive-modal"><button type="button"
 											class="btn btn-primary btn-md"><i class="fa fa-edit"> </i>
 											Change</button></a>
                                 </h5>
                             </div>
                             <div class="pull-right">
-                                <a href="#"><button type="button" class="btn btn-primary btn-md"><i
+                                <a href="/getLiveCurrencyData"><button type="button" class="btn btn-primary btn-md"><i
 											class="fa fa-refresh"></i> Refresh Currency</button></a>
                             </div>
                             <div class="clearfix"></div>
@@ -41,8 +41,8 @@
                                         <table id="myTable" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Country Code</th>
-                                                    <th>Amount per chips</th>
+                                                    <th>Currency Code</th>
+                                                    <th>Conversation Rate</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -50,7 +50,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>Country Code</th>
-                                                    <th>Amount per chips</th>
+                                                    <th>Conversation Rate</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -71,30 +71,29 @@
         <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
-                    <form method="POST" name="adduser" action="#">
+                    <form method="POST" action="/updateCurrencySetting">
+                        <input type="hidden" name="id" value="{{setting.id}}">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h5 class="modal-title">Change Currency</h5>
+                            <h5 class="modal-title">Change rate per chip in USD</h5>
                         </div>
                         <div class="modal-body">
                             <div id="chipsAdd"> </div>
                             <div class="form-group">
-                                <label for="recipient-name" class="control-label mb-10">Amount Per Chips</label>
+                                <label for="recipient-name" class="control-label mb-10">Amount Per Chip in USD</label>
 
                                 <div class='input-group'>
-                                    <input type="text" name="chips" class="form-control" id="action_chips" Value="10" required>
+                                    <input type="text" name="ratePerChip" class="form-control" value="{{setting.ratePerChip}}" required>
                                     <span class="input-group-addon">
 										USD
                                     </span>
                                 </div>
-                                <!-- <span class="help-block form-error" id="displayError" style="display: none;">The input
-									value was not a correct number</span> -->
                             </div>
 
                         </div>
                         <div class="modal-footer">
                             <input type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-danger" value="Cancel">
-                            <input type="button" name="add" action="add" class="btn btn-success" value="Change">
+                            <input type="submit" name="add" action="add" class="btn btn-success" value="Change">
                         </div>
                     </form>
                 </div>
@@ -119,29 +118,14 @@
             "ordering": false,
             "autoWidth": false,
             "pageLength": 25,
-            "ajax": host + "/rack/getRackData",
+            "ajax": host + "/getCurrencyData",
             "columns": [
                 // { "data": "_id" },
                 {
-                    "data": "rackAmount"
+                    "data": "currencyCode"
                 }, {
-                    "data": "gameId",
-                    render: function(data, type, row) {
-                        return '<a href="/game/allGameHistory/' + row.gameId + '">' + row.gameId +
-                            '</a>'
-                    }
-                }, {
-                    "data": "roomId"
-                }, {
-                    "data": "createdAt"
-                },
-                /*{
-                	"data": "action",
-                	render : function(data, type, row){
-                		return '<a href="/userEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
-
-                	}
-                }*/
+                    "data": "usdPerUnit"
+                }
             ]
         });
 

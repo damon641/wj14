@@ -388,15 +388,33 @@ module.exports = {
     if(playerData[0].thirdData.length){
       playerData[0].thirdData.unshift({createdAt:playerData[0].thirdData[0].createdAt ,sessionId:"-",transactionNumber:"-",chips:"0",afterBalance:playerData[0].thirdData.length ? playerData[0].firstData[0].firstRecord.previousBalance || playerData[0].firstData[0].firstRecord.beforeBalance : 0,type:"Opening",remark:"Opening Balance"})
     }
+    var closingBalance = playerData[0].thirdData.length ? playerData[0].firstData[0].lastRecords.afterBalance : 0;
+    var amount = closingBalance;
+    if (players.currency) {
+      var currency = await Sys.App.Services.CurrencyServices.getByData({'currencyCode': players.currency});
+      var setting = await Sys.App.Services.SettingsServices.getSettingsData({}); 
+      if (setting.ratePerChip) {
+        if (currency[0].usdPerUnit) {
+          amount = amount * setting.ratePerChip * currency[0].usdPerUnit;
+        } else {
+          amount = amount * setting.ratePerChip;
+        }
+      }
+      amount = amount + ' ' + players.currency;
+    } else {
+      amount = amount + ' USD';
+    }
+
       var obj = {
         'App': Sys.Config.App.details, Agent: req.session.details,'draw': req.query.draw,
         'recordsTotal':playerData[0].thirdData.length ? playerData[0].secondData[0].count : 0,
         'recordsFiltered': playerData[0].thirdData.length ? playerData[0].secondData[0].count : 0,
         'data': playerData[0].thirdData,
         'openingData': playerData[0].thirdData.length ? playerData[0].firstData[0].firstRecord.previousBalance || playerData[0].firstData[0].firstRecord.beforeBalance : 0,
-        'closingData': playerData[0].thirdData.length ? playerData[0].firstData[0].lastRecords.afterBalance : 0,
+        'closingData': closingBalance,
         'id': id,
-        'total_balance': total_balance
+        'total_balance': total_balance,
+        'amount': amount
       };
       res.send(obj);
     } catch (e) {

@@ -143,6 +143,14 @@ const PlayerSchema = new Schema({
 		type: String,
 		default: null
 	},
+	country: {
+		type: String,
+		default: null
+	},
+	currency: {
+		type: String,
+		default: 'USD'
+	},
 	loginToken: {
 		type: 'string',
 		default: null

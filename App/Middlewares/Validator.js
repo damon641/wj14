@@ -159,7 +159,9 @@ module.exports = {
            gender: Joi.string().required(),
            bot: Joi.string().required(),
            mobile: Joi.number().required(),
-           accountNumber: Joi.string().alphanum()
+           accountNumber: Joi.string().alphanum(),
+           country: Joi.string().required(),
+           currency: Joi.string().required()
         });
 
         const ret = Joi.validate(req.body, rulesSchema, {
@@ -191,7 +193,9 @@ module.exports = {
            gender: Joi.string().required(),
            bot: Joi.string().required(),
            mobile: Joi.number().required(),
-           accountNumber: Joi.string().alphanum()
+           accountNumber: Joi.string().alphanum(),
+           country: Joi.string().required(),
+           currency: Joi.string().required()
         });
 
         const ret = Joi.validate(req.body, rulesSchema, {
