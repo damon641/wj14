@@ -67,13 +67,7 @@
                 </ul>
             </li>
             <li class="treeview {{AgentMenu}}">
-                <a href="#">
-                    <i class="fa fa-user-secret" style="color: #28a745"></i>
-                    <span>Agent Management</span>
-                    <span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
-                </a>
+
 
                 <ul class="treeview-menu" style="margin-left: 20px;">
                     <li class=" {{agentActive}}">
@@ -232,7 +226,7 @@
             </li>
 
             <li class="nav-item {{maintenanceActive}}">
-                <a href="/maintenance" class="nav-link">
+                <a href="/blockedIp" class="nav-link">
                     <i class="fa fa-map-signs nav-icon" style="color: #dc3545"></i><span> Maintenance</span>
                 </a>
             </li>
@@ -294,7 +288,7 @@
             </li>
 
             <li class="{{promocodeActive}}">
-                <a href="/promocode">
+                <a href="/deposit-receipt">
                     <i class="fa fa-barcode mr-20" style="color: #ffffff"></i>
                     <span> Promocode</span>
                 </a>
@@ -334,10 +328,10 @@
                 <a href="/player">
                     <i class="fa fa-users mr-20" style="color: #7bf84a"></i>
                     <span>
-							Player Master
-							<!-- {% if countObject.latestPlayerCount != 0  %}
-								<i class="fa fa-bell-o" style="font-size: 20px; float: right; color: red">
-									<span class="badge badge-danger">{{countObject.latestPlayerCount}}</span>
+                                Player Master
+                                <!-- {% if countObject.latestPlayerCount != 0  %}
+                                    <i class="fa fa-bell-o" style="font-size: 20px; float: right; color: red">
+                                        <span class="badge badge-danger">{{countObject.latestPlayerCount}}</span>
                     </i>
 
 
@@ -350,8 +344,8 @@
                     <i class="fa fa-user-secret" style="color: #f84a4a"></i>
                     <span>Agent Management</span>
                     <span class="pull-right-container">
-									<i class="fa fa-angle-left pull-right"></i>
-								</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                 </a>
 
                 <ul class="treeview-menu">
@@ -365,16 +359,16 @@
                         <a href="/my-rack-history">
                             <i class="fa fa-circle" style="color: #f84a4a;font-size: 0.8em"></i> My Rake
                             <span class="pull-right-container">
-											<i class="pull-right"></i>
-										</span>
+                                            <i class="pull-right"></i>
+                                        </span>
                         </a>
                     </li>
                     <li class=" {{myChipsTransactionsActive}}">
                         <a href="/my-chips-transactions">
                             <i class="fa fa-circle" style="color: #f84a4a;font-size: 0.8em"></i> My Chips History
                             <span class="pull-right-container">
-											<i class="pull-right"></i>
-										</span>
+                                            <i class="pull-right"></i>
+                                        </span>
                         </a>
                     </li>
                 </ul>
@@ -386,32 +380,32 @@
                     <i class="fa fa-file" style="color: #007bff"></i>
                     <span>Reports</span>
                     <span class="pull-right-container">
-									<i class="fa fa-angle-left pull-right"></i>
-								</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class=" {{selfactive}}">
                         <a href="/selfReports">
                             <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Self Report
                             <span class="pull-right-container">
-											<i class="pull-right"></i>
-										</span>
+                                            <i class="pull-right"></i>
+                                        </span>
                         </a>
                     </li>
                     <li class=" {{agentactive}}">
                         <a href="/agentReports">
                             <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Agents Report
                             <span class="pull-right-container">
-											<i class="pull-right"></i>
-										</span>
+                                            <i class="pull-right"></i>
+                                        </span>
                         </a>
                     </li>
                     <li class=" {{playeractive}}">
                         <a href="/playerReports">
                             <i class="fa fa-circle" style="color: #007bff;font-size: 0.8em"></i> Player Report
                             <span class="pull-right-container">
-											<i class="pull-right"></i>
-										</span>
+                                            <i class="pull-right"></i>
+                                        </span>
                         </a>
                     </li>
                 </ul>
@@ -427,8 +421,8 @@
                 <a href="/my-chips-transactions">
                     <i class="fa fa-microchip" style="color: #ff0505"></i> My Chips History
                     <span class="pull-right-container">
-									<i class="pull-right"></i>
-								</span>
+                                        <i class="pull-right"></i>
+                                    </span>
                 </a>
             </li>
             {% if session.level != 100%}
@@ -496,7 +490,8 @@
                         </a>
                     </li>
                 </ul>
-            </li> #} {% endif %} {% endif %}
+            </li>
+            #} {% endif %} {% endif %}
 
         </ul>
     </section>

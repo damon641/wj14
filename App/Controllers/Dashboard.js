@@ -61,6 +61,13 @@ module.exports = {
             let getTotalPlayer = await Sys.App.Services.PlayerServices.getPlayerCount();
             let getTotalOnlinePlayers = Sys.Io.engine.clientsCount;
             let getTopPlayers = await Sys.App.Services.PlayerServices.getLimitedPlayerWithSort({}, 8, 'chips', -1);
+
+            let start = parseInt(req.query.start);
+            let length = parseInt(req.query.length);
+            // let search = req.query.search.value;
+
+            let tournament = await Sys.App.Services.TournamentServices.getTournamentCount(query);
+            let tournamentdata = await Sys.App.Services.TournamentServices.getTouDatatable(query, length, start);
             //console.log("total player",getTotalPlayer.length);
             /*var platformdataObj={};
             if(getTotalPlayer != 0){
@@ -133,6 +140,14 @@ module.exports = {
                 chartEndDate: endDate,
                 totalPlayingPly: totalPlayingPly,
                 totalRunningGame: runningRoom.length,
+
+                cashTexasActive: 'active',
+                type: 'normal',
+                tableType: 'req.params.type',
+
+                recordsFiltered: tournament,
+                data: tournamentdata,
+                setting: await Sys.App.Services.SettingsServices.getSettingsData()
             };
             return res.render('templates/dashboard', data);
         } catch (e) {
@@ -395,4 +410,21 @@ module.exports = {
             console.log(err);
         }
     },
+    updateDashboardSettings: async function(req, res) {
+        try {
+            let settings = await Sys.App.Services.SettingsServices.getSettingsData({ _id: req.body.id });
+            var dataToUpdate = {};
+            dataToUpdate[req.body.type] = req.body.value;
+            if (settings) {
+                await Sys.App.Services.SettingsServices.updateSettingsData({
+                    _id: req.body.id
+                }, dataToUpdate);
+            }
+
+            return res.json(true);
+        } catch (e) {
+            console.log("Error", e);
+            return new Error('Error', e);
+        }
+    }
 }

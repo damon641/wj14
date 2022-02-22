@@ -2,116 +2,124 @@
 
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container nav_drop_menu" id="Tournaments">
+    <ul>
+        <li class="text_container">
+            <a href="/regular-tournament">
+                <div class="name">Regular Tournament</div>
+            </a>
+        </li>
+        <li class="text_container">
+            <a href="/sng-tournament">
+                <div class="name">Sit & Go Tournament</div>
+            </a>
 
-        <!-- Breadcrumb -->
-        <section class="content-header">
-            <h1>Sit & Go Price Pool</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">sit & Go pricePool</li>
-            </ol>
-        </section>
-        <!-- /Breadcrumb -->
+        </li>
+        <li class="text_container">
+            <a href="/price-pool/regulartournament">
+                <div class="name">Payout Chart Regular</div>
+            </a>
+        </li>
+        <li class="text_container">
+            <a class="active" href="/price-pool/sngtournament">
+                <div class="name">Payout Chart SNG</div>
+            </a>
 
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Sit & Go Price pool</h6>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        {% if pricepool %}
-                                        <form method="POST" action="/price-pool/sngTournament/update" class="form-horizontal">
-                                            {% else %}
-                                            <form method="POST" action="/price-pool/sngTournament/add" class="form-horizontal">
-                                                {% endif %}
-                                                <table border="0" class="table display  pb-30">
-                                                    <div class="col-sm-12">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <input type="hidden" name="id" value="{{pricepool.id}}">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="winner">Winner's Percentage:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" id="winner" placeholder="Enter Winner's Percentage" required data-validation="number" data-validation-allowing="float" name="winner" value="{{pricepool.winner}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="firstRunnerUp">First RunnerUp's Percentage:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" id="firstRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="firstRunnerUp" value="{{pricepool.firstRunnerUp}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="secondRunnerUp">Second RunnerUp's Percentage:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" id="secondRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="secondRunnerUp" value="{{pricepool.secondRunnerUp}}">
-                                                                    </div>
-                                                                </div>
+        </li>
+    </ul>
+</div>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Payout Chart</h3>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if pricepool %}
+                            <form method="POST" action="/price-pool/sngTournament/update" class="form-horizontal">
+                                {% else %}
+                                <form method="POST" action="/price-pool/sngTournament/add" class="form-horizontal">
+                                    {% endif %}
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
+                                                <div class="panel-wrapper">
+                                                    <div class="panel-body">
+                                                        <input type="hidden" name="id" value="{{pricepool.id}}">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="winner">Winner's Percentage:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="winner" placeholder="Enter Winner's Percentage" required data-validation="number" data-validation-allowing="float" name="winner" value="{{pricepool.winner}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="firstRunnerUp">First RunnerUp's Percentage:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="firstRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="firstRunnerUp" value="{{pricepool.firstRunnerUp}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="secondRunnerUp">Second RunnerUp's
+                                                                Percentage:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="secondRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="secondRunnerUp" value="{{pricepool.secondRunnerUp}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <input type="hidden" name="id" value="{{pricepool.id}}">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="fr_winner">Freeroll Winner's Amount:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="fr_winner" placeholder="Enter Winner's Percentage" required data-validation="number" data-validation-allowing="float" name="fr_winner" value="{{pricepool.fr_winner}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="fr_firstRunnerUp">Freeroll First RunnerUp's
+                                                                Amount:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="fr_firstRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="fr_firstRunnerUp" value="{{pricepool.fr_firstRunnerUp}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="fr_secondRunnerUp">Freeroll Second RunnerUp's
+                                                                Amount:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="fr_secondRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="fr_secondRunnerUp" value="{{pricepool.fr_secondRunnerUp}}">
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-sm-12">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <input type="hidden" name="id" value="{{pricepool.id}}">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="fr_winner">Freeroll Winner's Amount:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" id="fr_winner" placeholder="Enter Winner's Percentage" required data-validation="number" data-validation-allowing="float" name="fr_winner" value="{{pricepool.fr_winner}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="fr_firstRunnerUp">Freeroll First RunnerUp's Amount:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" id="fr_firstRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="fr_firstRunnerUp" value="{{pricepool.fr_firstRunnerUp}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="fr_secondRunnerUp">Freeroll Second RunnerUp's Amount:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" id="fr_secondRunnerUp" placeholder="Enter Rake Percentage" required data-validation="number" data-validation-allowing="float" name="fr_secondRunnerUp" value="{{pricepool.fr_secondRunnerUp}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- <tr>
-													<td colspan="2">
-														<input type="submit" class="btn btn-success btn-flat" value="Submit">
-														<a href="/settings" class="btn btn-info btn-lg">Cancel</a>
-													</td>
-												</tr> -->
-                                                </table>
-                                                <div class="box-footer">
-                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
-                                                    <!-- <a href="/price-pool/regularTournament" class="btn btn-danger float-right">Cancel</a> -->
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/price-pool/sngtournament" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn" value="Submit">
+                                                </div>
+                                            </div>
+                                        </center>
                                     </div>
-                                </div>
-                            </div>
+                                    <!-- <div class="box-footer">
+                                        <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
+                                        <a href="/price-pool/regularTournament" class="btn btn-danger float-right">Cancel</a> 
+                                    </div>-->
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- /Row -->
+        </div>
     </div>
+
 </div>
 
 {% endblock %} {% block Jscript %}
@@ -128,9 +136,11 @@
             var firstRunnerUp = $("#firstRunnerUp").val();
             var secondRunnerUp = $("#secondRunnerUp").val();
 
-            if (roundUp((parseFloat(winner) + parseFloat(firstRunnerUp) + parseFloat(secondRunnerUp)), 1) != 100) {
+            if (roundUp((parseFloat(winner) + parseFloat(firstRunnerUp) + parseFloat(secondRunnerUp)),
+                    1) != 100) {
                 e.preventDefault();
-                console.log("percentage", (parseFloat(winner) + parseFloat(firstRunnerUp) + parseFloat(secondRunnerUp)))
+                console.log("percentage", (parseFloat(winner) + parseFloat(firstRunnerUp) + parseFloat(
+                    secondRunnerUp)))
                 alert("Percentage Total must be 100%");
                 return false;
 

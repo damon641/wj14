@@ -1,241 +1,234 @@
 {% extends "partition/layout.html" %} {% block body %}
 
+<div class="container nav_drop_menu" id="Games">
+    <ul>
+        <li class="text_container">
+            <a href="/holdem">
+                <div class="name">Hold'em Table</div>
+            </a>
+        </li>
+        <li class="text_container">
+            <a href="/omaha">
+                <div class="name">Omaha Table</div>
+            </a>
+
+        </li>
+        <li class="text_container">
+            <a class="active" href="/table/add">
+                <div class="name"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Table</div>
+            </a>
+        </li>
+    </ul>
+</div>
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container">
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Poker Table</h1>
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="/table"><span> Poker Table </a></li>
-                {% if room %}
-                <li class="active"><span>Edit Poker Table</span></li>
-                {% else %}
-                <li class="active"><span>Add Poker Table</span></li>
-                {% endif %}
-            </ol>
-            <!-- /Breadcrumb -->
-        </section>
-        {% include "partition/notification.html" %}
-        <!-- /Title -->
-
-        <section class="content">
-            <!-- Row -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                {% if room %}
-                                <h6 class="panel-title txt-dark">Edit Poker Table</h6>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            {% if room %}
+                            <h3 class="panel-title">Edit Poker Table</h3>
+                            {% else %}
+                            <h3 class="panel-title">Add Poker Table</h3>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if room %}
+                            <form method="POST" action="/regular-tournament/postEditTexasRegular/{{room.id}}" class="form-horizontal" id="tableForm">
                                 {% else %}
-                                <h6 class="panel-title txt-dark">Add Poker Table</h6>
-                                {% endif %}
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        {% if room %}
-                                        <form method="POST" action="/regular-tournament/postEditTexasRegular/{{room.id}}" class="form-horizontal" id="tableForm">
-                                            {% else %}
-                                            <form method="POST" action="/table/add" class="form-horizontal" id="tableForm">
-                                                {% endif %}
-                                                <table border="0" class="table display pb-30">
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="name">Name:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" data-validation="length" data-validation-length="" data-validation-error-msg="TableName is required" data-validation-allowing=" " placeholder="Name" name="name" type="text" id="name" value="{{room.name}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="minPlayers">Minimum Players:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input type="text" class="form-control" name="minPlayers" data-validation="number" placeholder="Minimum Players" value="2" readonly>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="maxPlayers">Maximum Players:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select required="required" class="form-control" data-validation="number" placeholder="Maximim Players" name="maxPlayers">
-																			{% for i in range(2, maxPlayers+1) %}
-																			<option value="{{ i }}" {% if item == room.maxPlayers %} selected {% endif %}  >{{ i }}</option>
-																			{% endfor %}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="tablePrivacy">Table Privacy:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="tablePrivacy" id="tablePrivacy">
-																			<option value="public" {{ "selected" if room.tablePrivacy=='public' else "" }} >Public</option>
-																			<option value="private" {{ "selected" if room.tablePrivacy=='private' else "" }} >Private</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
+                                <form method="POST" action="/table/add" class="form-horizontal" id="tableForm">
+                                    {% endif %}
 
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="isGPSRestriction">GPS Restriction:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="isGPSRestriction" id="isGPSRestriction">
-																			<option value="false" {{ "selected" if room.isGPSRestriction=='false' else "" }} >Inactive</option>
-																			<option value="true" {{ "selected" if room.isGPSRestriction=='true' else "" }} >Active</option>
-																			
-																		</select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="isIPAddressRestriction">IP Address Restriction:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="isIPAddressRestriction" id="isIPAddressRestriction">
-																			<option value="false" {{ "selected" if room.isIPAddressRestriction=='false' else "" }} >Inactive</option>
-																			<option value="true" {{ "selected" if room.isIPAddressRestriction=='true' else "" }} >Active</option>
-																			
-																		</select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="tableType">Table Type:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="tableType" id="tableType">
-																			<option value="texas" {{ "selected" if room.tableType=='texas' else "" }} >Texas</option>
-																			<option value="omaha" {{ "selected" if room.tableType=='omaha' else "" }} >Omaha</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group" {%if(room.tablePrivacy=='private' ) %} style="display: block;" {% else %} style="display: none;" {% endif %} id="password_div">
-                                                                    <label class="control-label mb-10 col-sm-4" for="tablePassword">Password:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input type="password" class="form-control" name="tablePassword" id="tablePassword" placeholder="Table Password" value="{{room.tablePassword}}">
-                                                                    </div>
-                                                                </div>
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
+                                                <div class="panel-wrapper">
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="name">Name:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" data-validation="length" data-validation-length="" data-validation-error-msg="TableName is required" data-validation-allowing=" " placeholder="Name" name="name" type="text" id="name" value="{{room.name}}">
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="email">Speed:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="gameSpeed" id="type">
-																			<option value="regular" {{ "selected" if room.type=='regular' else "" }} >Regular</option>
-																			<option value="fast" {{ "selected" if room.type=='fast' else "" }} >Fast</option>
-																			<option value="slow" {{ "selected" if room.type=='slow' else "" }} >Slow</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- <div class="form-group">
-																	<label class="control-label mb-10 col-sm-4" for="turnTime">Turn Time (In Seconds):</label>
-																	<div class="col-sm-8">
-																		<input required="required" class="form-control" data-validation="length" 
-																		data-validation-length="" {{editDisable}}
-																		data-validation-error-msg="Turn time is required" data-validation-allowing=" " Min="1" placeholder="Turn Time"  name="turnTime" type="number" id="turnTime" value="{{room.turnTime}}">
-																	</div>
-																	<div class="col-sm-1">
-																	<button type="button" {{editDisable}} onclick="showValue(15)">15</button>
-																	</div>
-																	<div class="col-sm-1">
-																	<button type="button" {{editDisable}} onclick="showValue(30)">30</button>
-																	</div>
-																</div> -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="email">Limit:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="limit" id="limit">
-																			<option value="limit" {{ "selected" if room.isLimitGame=='limit' else "" }} >Limit</option>
-																			<option value="no_limit" {{ "selected" if room.isLimitGame=='no_limit' else "" }} >No Limit</option>
-																			<option value="pot_limit" {{ "selected" if room.isLimitGame=='pot_limit' else "" }} >Pot Limit</option>
-																			<option value="Hi-Lo" {{ "selected" if room.isLimitGame=='Hi-Lo' else "" }} style="display: none;" >Hi-Lo No Limit</option>
-																			<option value="Hi-Lo-pot_limit" {{ "selected" if room.isLimitGame=='Hi-Lo-pot_limit' else "" }}  style="display: none;">Hi-Lo Pot Limit</option>
-																			<option value="Hi-Lo-limit" {{ "selected" if room.isLimitGame=='Hi-Lo-limit' else "" }} style="display: none;">Hi-Lo Limit</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Stacks:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select required="required" class="form-control" id="" name="stacks">
-																			{% for item in stacks %}
-																			<option value="{{item.id}}" {{ "selected" if  item.minStack == room.smallBlind }}>{{ item.minStack }}/{{ item.maxStack }}</option>
-																			{% endfor %}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="minBuyIn">MinBuyIn:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" data-validation="length" data-validation-length="" data-validation-error-msg="MinBuyIn is required" data-validation-allowing=" " placeholder="MinBuyIn" name="minBuyIn" type="number" id="minBuyIn" value="{{room.minBuyIn}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="timeBank">Extra Timer Bank [Seconds]:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" min="0" data-validation="length" data-validation-length="" data-validation-error-msg="Timer Bank is required" data-validation-allowing=" " placeholder="Timer Bank" name="timeBank" type="number" id="timeBank"
-                                                                            value="{{room.timerBank}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="isCashGame">GameType:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="isCashGame" id="type">
-																			<option value="true" {{ "selected" if room.isCashGame== true else "" }} >Cash</option>
-																			<option value="false" {{ "selected" if room.isCashGame== false else "" }} >Chips</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group" {%if(room.isGPSRestriction=='true' ) %} style="display: block;" {% else %} style="display: none;" {% endif %} id="radiousPoint_div">
-                                                                    <label class="control-label mb-10 col-sm-4" for="radiousPoint">Radious Point(Meters):</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input type="number" class="form-control" id="radiousPoint" data-validation="number" data-validation-allowing="float" placeholder="Enter radious in meters " name="radiousPoint">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- <div class="form-group">
-																	<label class="control-label mb-10 col-sm-4" for="username">Status</label>
-																	<div class="col-sm-8">
-																		<select class="form-control" name="status" id="status">
-																		<option value="active" {{ "selected" if room.status=='active' else "" }} >Active</option>
-																		<option value="inactive" {{ "selected" if room.status=='inactive' else "" }} >Inactive</option>
-																	</select>
-																	</div>
-																</div> -->
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="minPlayers">Minimum Players:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" name="minPlayers" data-validation="number" placeholder="Minimum Players" value="2" readonly>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="maxPlayers">Maximum Players:</label>
+                                                            <div class="col-sm-12">
+                                                                <select required="required" class="form-control" data-validation="number" placeholder="Maximim Players" name="maxPlayers">
+                                                                {% for i in range(2, maxPlayers+1) %}
+                                                                <option value="{{ i }}" {% if item == room.maxPlayers %} selected {% endif %}  >{{ i }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="tablePrivacy">Table Privacy:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="tablePrivacy" id="tablePrivacy">
+                                                                <option value="public" {{ "selected" if room.tablePrivacy=='public' else "" }} >Public</option>
+                                                                <option value="private" {{ "selected" if room.tablePrivacy=='private' else "" }} >Private</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="isGPSRestriction">GPS Restriction:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="isGPSRestriction" id="isGPSRestriction">
+                                                                <option value="false" {{ "selected" if room.isGPSRestriction=='false' else "" }} >Inactive</option>
+                                                                <option value="true" {{ "selected" if room.isGPSRestriction=='true' else "" }} >Active</option>
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="isIPAddressRestriction">IP Address Restriction:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="isIPAddressRestriction" id="isIPAddressRestriction">
+                                                                <option value="false" {{ "selected" if room.isIPAddressRestriction=='false' else "" }} >Inactive</option>
+                                                                <option value="true" {{ "selected" if room.isIPAddressRestriction=='true' else "" }} >Active</option>
+                                                                
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="tableType">Table Type:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="tableType" id="tableType">
+                                                                <option value="texas" {{ "selected" if room.tableType=='texas' else "" }} >Texas</option>
+                                                                <option value="omaha" {{ "selected" if room.tableType=='omaha' else "" }} >Omaha</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" {%if(room.tablePrivacy=='private' ) %} style="display: block;" {% else %} style="display: none;" {% endif %} id="password_div">
+                                                            <label class="control-label mb-10 col-sm-12" for="tablePassword">Password:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="password" class="form-control" name="tablePassword" id="tablePassword" placeholder="Table Password" value="{{room.tablePassword}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="email">Speed:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="gameSpeed" id="type">
+                                                                <option value="regular" {{ "selected" if room.type=='regular' else "" }} >Regular</option>
+                                                                <option value="fast" {{ "selected" if room.type=='fast' else "" }} >Fast</option>
+                                                                <option value="slow" {{ "selected" if room.type=='slow' else "" }} >Slow</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="form-group">
+                                                        <label class="control-label mb-10 col-sm-12" for="turnTime">Turn Time (In Seconds):</label>
+                                                        <div class="col-sm-12">
+                                                            <input required="required" class="form-control" data-validation="length" 
+                                                            data-validation-length="" {{editDisable}}
+                                                            data-validation-error-msg="Turn time is required" data-validation-allowing=" " Min="1" placeholder="Turn Time"  name="turnTime" type="number" id="turnTime" value="{{room.turnTime}}">
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                        <button type="button" {{editDisable}} onclick="showValue(15)">15</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                        <button type="button" {{editDisable}} onclick="showValue(30)">30</button>
+                                                        </div>
+                                                    </div> -->
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="email">Limit:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="limit" id="limit">
+                                                                <option value="limit" {{ "selected" if room.isLimitGame=='limit' else "" }} >Limit</option>
+                                                                <option value="no_limit" {{ "selected" if room.isLimitGame=='no_limit' else "" }} >No Limit</option>
+                                                                <option value="pot_limit" {{ "selected" if room.isLimitGame=='pot_limit' else "" }} >Pot Limit</option>
+                                                                <option value="Hi-Lo" {{ "selected" if room.isLimitGame=='Hi-Lo' else "" }} style="display: none;" >Hi-Lo No Limit</option>
+                                                                <option value="Hi-Lo-pot_limit" {{ "selected" if room.isLimitGame=='Hi-Lo-pot_limit' else "" }}  style="display: none;">Hi-Lo Pot Limit</option>
+                                                                <option value="Hi-Lo-limit" {{ "selected" if room.isLimitGame=='Hi-Lo-limit' else "" }} style="display: none;">Hi-Lo Limit</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Stacks:</label>
+                                                            <div class="col-sm-12">
+                                                                <select required="required" class="form-control" id="" name="stacks">
+                                                                {% for item in stacks %}
+                                                                <option value="{{item.id}}" {{ "selected" if  item.minStack == room.smallBlind }}>{{ item.minStack }}/{{ item.maxStack }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="minBuyIn">MinBuyIn:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" data-validation="length" data-validation-length="" data-validation-error-msg="MinBuyIn is required" data-validation-allowing=" " placeholder="MinBuyIn" name="minBuyIn" type="number" id="minBuyIn" value="{{room.minBuyIn}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="timeBank">Extra Timer Bank [Seconds]:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" min="0" data-validation="length" data-validation-length="" data-validation-error-msg="Timer Bank is required" data-validation-allowing=" " placeholder="Timer Bank" name="timeBank" type="number" id="timeBank"
+                                                                    value="{{room.timerBank}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="isCashGame">GameType:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="isCashGame" id="type">
+                                                                <option value="true" {{ "selected" if room.isCashGame== true else "" }} >Cash</option>
+                                                                <option value="false" {{ "selected" if room.isCashGame== false else "" }} >Chips</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" {%if(room.isGPSRestriction=='true' ) %} style="display: block;" {% else %} style="display: none;" {% endif %} id="radiousPoint_div">
+                                                            <label class="control-label mb-10 col-sm-12" for="radiousPoint">Radious Point(Meters):</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="number" class="form-control" id="radiousPoint" data-validation="number" data-validation-allowing="float" placeholder="Enter radious in meters " name="radiousPoint">
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="form-group">
+                                                        <label class="control-label mb-10 col-sm-12" for="username">Status</label>
+                                                        <div class="col-sm-12">
+                                                            <select class="form-control" name="status" id="status">
+                                                            <option value="active" {{ "selected" if room.status=='active' else "" }} >Active</option>
+                                                            <option value="inactive" {{ "selected" if room.status=='inactive' else "" }} >Inactive</option>
+                                                        </select>
+                                                        </div>
+                                                    </div> -->
                                                     </div>
-                                                    <!-- <tr>
-														<td colspan="2">
-															<input type="submit" class="btn btn-success btn-flat" value="Submit" id="btnsubmit">
-															<a href="/table" class="btn btn-danger btn-flat" id="btncancel">Cancel</a>
-														</td>
-													</tr> -->
-                                                </table>
-                                                <div class="box-footer">
-                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
-                                                    <a href="/table" class="btn btn-danger float-right">Cancel</a>
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/holdem" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn" value="Submit">
+                                                </div>
+                                            </div>
+
+                                        </center>
                                     </div>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /Row -->
-        </section>
+        </div>
     </div>
+
 </div>
 
 {% endblock %} {% block Jscript %}

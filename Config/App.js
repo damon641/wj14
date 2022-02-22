@@ -1,6 +1,6 @@
 module.exports = {
     details: {
-        name: 'Byte Poker'
+        name: 'White Poker'
     },
     maxPlayers: 9,
     logger: {
@@ -8,10 +8,11 @@ module.exports = {
         logFilePrefix: 'game'
     },
     defaultUserLogin: {
-        name: 'Byte Poker',
+        name: 'White Poker',
         email: 'admin@pokerscript.net',
         password: '123456',
         role: 'admin',
+        admin_type: 'admin',
         avatar: 'user.png'
     },
     mailer: {
@@ -19,6 +20,6 @@ module.exports = {
             user: 'admin@pokerscript.net',
             pass: 'BYTE@#!@#$!@SW',
         },
-        defaultFromAddress: 'Byte Poker <admin@pokerscript.net>'
+        defaultFromAddress: 'White Poker <admin@pokerscript.net>'
     },
 }

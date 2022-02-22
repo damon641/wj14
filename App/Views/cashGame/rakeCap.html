@@ -1,71 +1,98 @@
 {% extends "partition/layout.html" %} {% block body %}
+<div class="container nav_drop_menu " id="Settings ">
+    <ul>
+        <li class="text_container ">
+            <a href="/settings ">
+                <div class="name ">System Settings</div>
+            </a>
+        </li>
+        <!-- <li class="text_container ">
+            <a href="/blockedIp ">
+                <div class="name ">Location Security</div>
+            </a>
 
+        </li> -->
+        <li class="text_container ">
+            <a href="/cashgames/stacks ">
+                <div class="name ">Stack Setup</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a class="active" href="/cashgames/rakecap ">
+                <div class="name ">Table Rake Cap</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/blindLevels ">
+                <div class="name ">Blind Level</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/ad-banner ">
+                <div class="name ">Ad-Banner</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/currency ">
+                <div class="name ">Currency</div>
+            </a>
+        </li>
+    </ul>
+</div>
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Rake Cap Table</h1>
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Rake Cap</li>
-            </ol>
-            <!-- /Breadcrumb -->
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Rake Cap</h6>
-                            </div>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Tabel Rake Cap</h3>
                             <div class="pull-right">
-                                <a href="/cashgames/addRakeCap"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Rake Cap</button></a>
+                                <a href="/cashgames/addRakeCap"><button class="table_btn "><i
+                                        class="fa fa-plus"></i> Add Rake Cap</button></a>
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <input type="hidden" id="gameType" name="gameType">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Stack</th>
-                                                    <th>%Rake</th>
-                                                    <th>2Player Cap</th>
-                                                    <th>3-4 Player Cap</th>
-                                                    <th>5+ Player Cap</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Stack</th>
-                                                    <th>%Rake</th>
-                                                    <th>2Player Cap</th>
-                                                    <th>3-4 Player Cap</th>
-                                                    <th>5+ Player Cap</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <input type="hidden" id="gameType" name="gameType">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Stack</th>
+                                            <th>%Rake</th>
+                                            <th>2Player Cap</th>
+                                            <th>3-4 Player Cap</th>
+                                            <th>5+ Player Cap</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Stack</th>
+                                            <th>%Rake</th>
+                                            <th>2Player Cap</th>
+                                            <th>3-4 Player Cap</th>
+                                            <th>5+ Player Cap</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>
 

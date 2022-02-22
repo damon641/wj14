@@ -1,171 +1,193 @@
 {% extends "partition/layout.html" %} {% block body %}
 
-<!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container nav_drop_menu" id="Tournaments">
+    <ul>
+        <li class="text_container">
+            <a href="/regular-tournament">
+                <div class="name">Regular Tournament</div>
+            </a>
+        </li>
+        <li class="text_container">
+            <a class="active" href="/sng-tournament">
+                <div class="name">Sit & Go Tournament</div>
+            </a>
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Sit & Go Tournament </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Sit & Go Tournament</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Sit & Go Tournament</h6>
-                            </div>
+        </li>
+        <li class="text_container">
+            <a href="/price-pool/regulartournament">
+                <div class="name">Payout Chart Regular</div>
+            </a>
+        </li>
+        <li class="text_container">
+            <a href="/price-pool/sngtournament">
+                <div class="name">Payout Chart SNG</div>
+            </a>
+
+        </li>
+    </ul>
+</div>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Sit & Go Tournament</h3>
                             <div class="pull-right">
-                                <a href="/sng-tournament/addSngTournament"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Tournament</button></a>
+                                <a href="/sng-tournament/addSngTournament"><button class="table_btn "><i
+                                        class="fa fa-plus"></i> Add Tournament</button></a>
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <input type="hidden" id="gameType" name="gameType">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Game</th>
-                                                    <th>Stack</th>
-                                                    <th>Fee</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Game</th>
-                                                    <th>Stack</th>
-                                                    <th>Fee</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <input type="hidden" id="gameType" name="gameType">
+                                <table id="myTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Game</th>
+                                            <th>Stack</th>
+                                            <th>Fee</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Game</th>
+                                            <th>Stack</th>
+                                            <th>Fee</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
-    {% endblock %} {% block Jscript %}
-    <script>
-        $(document).ready(function() {
-            var host = window.location.origin;
-            $('#myTable').DataTable({
-                "oLanguage": {
-                    "sSearch": "Search By Name"
-                },
-                // "scrollX": true,
-                "processing": true,
-                "serverSide": true,
-                // "searching": false,
-                "ordering": false,
-                "autoWidth": false,
-                "pageLength": 25,
-                "ajax": host + "/sng-tournament/getSngTournament",
-                "columns": [
-                    // { "data": "_id" },
-                    {
-                        "data": "name"
-                    }, {
-                        "data": "game"
-                    }, {
-                        "data": "stacks",
-                        render: function(data, type, row) {
-                            return data.minStack + '/' + data.maxStack;
-                        }
-                    }, {
-                        "data": "fee"
-                    }, {
-                        "data": "status"
-                    },
-
-
-                    {
-                        "data": "action",
-                        render: function(data, type, row) {
-                            return '<a href="/sng-tournament/editSngTournament/' + row._id + '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button><a href="/sng-tournament/report/' + row._id + '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="Report"><i class="fa fa-file " aria-hidden="true"></i></button></a>'
-                        }
+</div>
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function() {
+        var host = window.location.origin;
+        $('#myTable').DataTable({
+            "oLanguage": {
+                "sSearch": "Search By Name"
+            },
+            // "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            // "searching": false,
+            "ordering": false,
+            "autoWidth": false,
+            "pageLength": 25,
+            "ajax": host + "/sng-tournament/getSngTournament",
+            "columns": [
+                // { "data": "_id" },
+                {
+                    "data": "name"
+                }, {
+                    "data": "game"
+                }, {
+                    "data": "stacks",
+                    render: function(data, type, row) {
+                        return data.minStack + '/' + data.maxStack;
                     }
-                ]
-            });
+                }, {
+                    "data": "fee"
+                }, {
+                    "data": "status"
+                },
 
-            $(function() {
-                "use strict";
 
-                var SweetAlert = function() {};
-
-                SweetAlert.prototype.init = function() {
-
-                        //Parameter
-                        $('body').on('click', '.delete', function(e) {
-                            var id = $(this).attr('id');
-                            var thisElement = this;
-                            swal({
-                                title: "Are you sure?",
-                                text: "You will not be able to recover this Tournament!",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#e69a2a",
-                                confirmButtonText: "Yes, delete it!",
-                                cancelButtonText: "No, cancel plx!",
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            }, function(isConfirm) {
-                                if (isConfirm) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: host + "/sng-tournament/delete",
-                                        data: {
-                                            id: id
-                                        },
-                                        success: function(resultData) {
-                                            // alert(resultData)
-                                            console.log(resultData);
-                                            if (resultData == 'success') {
-                                                $(thisElement).parent().parent().hide(700);
-                                                swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                                            } else {
-                                                alert("Something went wrong")
-                                            }
-                                            // alert("Save Complete")
-                                        }
-                                    });
-                                    swal("Deleted!", "Tournament Deleted Succesfully.", "success");
-                                } else {
-                                    swal("Cancelled", "Tournament Not Deleted)", "error");
-                                }
-                            });
-                            return false;
-                        });
-
-                    },
-                    $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
-
-                $.SweetAlert.init();
-            });
-
+                {
+                    "data": "action",
+                    render: function(data, type, row) {
+                        return '<a href="/sng-tournament/editSngTournament/' + row._id +
+                            '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit " aria-hidden="true"></i></button></a> <a href="/sng-tournament/report/' +
+                            row._id +
+                            '"> <button type="button" class="btn btn-success btn-xs btn-rounded" name="Report"><i class="fa fa-file " aria-hidden="true"></i></button></a> <button type="button" name="delete" id="' +
+                            row._id +
+                            '" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+                    }
+                }
+            ]
         });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    {% endblock %}
+
+        $(function() {
+            "use strict";
+
+            var SweetAlert = function() {};
+
+            SweetAlert.prototype.init = function() {
+
+                    //Parameter
+                    $('body').on('click', '.delete', function(e) {
+                        var id = $(this).attr('id');
+                        var thisElement = this;
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this Tournament!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#e69a2a",
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel plx!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + "/sng-tournament/delete",
+                                    data: {
+                                        id: id
+                                    },
+                                    success: function(resultData) {
+                                        // alert(resultData)
+                                        console.log(resultData);
+                                        if (resultData == 'success') {
+                                            $(thisElement).parent().parent()
+                                                .hide(700);
+                                            swal("Deleted!",
+                                                "Your imaginary file has been deleted.",
+                                                "success");
+                                        } else {
+                                            alert("Something went wrong")
+                                        }
+                                        // alert("Save Complete")
+                                    }
+                                });
+                                swal("Deleted!", "Tournament Deleted Succesfully.",
+                                    "success");
+                            } else {
+                                swal("Cancelled", "Tournament Not Deleted)", "error");
+                            }
+                        });
+                        return false;
+                    });
+
+                },
+                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+            $.SweetAlert.init();
+        });
+
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+{% endblock %}

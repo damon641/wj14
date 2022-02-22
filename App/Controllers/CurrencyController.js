@@ -2,7 +2,7 @@
 
   module.exports = {
 
-      currency: async function(req, res) {
+    currency: async function(req, res) {
           try {
               var data = {
                   App: Sys.Config.App.details,

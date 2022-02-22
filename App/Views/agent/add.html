@@ -1,179 +1,189 @@
 {% extends "partition/layout.html" %} {% block body %}
+<div class="container nav_drop_menu " id="Agents ">
+    <ul>
+        <li class="text_container ">
+            <a href="/agents ">
+                <div class="name ">My Agents</div>
+            </a>
+        </li>
+        {% if session.role == 'admin'%}
+        <li class="text_container ">
+            <a class="allagent" href="/allagents ">
+                <div class="name ">All Agents</div>
+            </a>
 
+        </li>
+
+        <li class="text_container ">
+            <a href="/my-rack-history ">
+                <div class="name ">My Rake</div>
+            </a>
+        </li>
+        {% endif %}
+	<li class="text_container ">
+		            <a href="/my-rack-history ">
+				                    <div class="name ">My Rake</div>
+						                </a>
+								        </li>
+        <li class="text_container ">
+            <a href="/my-chips-transactions ">
+                <div class="name ">Chips Transactions</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a class="active" href="/addAgent ">
+                <div class="name "><i class="fa fa-plus-circle " aria-hidden="true "></i> Add Agents</div>
+            </a>
+
+        </li>
+    </ul>
+</div>
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container">
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Agent Table </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li href="/Agents">Agent</li>
-                {% if agent %}
-                <li class="active">Edit Agent</li>
-                {% else %}
-                <li class="active">Add Agent</li>
-                {% endif %}
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <section class="content">
-            <!-- Row -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                {% if agent %}
-                                <h6 class="panel-title txt-dark">Edit Agent</h6>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            {% if agent %}
+                            <h3 class="panel-title">Edit Agent</h3>
+                            {% else %}
+                            <h3 class="panel-title">Add Agent</h3>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if agent %}
+                            <form method="POST" action="/agentEdit/{{agent._id}}" name="adduser" class="form-horizontal">
                                 {% else %}
-                                <h6 class="panel-title txt-dark">Add Agent</h6>
-                                {% endif %}
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        {% if agent %}
-                                        <form method="POST" action="/agentEdit/{{agent._id}}" name="adduser" class="form-horizontal">
-                                            {% else %}
-                                            <form method="POST" action="/addAgent" name="adduser" class="form-horizontal">
-                                                {% endif %}
-                                                <table border="0" class="table display  pb-30">
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="username">Username:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="text" class="form-control" id="username" placeholder="Enter username" required name="username" value="{{agent.username}}" data-validation="length alphanumeric" data-validation-length="" data-validation-error-msg="Username is required">
-                                                                    </div>
-                                                                </div>
+                                <form method="POST" action="/addAgent" name="adduser" class="form-horizontal">
+                                    {% endif %}
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
+                                                <div class="panel-wrapper">
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Username:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="username" placeholder="Enter username" required name="username" value="{{agent.username}}" data-validation="length alphanumeric" data-validation-length="" data-validation-error-msg="Username is required">
+                                                            </div>
+                                                        </div>
 
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="password">Password:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="password" class="form-control" id="password" placeholder="Enter password" data-minlength="6" name="password" value="{{agent.password}}" data-validation="length" data-validation-length="min6">
-                                                                    </div>
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="password">Password:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="password" class="form-control" id="password" placeholder="Enter password" data-minlength="6" name="password" value="{{agent.password}}" data-validation="length" data-validation-length="min6">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="mobile">Mobile:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="mobile" placeholder="Enter mobile" required="" name="mobile" value="{{agent.mobile}}" data-validation="number">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="email">Email:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" {{ "readonly disabled" if agent else "" }} placeholder="Enter Email" name="email" id="email" value="{{agent.email}}">
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="form-group">
+                                                        <label class="control-label mb-10 col-sm-12" for="firstname">Firstname:</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" id="firstname" placeholder="Enter firstname" required name="firstname" value="{{agent.firstname}}" data-validation="length alphanumeric" 
+                                                            data-validation-length="" 
+                                                            data-validation-error-msg="Firstname is required">
+                                                        </div>
+                                                    </div> -->
+                                                        <!-- <div class="form-group">
+                                                        <label class="control-label mb-10 col-sm-12" for="lastname">Lastname:</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" id="lastname" placeholder="Enter lastname" required name="lastname" value="{{agent.lastname}}" data-validation="length alphanumeric" 
+                                                            data-validation-length="" 
+                                                            data-validation-error-msg="Lastname is required">
+                                                        </div>
+                                                    </div> -->
 
-                                                                <!-- <div class="form-group">
-																	<label class="control-label mb-10 col-sm-2" for="firstname">Firstname:</label>
-																	<div class="col-sm-10">
-																		<input type="text" class="form-control" id="firstname" placeholder="Enter firstname" required name="firstname" value="{{agent.firstname}}" data-validation="length alphanumeric" 
-																		data-validation-length="" 
-																		data-validation-error-msg="Firstname is required">
-																	</div>
-																</div> -->
-                                                                <!-- <div class="form-group">
-																	<label class="control-label mb-10 col-sm-2" for="lastname">Lastname:</label>
-																	<div class="col-sm-10">
-																		<input type="text" class="form-control" id="lastname" placeholder="Enter lastname" required name="lastname" value="{{agent.lastname}}" data-validation="length alphanumeric" 
-																		data-validation-length="" 
-																		data-validation-error-msg="Lastname is required">
-																	</div>
-																</div> -->
+
+                                                        <!-- <div class="form-group">
+                                                        <label class="control-label mb-10 col-sm-12" for="commission">Commission:</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" id="commission" placeholder="Enter Agents Commission" required="" name="commission" value="{{agent.commission}}" data-validation="number,required"
+                                                            
+                                                            data-validation-allowing="range[1;100],float"
+                                                            data-validation-error-msg="Commision can't be empty or greater than 100%"
+                                                            >
+                                                        </div>
+                                                    </div> -->
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="role">Agent Type: </label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" id="role" name="role" data-validation="required">
+                                                                <option selected="selected" value="">Select Agent Type</option>
+                                                                {% if session.role =='admin' %}
+                                                                <option value="senior"  {% if  "senior" == agent.role %} selected {% endif %}>Senior Agent</option>
+                                                                {% endif %}
+                                                                {% if session.role =='admin' or session.role =='senior' %}
+                                                                <option value="master" {% if  "master" == agent.role %} selected {% endif %}>Master Agent</option>
+                                                                {% endif %}
+                                                                {% if session.role =='admin' or session.role =='senior' or session.role =='master' %}
+                                                                <option value="agent" {% if  "agent" == agent.role %} selected {% endif %}>Agent</option>
+                                                                {% endif %}
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="commission">Commission: </label>
+                                                            <div class="col-sm-12">
+                                                                <select {% if agent.commission and is_admin !='yes' %} disabled {% endif %} class="form-control" id="commission" name="commission" data-validation="number,required">
+                                                                <option selected="selected" value="">Commission</option>  
+                                                                {% for item in agentCommision %}
+                                                                <option value="{{ item }}" {% if  item == agent.commission %} selected {% endif %}  >{{ item }}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="status">Status:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="status" id="status">
+                                                                <option value="active" {{ "selected" if agent.status=='active' else "" }} >Active</option>
+                                                                <option value="Block" {{ "selected" if agent.status=='Block' else "" }} >Block</option>
+                                                            </select>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="mobile">Mobile:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="text" class="form-control" id="mobile" placeholder="Enter mobile" required="" name="mobile" value="{{agent.mobile}}" data-validation="number">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="email">Email:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="text" class="form-control" {{ "readonly disabled" if agent else "" }} placeholder="Enter Email" name="email" id="email" value="{{agent.email}}">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- <div class="form-group">
-																	<label class="control-label mb-10 col-sm-2" for="commission">Commission:</label>
-																	<div class="col-sm-10">
-																		<input type="text" class="form-control" id="commission" placeholder="Enter Agents Commission" required="" name="commission" value="{{agent.commission}}" data-validation="number,required"
-																	    
-																	    data-validation-allowing="range[1;100],float"
-																	    data-validation-error-msg="Commision can't be empty or greater than 100%"
-																	    >
-																	</div>
-																</div> -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="role">Agent Type: </label>
-                                                                    <div class="col-sm-10">
-                                                                        <select class="form-control" id="role" name="role" data-validation="required">
-                                                                            <option selected="selected" value="">Select Agent Type</option>
-                                                                            {% if session.role =='admin' %}
-                                                                            <option value="senior"  {% if  "senior" == agent.role %} selected {% endif %}>Senior Agent</option>
-                                                                            {% endif %}
-                                                                            {% if session.role =='admin' or session.role =='senior' %}
-                                                                            <option value="master" {% if  "master" == agent.role %} selected {% endif %}>Master Agent</option>
-                                                                            {% endif %}
-                                                                            {% if session.role =='admin' or session.role =='senior' or session.role =='master' %}
-                                                                            <option value="agent" {% if  "agent" == agent.role %} selected {% endif %}>Agent</option>
-                                                                            {% endif %}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="commission">Commission: </label>
-                                                                    <div class="col-sm-10">
-                                                                        <select {% if agent.commission and is_admin !='yes' %} disabled {% endif %} class="form-control" id="commission" name="commission" data-validation="number,required">
-																			<option selected="selected" value="">Commission</option>  
-																			{% for item in agentCommision %}
-																			<option value="{{ item }}" {% if  item == agent.commission %} selected {% endif %}  >{{ item }}
-																			</option>
-																			{% endfor %}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="status">Status:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <select class="form-control" name="status" id="status">
-																			<option value="active" {{ "selected" if agent.status=='active' else "" }} >Active</option>
-																			<option value="Block" {{ "selected" if agent.status=='Block' else "" }} >Block</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <tr>
-														<td colspan="2">
-															<div class="pull-right">
-																<input type="submit" class="btn btn-success btn-flat" value="Submit">
-																<a href="/agents" class="btn btn-danger btn-flat">Cancel</a>
-															</div>
-														</td>
-													</tr> -->
-                                                </table>
-                                                <div class="box-footer">
-                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
-                                                    <a href="/agents" class="btn btn-danger float-right">Cancel</a>
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/agents" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn" value="Submit">
+                                                </div>
+                                            </div>
+                                        </center>
                                     </div>
-                                </div>
-
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </section>
-        <!-- /Row -->
+        </div>
     </div>
+
 </div>
+
 
 {% endblock %} {% block Jscript %}
 <script>

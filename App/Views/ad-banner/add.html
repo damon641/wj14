@@ -1,0 +1,115 @@
+{% extends "partition/layout.html" %} {% block body %}
+<!-- Main Content -->
+
+
+<!-- Main Content -->
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            {% if ad %}
+                            <h3 class="panel-title">Edit Ad-Banner</h3>
+                            {% else %}
+                            <h3 class="panel-title">Add New Ad-Banner</h3>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if ad %}
+                            <form method="POST" action="/editAd/{{ad._id}}" name="addvideo"
+                                class="form-horizontal" enctype="multipart/form-data">
+                                {% else %}
+                                <form method="POST" action="/addNewAd" name="addvideo" class="form-horizontal" enctype="multipart/form-data">
+                                    {% endif %}
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
+                                                <div class="panel-wrapper">
+                                                    <div class="panel-body">
+                                                        <input type="hidden" name="role" class="form-control"
+                                                            value="admin">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12"
+                                                                for="name">Name* :</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="name"
+                                                                    placeholder="Enter Video Title" required name="name"
+                                                                    value="{{ad.name}}" data-validation-length=""
+                                                                    data-validation-error-msg="Video Name is required">
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- /.box-header -->
+                                                        {% if ad %} {% else %}
+                                                        <div class="form-group">
+                                                            <label for="avatar" class="col-sm-12 control-label">Video* :</label>
+                                                            <div class="col-sm-12">
+                                                                <div class="input-group">
+                                                                    <input type="file" class="form-control" id="video" name="video" required accept="video/*">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="pwd_hr">Chips* :</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" id="chips" placeholder="Enter Chips" required data-validation="number" name="chips" value="{{ad.chips}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12"
+                                                                for="status">Status* :</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="status" id="status">
+                                                                    <option value="primary" {{ "selected" if ad.status=='primary'
+                                                                        else "" }}>
+                                                                        Primary Ad</option>
+                                                                    <option value="secondary" {{ "selected" if ad.status=='secondary'
+                                                                        else "" }}>
+                                                                        Secondary Ad</option>
+                                                                    <option value="inactive" {{ "selected" if ad.status=='inactive'
+                                                                        else "" }}>
+                                                                        Inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/ad-banner" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn"
+                                                        value="Submit">
+                                                </div>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function () {
+        var host = window.location.origin;
+    });
+</script>
+{% endblock %}

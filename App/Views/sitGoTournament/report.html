@@ -1,228 +1,268 @@
-{% extends "partition/layout.html" %}
-
-{% block body %}
+{% extends "partition/layout.html" %} {% block body %}
 
 <!-- Main Content -->
-<div class="page-wrapper">
-	<div class="container-fluid">
+<div class="container">
 
-		<!-- Title -->
-		<section class="content-header">
-		    <h1>Sit & Go Tournament Profile</h1>
-		    <ol class="breadcrumb">
-		        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-		        <li class="active" href="/regular-tournament">Sit & Go Tournament</li>
-		        <li class="active" href="/regular-tournament">Report</li>
-		    </ol>
-		</section>
-		<!-- /Title -->
-		{% include "partition/notification.html" %}
-			
-		<section class="invoice">
-		  <!-- title row -->
-		  <div class="row">
-		    <div class="col-xs-12">
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+							<img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+							<h3 class="panel-title">Sit & Go Tournament Profile</h3>
+						</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-body box-profile">
+                                        <center>
 
-		      <h2 class="page-header">
-		        <i class="fa fa-gamepad"></i> {{sng_tournament.name}}
-		        <small class="pull-right">Total Player Registered: <b>{{sng_tournament.players.length}}</b></small>
-		      </h2>
-		      <h4 style="text-align: center;color: red">Tournament Status: {{sng_tournament.status}}</h4>
-		    </div>
-		    <!-- /.col -->
-		  </div>
-		  <!-- info row -->
-		  <div class="row invoice-info">
-		    <div class="col-sm-4 invoice-col">
-		      <address>
-		        <b>Entry Fee:</b> {{sng_tournament.entry_fee}}<br>
-		        <b>Buy In:</b> {{sng_tournament.buy_in}}<br>
-		         <b style="color:red">Winners Count:</b> {{sng_tournament.tournamentWinners.length}}<br>
-		      </address>
-		    </div>
-		    <div class="col-sm-4 invoice-col">
-		      <address>
-		        <b>Min Players:</b> {{sng_tournament.min_players}}<br>
-		         <b>Max Players:</b> {{sng_tournament.max_players}}<br>
-		         <b style="color:red">Loosers Count:</b> {{sng_tournament.tournamentLosers.length}}<br>
-		      </address>
-		    </div>
-		    <div class="col-sm-4 invoice-col">
-		      <address>
-		        <b>Stacks:</b> {{sng_tournament.stacks.minStack}}/{{sng_tournament.stacks.maxStack}}<br>
-		        <b>Blind levels rise time:</b> {{sng_tournament.blind_levels_rise_time}} 
-		      </address>
-		    </div>
-		   
-		    
-		  </div>
+                                            <img class="profile-user-img  img-circle" src="/dist/img/user.png" alt="User profile picture">
 
-		
-		  <!-- /.row -->
+                                            <h3 class="profile-username text-center">{{sng_tournament.name}}
+                                            </h3>
+                                            <h5 class="profile-username text-center" style="color: #f68627;">Total Player Registered: {{sng_tournament.players.length}}
+                                            </h5>
+                                            <h5 class="profile-username text-center" style="color: red;">Tournament Status: {{sng_tournament.status}}
+                                            </h5>
+                                        </center>
 
-		</section>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row invoice-info ">
+                            <div class="col-lg-4 invoice-col">
+                                <address>
+                                    Entry Fee: {{sng_tournament.entry_fee}}<br>
+                                    Buy In: {{sng_tournament.buy_in}}<br>
+                                    <span style="color: #f68627;"> Winners Count: {{sng_tournament.tournamentWinners.length}}</span>
+                                                <br>
+                                 </address>
+                            </div>
+                            <div class="col-lg-4 invoice-col">
+                                <address>
+									Min Players: {{sng_tournament.min_players}}<br>
+									Max Players: {{sng_tournament.max_players}}<br>
+									<span style="color: #f68627;"> Loosers Count:
+                                    {{sng_tournament.tournamentLosers.length}}</span>
+                                    <br>
+								</address>
+                            </div>
+                            <div class="col-sm-4 invoice-col">
+                                <address>
+									Stacks: {{sng_tournament.stacks.minStack}}/{{sng_tournament.stacks.maxStack}}<br>
+									Blind levels rise time: {{sng_tournament.blind_levels_rise_time}} 
+								</address>
+                            </div>
 
-		<section class="content" style="min-height: 0px !important;">
-			<div class="box box-info">
-			  <div class="box-header with-border">
-			    <h3 class="box-title">Registered Players</h3>
 
-			    <div class="box-tools pull-right">
-			      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			      </button>
-			      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			    </div>
-			  </div>
-			  <!-- /.box-header -->
-			  <div class="box-body">
-			    <div class="table-responsive">
-			      <table class="table no-margin" id="playerTable">
-			        <thead>
-			        <tr>
-			        	<th>Username</th>
-						<th>Email</th>
-						<th>Chips</th>
-			        </tr>
-			        </thead>
-			        <tbody>
-			        
-			        </tbody>
-			      </table>
-			    </div>
-			    <!-- /.table-responsive -->
-			  </div>
-			 
-			</div>
-		</section>
-
-		<section class="content" style="min-height: 0px !important;">
-			<div class="box box-info">
-			  <div class="box-header with-border">
-			    <h3 class="box-title">Rooms</h3>
-			 
-			    <div class="box-tools pull-right">
-			      <span class="label label-danger">Total Game Played: {{gameCount}}</span>
-			      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			      </button>
-			      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			    </div>
-			  </div>
-			  <!-- /.box-header -->
-			  <div class="box-body">
-			    <div class="table-responsive">
-			      <table class="table no-margin" id="roomTable">
-			        <thead>
-			        <tr>
-			        	<th>Room Id</th>
-						<th>Room Name</th>
-			        </tr>
-			        </thead>
-			        <tbody>
-			        
-			        </tbody>
-			      </table>
-			    </div>
-			    <!-- /.table-responsive -->
-			  </div>
-			 
-			</div>
-		</section>
-
-		<section class="content" style="min-height: 0px !important;">
-			<div class="box box-info">
-			  <div class="box-header with-border">
-			    <h3 class="box-title">Winners</h3>
-			    
-			    <div class="box-tools pull-right">
-			      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-			      </button>
-			      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			    </div>
-			  </div>
-			  <!-- /.box-header -->
-			  <div class="box-body">
-			    <div class="table-responsive">
-			      <table class="table no-margin" id="winnerTable">
-			        <thead>
-			        <tr>
-			        	<th>Name</th>
-						<th>Chips Won</th>
-			        </tr>
-			        </thead>
-			        <tbody>
-			        	{% for winner in sng_tournament.tournamentWinners %}
-			        	<tr>
-			        		<td>{{ winner.username }}</td>
-			        		<td>{{ winner.winningChips }}</td>
-			        	</tr>
-			        	{% endfor %}
-			        </tbody>
-			      </table>
-			    </div>
-			    <!-- /.table-responsive -->
-			  </div>
-			 
-			</div>
-		</section>	
-
-	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-			
 
-			
-		
-			
+<div class="container">
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+							<img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+							<h3 class="panel-title">Registered Players</h3>
+						</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="playerTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Chips</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-{% endblock %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Chips</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-{% block Jscript %}
+<div class="container">
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+							<img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+							<h3 class="panel-title">Rooms</h3>
+							<div class="box-tools pull-right">
+								<span class="label label-danger">Total Game Played: {{gameCount}}</span>
+                    </div>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="roomTable">
+                                <thead>
+                                    <tr>
+                                        <th>Room Id</th>
+                                        <th>Room Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Room Id</th>
+                                        <th>Room Name</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+							<img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+							<h3 class="panel-title">Winners</h3>
+						</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="winnerTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Chips Won</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for winner in sng_tournament.tournamentWinners %}
+                                        <tr>
+                                            <td>{{ winner.username }}</td>
+                                            <td>{{ winner.winningChips }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Chips Won</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %} {% block Jscript %}
 <script>
-	$('#playerTable').DataTable({
-		"oLanguage": {
-			"sSearch": "Search Email"
-		},
-		"processing": true,
-		"serverSide": true,
-		"ordering": false,
-		"autoWidth": false,
-		"pageLength": 10,
-		"ajax": "/sng-tournament/{{sng_tournament._id}}/getPlayers",
-		"dom": 'Bfrtip',
-		"buttons":[
-		            'csv', 'excel'
-		 ],
-		"columns": [
-	
-			{ "data": "username" },
-			{ "data": "email" },
-			{ "data": "chips" },
-			
-		]
-	});
+    $('#playerTable').DataTable({
+        "oLanguage": {
+            "sSearch": "Search By Email"
+        },
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "autoWidth": false,
+        "pageLength": 10,
+        "ajax": "/sng-tournament/{{sng_tournament._id}}/getPlayers",
+        "dom": 'Bfrtip',
+        "buttons": [
+            'csv', 'excel'
+        ],
+        "columns": [
 
-	$('#roomTable').DataTable({
-		"processing": true,
-		"serverSide": true,
-		"ordering": false,
-		"autoWidth": false,
-		"pageLength": 10,
-		"searching": false,
-		"ajax": "/sng-tournament/{{sng_tournament._id}}/getRooms",
-		"dom": 'Bfrtip',
-		"buttons":[
-		            'csv', 'excel'
-		 ],
-		"columns": [
-	
-			//{ "data": "_id" },
-			{ "data": "_id",
-				render: function(data, type,row){
-					return '<a href="/sng-tournament/room/'+row._id+'">'+row._id+'</a>'
-				}
-			},
-			{ "data": "name" },
-			
-		]
-	});
+            {
+                "data": "username"
+            }, {
+                "data": "email"
+            }, {
+                "data": "chips"
+            },
+
+        ]
+    });
+
+    $('#roomTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "autoWidth": false,
+        "pageLength": 10,
+        "searching": false,
+        "ajax": "/sng-tournament/{{sng_tournament._id}}/getRooms",
+        "dom": 'Bfrtip',
+        "buttons": [
+            'csv', 'excel'
+        ],
+        "columns": [
+
+            //{ "data": "_id" },
+            {
+                "data": "_id",
+                render: function(data, type, row) {
+                    return '<a href="/sng-tournament/room/' + row._id + '">' + row._id + '</a>'
+                }
+            }, {
+                "data": "name"
+            },
+
+        ]
+    });
 </script>
 {% endblock %}

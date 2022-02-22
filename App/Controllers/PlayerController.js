@@ -25,6 +25,13 @@ module.exports = {
                 isLatest: '1',
               }
               )*/
+            let getTopPlayers = await Sys.App.Services.PlayerServices.getLimitedPlayerWithSort({}, 8, 'chips', -1);
+            let latestPalyer = await Sys.App.Services.PlayerServices.getLimitPlayer({});
+            console.log(latestPalyer);
+            for (var m = 0; m < latestPalyer.length; m++) {
+                let dt = new Date(latestPalyer[m].createdAt);
+                latestPalyer[m].createdAtFormated = moment(dt).format('YYYY/MM/DD');
+            }
             var data = {
                 App: Sys.Config.App.details,
                 Agent: req.session.details,
@@ -33,6 +40,8 @@ module.exports = {
                 success: req.flash("success"),
                 playerActive: 'active',
                 PlayerMenu: 'active menu-open',
+                latestPalyer: latestPalyer,
+                topPlayers: getTopPlayers,
                 currency: await Sys.App.Services.CurrencyServices.getByData({}),
                 setting: await Sys.App.Services.SettingsServices.getSettingsData({})
             };
@@ -48,10 +57,17 @@ module.exports = {
             let length = parseInt(req.query.length);
             let search = req.query.search.value;
             let type = req.query.type;
-            let query = { isCash: (type === 'true') };
+            let query = {
+                isCash: (type === 'true')
+            };
 
             if (search != '') {
-                query = { isCash: (type === 'true'), username: { $regex: '.*' + search + '.*' } };
+                query = {
+                    isCash: (type === 'true'),
+                    username: {
+                        $regex: '.*' + search + '.*'
+                    }
+                };
             }
             let columns = [
                 'id',
@@ -72,7 +88,9 @@ module.exports = {
             } else if (req.session.details.role == "agent") {
                 query.agentId = req.session.details.id;
             }
-            console.log({ query })
+            console.log({
+                query
+            })
             let playersCount = await Sys.App.Services.PlayerServices.getPlayerCount(query);
             //console.log(playersCount);
             //let playersCount = playersC.length;console.log(playersCount);
@@ -80,7 +98,9 @@ module.exports = {
             let data = await Sys.App.Services.PlayerServices.getPlayerDatatable(query, length, start);
 
             for (let i = 0; i < data.length; i++) {
-                let agent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: data[i].agentId }, ['username']);
+                let agent = await Sys.App.Services.agentServices.getSingleAgentData({
+                    _id: data[i].agentId
+                }, ['username']);
                 if (agent == null) {
                     data[i].agentName = 'admin'
                 } else {
@@ -124,7 +144,7 @@ module.exports = {
                 success: req.flash("success"),
                 playerActive: 'active',
                 currency: await Sys.App.Services.CurrencyServices.getByData({}),
-                country: ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"]
+                country: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"]
             };
             return res.render('player/add', data);
         } catch (e) {
@@ -135,7 +155,9 @@ module.exports = {
     addPlayerPostData: async function(req, res) {
         try {
             // res.send(req.files.image.name); return;
-            let player = await Sys.App.Services.PlayerServices.getPlayerData({ email: req.body.email });
+            let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                email: req.body.email
+            });
             if (player && player.length > 0) {
                 req.flash('error', 'Player Already Present');
                 res.redirect('/player');
@@ -143,7 +165,9 @@ module.exports = {
 
             } else {
 
-                let player = await Sys.App.Services.PlayerServices.getPlayerData({ username: req.body.username });
+                let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                    username: req.body.username
+                });
                 if (player && player.length > 0) {
                     req.flash('error', 'Username Already Exist');
                     res.redirect('/player');
@@ -167,6 +191,7 @@ module.exports = {
                             totalLoseGame: 0
                         }
                     };
+                    console.log(req.session.details);
                     var playerObj = {
                         username: req.body.username,
                         firstname: req.body.firstname,
@@ -180,13 +205,14 @@ module.exports = {
                         chips: 0,
                         diamonds: 0,
                         agentRole: req.session.details.role,
-                        agentId: req.session.details.id,
+                        agentId: req.session.details._id,
                         isCash: true,
                         socketId: '1234',
                         statistics: statistics,
                         country: req.body.country,
-                        currency: req.body.currency
-                        // image: req.files.image.name
+                        currency: req.body.currency,
+                        lastChipsAddedDate: '',
+			    // image: req.files.image.name
                     };
                     if (req.session.details.role === "senior") {
                         playerObj.seniorAgentId = req.session.details.id;
@@ -196,7 +222,9 @@ module.exports = {
                         playerObj.masterAgentId = req.session.details.id;
                     }
                     if (req.session.details.role === "agent") {
-                        let agent = await Sys.App.Services.agentServices.getAgentData({ _id: req.session.details.parentId });
+                        let agent = await Sys.App.Services.agentServices.getAgentData({
+                            _id: req.session.details.parentId
+                        });
                         if (agent && agent.length > 0) {
                             if (agent[0].role == "senior") {
                                 playerObj.seniorAgentId = agent[0].id;
@@ -221,7 +249,9 @@ module.exports = {
 
     editPlayer: async function(req, res) {
         try {
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.params.id });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.params.id
+            });
             var data = {
                 App: Sys.Config.App.details,
                 Agent: req.session.details,
@@ -230,7 +260,7 @@ module.exports = {
                 playerActive: 'active',
                 player: player,
                 currency: await Sys.App.Services.CurrencyServices.getByData({}),
-                country: ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"]
+                country: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"]
             };
             req.session.playerBack = req.header('Referer');
             return res.render('player/add', data);
@@ -243,7 +273,9 @@ module.exports = {
 
     editPlayerPostData: async function(req, res) {
         try {
-            let player = await Sys.App.Services.PlayerServices.getPlayerData({ _id: req.params.id });
+            let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                _id: req.params.id
+            });
             if (player && player.length > 0) {
 
                 if (req.files) {
@@ -269,10 +301,10 @@ module.exports = {
                     gender: req.body.gender,
                     isBot: req.body.bot,
                     accountNumber: req.body.accountNumber,
-                        // status: req.body.bot,
-                        // password : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
-                        // password : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
-                        // image: req.files.image.name
+                    // status: req.body.bot,
+                    // password : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
+                    // password : bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null)
+                    // image: req.files.image.name
                     country: req.body.country,
                     currency: req.body.currency
                 }
@@ -282,7 +314,9 @@ module.exports = {
                 }
                 // console.log('data',data); return false;
 
-                await Sys.App.Services.PlayerServices.updatePlayerData({ _id: req.params.id }, data)
+                await Sys.App.Services.PlayerServices.updatePlayerData({
+                    _id: req.params.id
+                }, data)
                 req.flash('success', 'Player update successfully');
                 res.redirect('/playerEdit/' + req.params.id);
                 return;
@@ -304,7 +338,9 @@ module.exports = {
 
     getPlayerDelete: async function(req, res) {
         try {
-            let player = await Sys.App.Services.PlayerServices.getPlayerData({ _id: req.body.id });
+            let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                _id: req.body.id
+            });
             if (player || player.length > 0) {
                 await Sys.App.Services.PlayerServices.deletePlayer(req.body.id)
                 return res.send("success");
@@ -320,7 +356,9 @@ module.exports = {
 
         try {
 
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.body.id });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.body.id
+            });
             if (player || player.length > 0) {
                 if (player.status == 'active') {
                     await Sys.App.Services.PlayerServices.updatePlayerData({
@@ -351,7 +389,9 @@ module.exports = {
 
         try {
 
-            let player = await Sys.App.Services.PlayerServices.getPlayerData({ _id: req.body.id });
+            let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                _id: req.body.id
+            });
             if (player || player.length > 0) {
 
                 await Sys.App.Services.PlayerServices.updatePlayerData({
@@ -370,10 +410,14 @@ module.exports = {
 
     convert: async function(req, res) {
         try {
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.body.id });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.body.id
+            });
             if (player || player.length > 0) {
                 if (!player.isCash) {
-                    const superAdmin = await Sys.App.Services.UserServices.getSingleUserData({ isSuperAdmin: true });
+                    const superAdmin = await Sys.App.Services.UserServices.getSingleUserData({
+                        isSuperAdmin: true
+                    });
                     await Sys.App.Services.PlayerServices.updatePlayerData({
                         _id: req.body.id
                     }, {
@@ -395,7 +439,10 @@ module.exports = {
     chipsAdd: async function(req, res) {
         try {
             console.log("This is prohibited!", req.body);
-            res.send({ 'status': 'fail', 'message': "This is prohibited!" });
+            res.send({
+                'status': 'fail',
+                'message': "This is prohibited!"
+            });
 
             /*console.log("chipsAdd req.body: ", req.body);
 
@@ -472,12 +519,22 @@ module.exports = {
 
     getChipsNotes: async function(req, res) {
         try {
-            var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({ 'requestById': req.session.details.id, 'requestToId': req.body.player_id });
+            var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({
+                'requestById': req.session.details.id,
+                'requestToId': req.body.player_id
+            });
             console.log("noteDetail: ", noteDetail);
-            res.send({ 'status': 'success', 'message': 'chips note', data: noteDetail });
+            res.send({
+                'status': 'success',
+                'message': 'chips note',
+                data: noteDetail
+            });
         } catch (e) {
             console.log("Error when get chips note: ", e)
-            res.send({ 'status': 'fail', 'message': 'Player chips note not availabel' });
+            res.send({
+                'status': 'fail',
+                'message': 'Player chips note not availabel'
+            });
         }
     },
 
@@ -488,7 +545,11 @@ module.exports = {
 
                 var noteId = req.body.noteId;
                 var noteDetail = req.body.edit_chips_note;
-                await Sys.App.Services.agentServices.updateChipsNoteData({ '_id': noteId }, { 'note': noteDetail });
+                await Sys.App.Services.agentServices.updateChipsNoteData({
+                    '_id': noteId
+                }, {
+                    'note': noteDetail
+                });
 
                 req.flash("success", 'Note updated successfully');
             } else {
@@ -520,10 +581,15 @@ module.exports = {
             let current_date = moment(new Date()).format("YYYY-MM-DD HH:mm");
             if ((current_date >= m_start_date && current_date <= m_end_date && Sys.Setting.maintenance.status == 'active') || Sys.Setting.maintenance.quickMaintenance == "active") {
                 req.flash('error', 'Maintenance mode is on please try again later.');
-                res.send({ 'status': 'fail', 'message': 'Server under maintenance' });
+                res.send({
+                    'status': 'fail',
+                    'message': 'Server under maintenance'
+                });
             } else {
                 let operation = req.body.action;
-                let playerDetails = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.body.playerId });
+                let playerDetails = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                    _id: req.body.playerId
+                });
                 if (req.session.details.is_admin == 'yes') {
                     let transaction = {
                         to: req.body.playerId,
@@ -547,12 +613,19 @@ module.exports = {
                     let response = await Sys.Helper.Poker.Transaction(transaction);
                     console.log(response);
                 } else if (req.session.details.is_admin != 'yes' && playerDetails.agentId != req.session.details.id) {
-                    res.send({ status: 'fail', result: null, message: 'No Player Found' });
+                    res.send({
+                        status: 'fail',
+                        result: null,
+                        message: 'No Player Found'
+                    });
                     let backURL = req.header('Referer') || '/agents';
                     res.redirect(backURL);
                     return;
                 }
-                var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({ 'requestById': req.session.details.id, 'requestToId': req.body.playerId });
+                var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({
+                    'requestById': req.session.details.id,
+                    'requestToId': req.body.playerId
+                });
                 if (noteDetail == null) {
                     await Sys.App.Services.agentServices.insertChipsNoteData({
                         requestById: req.session.details.id,
@@ -561,7 +634,11 @@ module.exports = {
                         type: 'player'
                     });
                 } else {
-                    await Sys.App.Services.agentServices.updateChipsNoteData({ '_id': noteDetail._id }, { 'note': req.body.chips_note });
+                    await Sys.App.Services.agentServices.updateChipsNoteData({
+                        '_id': noteDetail._id
+                    }, {
+                        'note': req.body.chips_note
+                    });
                 }
                 req.flash("success", 'Chips updated successfully');
                 let backURL = req.header('Referer') || '/agents';
@@ -604,9 +681,16 @@ module.exports = {
             let query = {};
             if (search != '') {
                 let capital = search;
-                query = { username: { $regex: '.*' + search + '.*' }, user_id: req.params.id };
+                query = {
+                    username: {
+                        $regex: '.*' + search + '.*'
+                    },
+                    user_id: req.params.id
+                };
             } else {
-                query = { user_id: req.params.id };
+                query = {
+                    user_id: req.params.id
+                };
             }
             let columns = [
                 'id',
@@ -638,7 +722,9 @@ module.exports = {
     cashTransactionHistory: async function(req, res) {
         try {
 
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.params.id });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.params.id
+            });
 
             var data = {
                 App: Sys.Config.App.details,
@@ -662,22 +748,57 @@ module.exports = {
             let length = parseInt(req.query.length);
             let search = req.query.search.value;
             let query = {};
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.params.id });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.params.id
+            });
             if (player.isCash == true) {
                 if (search != '') {
-                    query = { $and: [{ $or: [{ 'receiverId': req.params.id }, { user_id: req.params.id }] }, { email: { $regex: '.*' + search + '.*' } }] }
+                    query = {
+                        $and: [{
+                            $or: [{
+                                'receiverId': req.params.id
+                            }, {
+                                user_id: req.params.id
+                            }]
+                        }, {
+                            email: {
+                                $regex: '.*' + search + '.*'
+                            }
+                        }]
+                    }
                 } else {
-                    query = { $or: [{ 'receiverId': req.params.id }, { user_id: req.params.id }] };
+                    query = {
+                        $or: [{
+                            'receiverId': req.params.id
+                        }, {
+                            user_id: req.params.id
+                        }]
+                    };
                 }
-                query.type = { '$nin': ['winner', 'lose'] }
+                query.type = {
+                    '$nin': ['winner', 'lose']
+                }
 
                 var countData = await Sys.App.Services.AllUsersTransactionHistoryServices.getCount(query);
-                var data = await Sys.App.Services.AllUsersTransactionHistoryServices.getByData(query, null, { skip: start, limit: length, sort: { createdAt: -1 } });
+                var data = await Sys.App.Services.AllUsersTransactionHistoryServices.getByData(query, null, {
+                    skip: start,
+                    limit: length,
+                    sort: {
+                        createdAt: -1
+                    }
+                });
             } else {
                 if (search != '') {
-                    query = { 'playerId': req.params.id, transactionNumber: { $regex: '.*' + search + '.*' } };
+                    query = {
+                        'playerId': req.params.id,
+                        transactionNumber: {
+                            $regex: '.*' + search + '.*'
+                        }
+                    };
                 } else {
-                    query = { 'playerId': req.params.id };
+                    query = {
+                        'playerId': req.params.id
+                    };
                 }
 
                 var countData = await Sys.App.Services.ChipsHistoryServices.getCashTransactionHistoryCount(query);
@@ -713,17 +834,32 @@ module.exports = {
             let chipsCount = await Sys.App.Services.ChipsHistoryServices.getCashTransactionHistoryCount(query);
             let data = await Sys.App.Services.ChipsHistoryServices.getCashTransactionDatatable(query, length, start);*/
 
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.params.id });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.params.id
+            });
 
             console.log("player: ", player);
 
             if (search != '') {
-                query = { 'receiverId': req.params.id, email: { $regex: '.*' + search + '.*' } };
+                query = {
+                    'receiverId': req.params.id,
+                    email: {
+                        $regex: '.*' + search + '.*'
+                    }
+                };
             } else {
-                query = { 'receiverId': req.params.id };
+                query = {
+                    'receiverId': req.params.id
+                };
             }
             let Count = await Sys.App.Services.AllUsersTransactionHistoryServices.getCount(query);
-            let data = await Sys.App.Services.AllUsersTransactionHistoryServices.getByData(query, null, { skip: start, limit: length, sort: { createdAt: -1 } });
+            let data = await Sys.App.Services.AllUsersTransactionHistoryServices.getByData(query, null, {
+                skip: start,
+                limit: length,
+                sort: {
+                    createdAt: -1
+                }
+            });
             var obj = {
                 'draw': req.query.draw,
                 'recordsTotal': Count,
@@ -762,9 +898,16 @@ module.exports = {
             let query = {};
             if (search != '') {
                 let capital = search;
-                query = { email: { $regex: '.*' + search + '.*' }, player: req.params.id };
+                query = {
+                    email: {
+                        $regex: '.*' + search + '.*'
+                    },
+                    player: req.params.id
+                };
             } else {
-                query = { player: req.params.id };
+                query = {
+                    player: req.params.id
+                };
             }
             let columns = [
                 'id',
@@ -793,6 +936,13 @@ module.exports = {
     },
 
     allPlayers: async function(req, res) {
+        let getTopPlayers = await Sys.App.Services.PlayerServices.getLimitedPlayerWithSort({}, 8, 'chips', -1);
+        let latestPalyer = await Sys.App.Services.PlayerServices.getLimitPlayer({});
+        console.log(latestPalyer);
+        for (var m = 0; m < latestPalyer.length; m++) {
+            let dt = new Date(latestPalyer[m].createdAt);
+            latestPalyer[m].createdAtFormated = moment(dt).format('YYYY/MM/DD');
+        }
         try {
             var data = {
                 App: Sys.Config.App.details,
@@ -801,7 +951,11 @@ module.exports = {
                 success: req.flash("success"),
                 allPlayers: 'true',
                 myPlayerActive: 'active',
-                PlayerMenu: 'active menu-open'
+                PlayerMenu: 'active menu-open',
+                latestPalyer: latestPalyer,
+                topPlayers: getTopPlayers,
+                currency: await Sys.App.Services.CurrencyServices.getByData({}),
+                setting: await Sys.App.Services.SettingsServices.getSettingsData({})
             };
             return res.render('player/player', data);
         } catch (e) {
@@ -818,9 +972,16 @@ module.exports = {
             let search = req.query.search.value;
             let type = req.query.type;
             console.log("TYPE", type)
-            let query = { isCash: (type === 'true') };
+            let query = {
+                isCash: (type === 'true')
+            };
             if (search != '') {
-                query = { isCash: (type === 'true'), username: { $regex: '.*' + search + '.*' } };
+                query = {
+                    isCash: (type === 'true'),
+                    username: {
+                        $regex: '.*' + search + '.*'
+                    }
+                };
             }
 
             let allPlayersCount = await Sys.App.Services.PlayerServices.getPlayerCount(query);
@@ -830,7 +991,9 @@ module.exports = {
             //let data = await Sys.App.Services.PlayerServices.getPlayerData(query);
 
             for (let i = 0; i < data.length; i++) {
-                let agent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: data[i].agentId }, ['username'])
+                let agent = await Sys.App.Services.agentServices.getSingleAgentData({
+                    _id: data[i].agentId
+                }, ['username'])
                 if (agent == null) {
                     data[i].agentName = 'admin'
                 } else {
@@ -877,9 +1040,24 @@ module.exports = {
             let length = parseInt(req.query.length);
             let search = req.query.search.value;
 
-            let query = { history: { $elemMatch: { playerId: req.params.id } } };
+            let query = {
+                history: {
+                    $elemMatch: {
+                        playerId: req.params.id
+                    }
+                }
+            };
             if (search != '') {
-                query = { gameNumber: { $regex: '.*' + search + '.*' }, history: { $elemMatch: { playerId: req.params.id } } };
+                query = {
+                    gameNumber: {
+                        $regex: '.*' + search + '.*'
+                    },
+                    history: {
+                        $elemMatch: {
+                            playerId: req.params.id
+                        }
+                    }
+                };
             }
 
             let gameCount = await Sys.App.Services.GameService.getGameCount(query);
@@ -902,10 +1080,20 @@ module.exports = {
     playerProfile: async function(req, res) {
         try {
             var date = new Date();
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.params.id });
-            let gamePlayed = await Sys.App.Services.gameStatisticsServices.getCount({ player: req.params.id });
-            let gamewon = await Sys.App.Services.gameStatisticsServices.getCount({ player: req.params.id, result: 'Won' });
-            let gameLost = await Sys.App.Services.gameStatisticsServices.getCount({ player: req.params.id, result: 'Lost' });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.params.id
+            });
+            let gamePlayed = await Sys.App.Services.gameStatisticsServices.getCount({
+                player: req.params.id
+            });
+            let gamewon = await Sys.App.Services.gameStatisticsServices.getCount({
+                player: req.params.id,
+                result: 'Won'
+            });
+            let gameLost = await Sys.App.Services.gameStatisticsServices.getCount({
+                player: req.params.id,
+                result: 'Lost'
+            });
 
             //START: Today rack
             var startDate = new Date();
@@ -928,7 +1116,9 @@ module.exports = {
                 {
                     $group: {
                         _id: null,
-                        count: { $sum: '$totalRack' },
+                        count: {
+                            $sum: '$totalRack'
+                        },
                     }
                 }
             ];
@@ -962,7 +1152,9 @@ module.exports = {
                 {
                     $group: {
                         _id: null,
-                        count: { $sum: '$totalRack' },
+                        count: {
+                            $sum: '$totalRack'
+                        },
                     }
                 }
             ];
@@ -996,7 +1188,9 @@ module.exports = {
                 {
                     $group: {
                         _id: null,
-                        count: { $sum: '$totalRack' },
+                        count: {
+                            $sum: '$totalRack'
+                        },
                     }
                 }
             ];
@@ -1007,7 +1201,9 @@ module.exports = {
                 var monthallyRakeTotal = parseFloat(monthallyTotalRack[0].count).toFixed(2);
             }
             //END: Monthally rack
-            console.log({ player })
+            console.log({
+                player
+            })
             var data = {
                 App: Sys.Config.App.details,
                 Agent: req.session.details,
@@ -1058,7 +1254,9 @@ module.exports = {
     rackDeduction: async function(req, res) {
         try {
             //console.log("playerId",req.body.playerId);
-            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: req.body.playerId });
+            let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                _id: req.body.playerId
+            });
             //console.log(player.username, player.agentRole, player.agentId);
             if (player.agentId !== '' && player.agentId !== null) {
 
@@ -1074,7 +1272,9 @@ module.exports = {
                 for (let rd = agentRoleId; rd >= 0; rd--) {
                     if (rd == 0) {
 
-                        let master = await Sys.App.Services.agentServices.getSingleAgentData({ _id: allAgents[allAgents.length - 1] });
+                        let master = await Sys.App.Services.agentServices.getSingleAgentData({
+                            _id: allAgents[allAgents.length - 1]
+                        });
 
                         allAgentsRole.push('admin');
 
@@ -1082,7 +1282,9 @@ module.exports = {
                         module.exports.rackDeductionUpdate(req.body.playerId, req.body.gameId, req.body.won, adminRack, totalRackDeduction, allAgentsRole[allAgentsRole.length - 2], allAgentsRole[allAgentsRole.length - 1], allAgentsFromToIds[allAgentsFromToIds.length - 2], allAgentsFromToIds[allAgentsFromToIds.length - 1]);
                     } else {
 
-                        let agent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: allAgents[allAgents.length - 1] });
+                        let agent = await Sys.App.Services.agentServices.getSingleAgentData({
+                            _id: allAgents[allAgents.length - 1]
+                        });
                         allAgents.push(agent.parentId);
 
                         allAgentsRole.push(agent.role + ' ( ' + agent.email + ')');
@@ -1144,7 +1346,9 @@ module.exports = {
                 //return processPage(documents);
                 //console.log("new Docs",newDocuments)
                 var last_id = documents[documents.length - 1]['_id'];
-                query['_id'] = { '$gt': last_id };
+                query['_id'] = {
+                    '$gt': last_id
+                };
                 console.log("query", query)
                 return [processPage(documents), this.getExportedData(query, pageSize, processPage)];
 
@@ -1180,7 +1384,9 @@ module.exports = {
 
 
         // recursison
-        let data = await module.exports.getPlayerData({ agentId: req.session.details.id }, 1)
+        let data = await module.exports.getPlayerData({
+                agentId: req.session.details.id
+            }, 1)
             //.then((sentence) => console.log(sentence));
         res.send(data);
 
@@ -1210,7 +1416,9 @@ module.exports = {
                 };
             } else {
                 var last_id = documents[documents.length - 1]['_id'];
-                query['_id'] = { '$gt': last_id };
+                query['_id'] = {
+                    '$gt': last_id
+                };
                 //await module.exports.wait(500);
                 return {
                     data: documents,
@@ -1242,7 +1450,9 @@ module.exports = {
             var players = await Sys.App.Services.PlayerServices.getByData({});
             console.log("players.length: ", players.length);
             for (var i = 0; i < players.length; i++) {
-                await Sys.App.Services.PlayerServices.updatePlayerData({ _id: players[i]._id });
+                await Sys.App.Services.PlayerServices.updatePlayerData({
+                    _id: players[i]._id
+                });
             }
 
             console.log("Players balance update")
@@ -1253,25 +1463,68 @@ module.exports = {
     updateSystemBalance: async function(req, res) {
         try {
             let waitingPlayers = []
-            var waitingRoom = await Sys.App.Services.RoomServices.getRoomData({ 'status': { '$in': ['Finished', 'Waiting'] } });
+            var waitingRoom = await Sys.App.Services.RoomServices.getRoomData({
+                'status': {
+                    '$in': ['Finished', 'Waiting']
+                }
+            });
             for (let index = 0; index < waitingRoom.length; index++) {
                 if (waitingRoom[index].players) {
                     for (let index1 = 0; index1 < waitingRoom[index].players.length; index1++) {
                         let waiting = {}
                         if (waitingRoom[index].players[index1].status != "Left") {
-                            waiting = { id: mongoose.Types.ObjectId(waitingRoom[index].players[index1].id), chips: waitingRoom[index].players[index1].chips, username: waitingRoom[index].players[index1].playerName }
+                            waiting = {
+                                id: mongoose.Types.ObjectId(waitingRoom[index].players[index1].id),
+                                chips: waitingRoom[index].players[index1].chips,
+                                username: waitingRoom[index].players[index1].playerName
+                            }
                             waitingPlayers.push(waiting)
                         }
                     }
                 }
             }
             let data = [];
-            var admin = await Sys.App.Services.UserServices.getSingleUserData({ $or: [{ chips: { $gte: 0.01 } }, { rake_chips: { $gte: 0.01 } }, { extraRakeChips: { $gte: 0.01 } }] }, null, null, ['chips', 'email', 'role', 'rake_chips', 'extraRakeChips']);
+            var admin = await Sys.App.Services.UserServices.getSingleUserData({
+                $or: [{
+                    chips: {
+                        $gte: 0.01
+                    }
+                }, {
+                    rake_chips: {
+                        $gte: 0.01
+                    }
+                }, {
+                    extraRakeChips: {
+                        $gte: 0.01
+                    }
+                }]
+            }, null, null, ['chips', 'email', 'role', 'rake_chips', 'extraRakeChips']);
             data = data.concat(admin)
-            var agents = await Sys.App.Services.agentServices.getAgentDatatable({ $or: [{ chips: { $gte: 0.01 } }, { rake_chips: { $gte: 0.01 } }] }, null, null, ['username', 'chips', 'parentId', 'email', 'level', 'role', 'rake_chips']);
+            var agents = await Sys.App.Services.agentServices.getAgentDatatable({
+                $or: [{
+                    chips: {
+                        $gte: 0.01
+                    }
+                }, {
+                    rake_chips: {
+                        $gte: 0.01
+                    }
+                }]
+            }, null, null, ['username', 'chips', 'parentId', 'email', 'level', 'role', 'rake_chips']);
             data = data.concat(agents)
                 // var players =  await Sys.App.Services.PlayerServices.getPlayerDatatable({isCash:true}, null, null, ['username','chips','agentId','agentRole','email']);
-            var players = await Sys.App.Services.PlayerServices.getPlayerDatatable({ isCash: true, $or: [{ chips: { $gte: 0.01 } }, { rake_chips: { $gte: 0.01 } }] }, null, null, ['username', 'chips', 'agentId', 'agentRole', 'email', 'uniqId']);
+            var players = await Sys.App.Services.PlayerServices.getPlayerDatatable({
+                isCash: true,
+                $or: [{
+                    chips: {
+                        $gte: 0.01
+                    }
+                }, {
+                    rake_chips: {
+                        $gte: 0.01
+                    }
+                }]
+            }, null, null, ['username', 'chips', 'agentId', 'agentRole', 'email', 'uniqId']);
             for (let index = 0; index < players.length; index++) {
                 for (let index1 = 0; index1 < waitingPlayers.length; index1++) {
                     if (waitingPlayers[index1].username == players[index].username) {
@@ -1306,12 +1559,16 @@ module.exports = {
     identifiertoken: async function(req, res) {
         try {
             console.log('identifiertoken:', req.body.id, req.body.identifiertoken);
-            let player = await Sys.App.Services.PlayerServices.getPlayerData({ _id: req.body.id });
+            let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                _id: req.body.id
+            });
             if (player && player.length > 0) {
                 let data = {
                     identifiertoken: req.body.identifiertoken
                 };
-                await Sys.App.Services.PlayerServices.updatePlayerData({ _id: req.body.id }, data);
+                await Sys.App.Services.PlayerServices.updatePlayerData({
+                    _id: req.body.id
+                }, data);
                 return res.send("success");
             } else {
                 return res.send("error");
@@ -1404,7 +1661,9 @@ module.exports = {
             }
 
             // Check Username & Email Already Avilable
-            player = await await Sys.App.Services.PlayerServices.getSinglePlayerData({ email: data.mobile });
+            player = await await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                email: data.mobile
+            });
             if (player) { // When Player Found
                 req.flash('error', 'Phone Number already taken.');
                 return res.redirect(gameURL);
@@ -1602,9 +1861,12 @@ module.exports = {
 
             // Define Validation Rules
             let playerObj = {
-                $or: [
-                    { username: data.username },
-                    { email: data.username }
+                $or: [{
+                        username: data.username
+                    },
+                    {
+                        email: data.username
+                    }
                 ]
             };
 
@@ -1653,7 +1915,9 @@ module.exports = {
                 console.log("player id on login", player.username);
 
                 // set jwt token
-                var token = jwt.sign({ id: player.id }, jwtcofig.secret, {
+                var token = jwt.sign({
+                    id: player.id
+                }, jwtcofig.secret, {
                     expiresIn: 60 // expires in 1 minute
                 });
 
@@ -1701,7 +1965,9 @@ module.exports = {
                         console.log("PLAYER ID", playerId);
                         let randomvalue = await randomString(36);
                         console.log("RANDOM VALUE", randomvalue);
-                        let player = await Sys.App.Services.PlayerServices.getPlayerData({ _id: playerId });
+                        let player = await Sys.App.Services.PlayerServices.getPlayerData({
+                            _id: playerId
+                        });
                         console.log("player", player);
 
                         if (player && player.length > 0) {
@@ -1709,7 +1975,9 @@ module.exports = {
                                 identifiertoken: randomvalue
                             };
                             console.log("DTATA", data);
-                            let my = await Sys.App.Services.PlayerServices.updatePlayerData({ _id: playerId }, data);
+                            let my = await Sys.App.Services.PlayerServices.updatePlayerData({
+                                _id: playerId
+                            }, data);
                             console.log("MYYY", my);
                             return res.redirect("https://pokerscript.net/WPA/index.html?token=" + randomvalue + "&u=" + playerId + "&lang=" + language);
                         } else {
@@ -1765,7 +2033,12 @@ module.exports = {
 
     getAccountNumberUpdateRequest: async function(req, res) {
         try {
-            const { draw, start, length, type } = req.query;
+            const {
+                draw,
+                start,
+                length,
+                type
+            } = req.query;
             const search = req.query.search.value;
             let query = {};
             if (search != '') {
@@ -1773,12 +2046,18 @@ module.exports = {
                 query = {
                     agentId: req.session.details.id,
                     isCash: type === 'true',
-                    username: { $regex: '.*' + search + '.*' }
+                    username: {
+                        $regex: '.*' + search + '.*'
+                    }
                 };
             } else {
-                query = { action: false };
+                query = {
+                    action: false
+                };
             }
-            console.log({ query })
+            console.log({
+                query
+            })
             const [requestCount, requestsData] = await Promise.all([
                 Sys.App.Services.PlayerServices.getRequestCount(query),
                 Sys.App.Services.PlayerServices.getRequestDataTable(query, parseInt(length), parseInt(start))
@@ -1795,7 +2074,10 @@ module.exports = {
 
     UpdateAccountNumberRequest: async function(req, res) {
         try {
-            const { id, flag } = req.body;
+            const {
+                id,
+                flag
+            } = req.body;
             if (flag == 1) {
                 const accountInfo = await Sys.App.Services.PlayerServices.getSingleRequestData(id);
                 if (!accountInfo || accountInfo instanceof Error) {
@@ -1804,7 +2086,11 @@ module.exports = {
                     }
                     return res.send(obj);
                 }
-                const updatePlayer = await Sys.App.Services.PlayerServices.updatePlayerData({ _id: accountInfo.playerId }, { accountNumber: accountInfo.accountNumber });
+                const updatePlayer = await Sys.App.Services.PlayerServices.updatePlayerData({
+                    _id: accountInfo.playerId
+                }, {
+                    accountNumber: accountInfo.accountNumber
+                });
                 console.log(updatePlayer)
                 if (!updatePlayer.nModified || updatePlayer instanceof Error) {
                     const obj = {
@@ -1834,6 +2120,15 @@ module.exports = {
 
     depositReceipt: async function(req, res) {
         try {
+            var permission = false;
+            if (req.session.details.admin_type == 'admin') {
+                permission = true;
+            } else if (req.session.details.admin_type == 'senioradmin') {
+                permission = true;
+            }
+            if (permission == false) {
+                return res.render('403');
+            }
             const data = {
                 App: Sys.Config.App.details,
                 Agent: req.session.details,
@@ -1842,7 +2137,11 @@ module.exports = {
                 success: req.flash('success'),
                 depositActive: 'active'
             };
-            await Sys.App.Services.PlayerServices.updateDepositNotification({}, { $set: { seen: true } });
+            await Sys.App.Services.PlayerServices.updateDepositNotification({}, {
+                $set: {
+                    seen: true
+                }
+            });
             return res.render('deposit/depositReceipt', data);
         } catch (err) {
             console.log(err);
@@ -1851,7 +2150,21 @@ module.exports = {
 
     getDepositReceipt: async function(req, res) {
         try {
-            const { draw, start, length, type } = req.query;
+            var permission = false;
+            if (req.session.details.admin_type == 'admin') {
+                permission = true;
+            } else if (req.session.details.admin_type == 'senioradmin') {
+                permission = true;
+            }
+            if (permission == false) {
+                return res.render('403');
+            }
+            const {
+                draw,
+                start,
+                length,
+                type
+            } = req.query;
             const search = req.query.search.value;
             let query = {};
             if (search != '') {
@@ -1859,12 +2172,18 @@ module.exports = {
                 query = {
                     agentId: req.session.details.id,
                     isCash: type === 'true',
-                    username: { $regex: '.*' + search + '.*' }
+                    username: {
+                        $regex: '.*' + search + '.*'
+                    }
                 };
             } else {
-                query = { action: false };
+                query = {
+                    action: false
+                };
             }
-            console.log({ query })
+            console.log({
+                query
+            })
             const [depositReceiptCount, depositReceiptData] = await Promise.all([
                 Sys.App.Services.PlayerServices.getDepositReceiptCount(query),
                 Sys.App.Services.PlayerServices.getDepositReceiptDataTable(query, parseInt(length), parseInt(start))
@@ -1881,8 +2200,20 @@ module.exports = {
 
     depositHandler: async function(req, res) {
         try {
+            var permission = false;
+            if (req.session.details.admin_type == 'admin') {
+                permission = true;
+            } else if (req.session.details.admin_type == 'senioradmin') {
+                permission = true;
+            }
+            if (permission == false) {
+                return res.render('403');
+            }
             console.log("depositHandler called")
-            const { id, flag } = req.body;
+            const {
+                id,
+                flag
+            } = req.body;
             if (flag == 1) {
                 const depositReceipt = await Sys.App.Services.PlayerServices.getSingleReceiptData(id);
                 if (!depositReceipt || depositReceipt instanceof Error) {
@@ -1892,9 +2223,13 @@ module.exports = {
                     }
                     return res.send(obj);
                 }
-                let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: depositReceipt.playerId });
+                let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                    _id: depositReceipt.playerId
+                });
                 if (player) {
-                    let parentAgent = await Sys.App.Services.UserServices.getSingleUserData({ _id: req.session.details.id });
+                    let parentAgent = await Sys.App.Services.UserServices.getSingleUserData({
+                        _id: req.session.details.id
+                    });
 
                     console.log("parentAgent: ", parentAgent);
 
@@ -1927,8 +2262,15 @@ module.exports = {
                         }
                         return res.send(obj);
                     }
-                    await Sys.App.Services.PlayerServices.updatePlayerData({ _id: depositReceipt.playerId }, { chips: newChips });
-                    await Sys.Io.to([player.socketId]).emit('OnPlayerChipsUpdate', { playerId: player.id, playersChips: newChips });
+                    await Sys.App.Services.PlayerServices.updatePlayerData({
+                        _id: depositReceipt.playerId
+                    }, {
+                        chips: newChips
+                    });
+                    await Sys.Io.to([player.socketId]).emit('OnPlayerChipsUpdate', {
+                        playerId: player.id,
+                        playersChips: newChips
+                    });
                     await Sys.App.Services.UserServices.updateUserData({
                         _id: req.session.details.id
                     }, {
@@ -1968,7 +2310,10 @@ module.exports = {
                         'status': 'success',
                     });
 
-                    var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({ 'requestById': req.session.details.id, 'requestToId': depositReceipt.playerId });
+                    var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({
+                        'requestById': req.session.details.id,
+                        'requestToId': depositReceipt.playerId
+                    });
                     if (noteDetail == null) {
                         await Sys.App.Services.agentServices.insertChipsNoteData({
                             requestById: req.session.details.id,
@@ -1977,9 +2322,16 @@ module.exports = {
                             type: 'player'
                         });
                     } else {
-                        await Sys.App.Services.agentServices.updateChipsNoteData({ '_id': noteDetail._id }, { 'note': 'deposit' });
+                        await Sys.App.Services.agentServices.updateChipsNoteData({
+                            '_id': noteDetail._id
+                        }, {
+                            'note': 'deposit'
+                        });
                     }
-                    const result = await Sys.App.Services.PlayerServices.updateDepositData(id, { status: 'approved', action: true });
+                    const result = await Sys.App.Services.PlayerServices.updateDepositData(id, {
+                        status: 'approved',
+                        action: true
+                    });
                     const obj = {
                         'success': 'success',
                         'message': 'Successfully Updated',
@@ -1993,7 +2345,10 @@ module.exports = {
                     return res.send(obj);
                 }
             } else {
-                const result = await Sys.App.Services.PlayerServices.updateDepositData(id, { status: 'Denied', action: true });
+                const result = await Sys.App.Services.PlayerServices.updateDepositData(id, {
+                    status: 'Denied',
+                    action: true
+                });
                 const obj = {
                     'success': 'success',
                     'message': 'Successfully Updated',
@@ -2011,6 +2366,15 @@ module.exports = {
 
     withdraw: async function(req, res) {
         try {
+            var permission = false;
+            if (req.session.details.admin_type == 'admin') {
+                permission = true;
+            } else if (req.session.details.admin_type == 'senioradmin') {
+                permission = true;
+            }
+            if (permission == false) {
+                return res.render('403');
+            }
             const data = {
                 App: Sys.Config.App.details,
                 Agent: req.session.details,
@@ -2019,7 +2383,11 @@ module.exports = {
                 success: req.flash('success'),
                 withdrawActive: 'active'
             };
-            await Sys.App.Services.PlayerServices.updateWithdrawNotification({}, { $set: { seen: true } });
+            await Sys.App.Services.PlayerServices.updateWithdrawNotification({}, {
+                $set: {
+                    seen: true
+                }
+            });
             return res.render('withdraw/withdraw', data);
         } catch (err) {
             console.log(err);
@@ -2028,7 +2396,21 @@ module.exports = {
 
     getWithdraw: async function(req, res) {
         try {
-            const { draw, start, length, type } = req.query;
+            var permission = false;
+            if (req.session.details.admin_type == 'admin') {
+                permission = true;
+            } else if (req.session.details.admin_type == 'senioradmin') {
+                permission = true;
+            }
+            if (permission == false) {
+                return res.render('403');
+            }
+            const {
+                draw,
+                start,
+                length,
+                type
+            } = req.query;
             const search = req.query.search.value;
             let query = {};
             if (search != '') {
@@ -2036,17 +2418,25 @@ module.exports = {
                 query = {
                     agentId: req.session.details.id,
                     isCash: type === 'true',
-                    username: { $regex: '.*' + search + '.*' }
+                    username: {
+                        $regex: '.*' + search + '.*'
+                    }
                 };
             } else {
-                query = { action: false };
+                query = {
+                    action: false
+                };
             }
-            console.log({ query })
+            console.log({
+                query
+            })
             const [withdrawCount, withdrawData] = await Promise.all([
                 Sys.App.Services.PlayerServices.getWithdrawCount(query),
                 Sys.App.Services.PlayerServices.getWithdrawDataTable(query, parseInt(length), parseInt(start))
             ]);
-            console.log({ withdrawData });
+            console.log({
+                withdrawData
+            });
             const obj = {
                 draw: draw,
                 recordsTotal: withdrawCount,
@@ -2059,11 +2449,25 @@ module.exports = {
 
     withdrawHandler: async function(req, res) {
         try {
+            var permission = false;
+            if (req.session.details.admin_type == 'admin') {
+                permission = true;
+            } else if (req.session.details.admin_type == 'senioradmin') {
+                permission = true;
+            }
+            if (permission == false) {
+                return res.render('403');
+            }
             console.log("withdrawHandler called")
-            const { id, flag } = req.body;
+            const {
+                id,
+                flag
+            } = req.body;
             if (flag == 2) {
                 const withdraw = await Sys.App.Services.PlayerServices.getSingleWithdrawData(id);
-                console.log({ withdraw })
+                console.log({
+                    withdraw
+                })
                 if (!withdraw || withdraw instanceof Error) {
                     const obj = {
                         'fail': 'fail',
@@ -2071,9 +2475,13 @@ module.exports = {
                     }
                     return res.send(obj);
                 }
-                let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ _id: withdraw.playerId });
+                let player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                    _id: withdraw.playerId
+                });
                 if (player) {
-                    let parentAgent = await Sys.App.Services.UserServices.getSingleUserData({ _id: req.session.details.id });
+                    let parentAgent = await Sys.App.Services.UserServices.getSingleUserData({
+                        _id: req.session.details.id
+                    });
 
                     console.log("parentAgent: ", parentAgent);
 
@@ -2107,8 +2515,15 @@ module.exports = {
                         return res.send(obj);
                     }
 
-                    await Sys.App.Services.PlayerServices.updatePlayerData({ _id: withdraw.playerId }, { chips: newChips });
-                    await Sys.Io.to([player.socketId]).emit('OnPlayerChipsUpdate', { playerId: player.id, playersChips: newChips });
+                    await Sys.App.Services.PlayerServices.updatePlayerData({
+                        _id: withdraw.playerId
+                    }, {
+                        chips: newChips
+                    });
+                    await Sys.Io.to([player.socketId]).emit('OnPlayerChipsUpdate', {
+                        playerId: player.id,
+                        playersChips: newChips
+                    });
                     await Sys.App.Services.UserServices.updateUserData({
                         _id: req.session.details.id
                     }, {
@@ -2148,7 +2563,10 @@ module.exports = {
                         'status': 'success',
                     });
 
-                    var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({ 'requestById': req.session.details.id, 'requestToId': withdraw.playerId });
+                    var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({
+                        'requestById': req.session.details.id,
+                        'requestToId': withdraw.playerId
+                    });
                     if (noteDetail == null) {
                         await Sys.App.Services.agentServices.insertChipsNoteData({
                             requestById: req.session.details.id,
@@ -2157,9 +2575,16 @@ module.exports = {
                             type: 'player'
                         });
                     } else {
-                        await Sys.App.Services.agentServices.updateChipsNoteData({ '_id': noteDetail._id }, { 'note': 'revert withdraw' });
+                        await Sys.App.Services.agentServices.updateChipsNoteData({
+                            '_id': noteDetail._id
+                        }, {
+                            'note': 'revert withdraw'
+                        });
                     }
-                    const result = await Sys.App.Services.PlayerServices.updateWithdrawData(id, { status: 'Denied', action: true });
+                    const result = await Sys.App.Services.PlayerServices.updateWithdrawData(id, {
+                        status: 'Denied',
+                        action: true
+                    });
                     const obj = {
                         'success': 'success',
                         'message': 'Successfully Updated',
@@ -2173,7 +2598,10 @@ module.exports = {
                     return res.send(obj);
                 }
             } else {
-                const result = await Sys.App.Services.PlayerServices.updateWithdrawData(id, { status: 'Approved', action: true });
+                const result = await Sys.App.Services.PlayerServices.updateWithdrawData(id, {
+                    status: 'Approved',
+                    action: true
+                });
                 const obj = {
                     'success': 'success',
                     'message': 'Successfully Updated',
@@ -2193,8 +2621,12 @@ module.exports = {
             console.log("req.session", req.session)
             const token = req.params.token;
             const column = ['username', 'accountNumber', 'mobile'];
-            const player = await Sys.App.Services.PlayerServices.getSinglePlayerData({ HTMLToken: token }, column);
-            console.log({ player })
+            const player = await Sys.App.Services.PlayerServices.getSinglePlayerData({
+                HTMLToken: token
+            }, column);
+            console.log({
+                player
+            })
             if (!player || player instanceof Error) {
                 const obj = {
                     'fail': 'fail',
@@ -2204,8 +2636,14 @@ module.exports = {
             }
             const response = await Sys.Game.Common.Services.PlayerServices.updatePlayerData({
                 _id: player.id
-            }, { $set: { "HTMLToken": null } });
-            var jwt_token = jwt.sign({ id: player.id }, jwtcofig.secret, {
+            }, {
+                $set: {
+                    "HTMLToken": null
+                }
+            });
+            var jwt_token = jwt.sign({
+                id: player.id
+            }, jwtcofig.secret, {
                 expiresIn: 300 // expires in 5 minute
             });
             req.session.web = {};
@@ -2338,7 +2776,9 @@ module.exports = {
                     };
                     return res.send(obj)
                 }
-                const newDepositReceipt = await Sys.Game.Common.Services.PlayerServices.getNewDepositCount({ seen: false })
+                const newDepositReceipt = await Sys.Game.Common.Services.PlayerServices.getNewDepositCount({
+                    seen: false
+                })
                 await Sys.Io.emit('depositNotification', {
                     count: newDepositReceipt
                 });
@@ -2400,7 +2840,9 @@ module.exports = {
                 };
                 return res.send(obj)
             }
-            const newDepositReceipt = await Sys.Game.Common.Services.PlayerServices.getNewDepositCount({ seen: false })
+            const newDepositReceipt = await Sys.Game.Common.Services.PlayerServices.getNewDepositCount({
+                seen: false
+            })
             await Sys.Io.emit('depositNotification', {
                 count: newDepositReceipt
             });
@@ -2469,7 +2911,9 @@ module.exports = {
             }
             // player = await Sys.App.Services.PlayerServices.getSinglePlayerData({_id: withdraw.playerId});
             if (player) {
-                let parentAgent = await Sys.App.Services.UserServices.getSingleUserData({ isSuperAdmin: true });
+                let parentAgent = await Sys.App.Services.UserServices.getSingleUserData({
+                    isSuperAdmin: true
+                });
 
                 console.log("parentAgent: ", parentAgent);
 
@@ -2497,7 +2941,9 @@ module.exports = {
                     await Sys.Game.CashGame.Texas.Services.PlayerAllTransectionService.createTransaction(transactionAdminDebitData);
                 } else {
                     console.log("player else")
-                    await Sys.Game.Common.Services.PlayerServices.deleteWithdrawData({ _id: withdraw.id });
+                    await Sys.Game.Common.Services.PlayerServices.deleteWithdrawData({
+                        _id: withdraw.id
+                    });
                     const obj = {
                         status: 'failed',
                         result: null,
@@ -2506,8 +2952,15 @@ module.exports = {
                     return res.send(obj)
                 }
 
-                await Sys.App.Services.PlayerServices.updatePlayerData({ _id: withdraw.playerId }, { chips: newChips });
-                await Sys.Io.to([player.socketId]).emit('OnPlayerChipsUpdate', { playerId: player.id, playersChips: newChips });
+                await Sys.App.Services.PlayerServices.updatePlayerData({
+                    _id: withdraw.playerId
+                }, {
+                    chips: newChips
+                });
+                await Sys.Io.to([player.socketId]).emit('OnPlayerChipsUpdate', {
+                    playerId: player.id,
+                    playersChips: newChips
+                });
                 await Sys.App.Services.UserServices.updateUserData({
                     _id: parentAgent.id
                 }, {
@@ -2547,7 +3000,10 @@ module.exports = {
                     'status': 'success',
                 });
 
-                var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({ 'requestById': parentAgent.id, 'requestToId': withdraw.playerId });
+                var noteDetail = await Sys.App.Services.agentServices.getSingleChipsNote({
+                    'requestById': parentAgent.id,
+                    'requestToId': withdraw.playerId
+                });
                 if (noteDetail == null) {
                     await Sys.App.Services.agentServices.insertChipsNoteData({
                         requestById: parentAgent.id,
@@ -2556,9 +3012,15 @@ module.exports = {
                         type: 'player'
                     });
                 } else {
-                    await Sys.App.Services.agentServices.updateChipsNoteData({ '_id': noteDetail._id }, { 'note': 'deposit' });
+                    await Sys.App.Services.agentServices.updateChipsNoteData({
+                        '_id': noteDetail._id
+                    }, {
+                        'note': 'deposit'
+                    });
                 }
-                const newWithdrawReq = await Sys.Game.Common.Services.PlayerServices.getNewWithdrawCount({ seen: false })
+                const newWithdrawReq = await Sys.Game.Common.Services.PlayerServices.getNewWithdrawCount({
+                    seen: false
+                })
                 await Sys.Io.emit('withdrawNotification', {
                     count: newWithdrawReq
                 });
@@ -2570,7 +3032,9 @@ module.exports = {
                 return res.send(obj)
             } else {
                 console.log("errrrr")
-                await Sys.Game.Common.Services.PlayerServices.deleteWithdrawData({ _id: withdraw.id });
+                await Sys.Game.Common.Services.PlayerServices.deleteWithdrawData({
+                    _id: withdraw.id
+                });
                 const obj = {
                     status: 'failed',
                     result: null,
@@ -2592,7 +3056,9 @@ module.exports = {
         try {
             const data = req.body
             data.playerId = req.session.web.details.id
-            let player = await Sys.Game.Common.Services.PlayerServices.getOneByData({ _id: data.playerId });
+            let player = await Sys.Game.Common.Services.PlayerServices.getOneByData({
+                _id: data.playerId
+            });
 
             if (player) {
 

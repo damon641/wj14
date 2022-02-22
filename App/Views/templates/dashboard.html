@@ -1,338 +1,838 @@
 {% extends "partition/layout.html" %} {% block body %}
 
 <!-- Breadcrumb -->
-<section class="content-header">
-    <h1>
-        {{App.name}}
-        <small>Version 2.1.0</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
 
 <!-- /Title -->
-{% include "partition/notification.html" %}
+
 <!-- Row -->
 
 <!-- /Main Content -->
-<section class="content">
-    <div class="main">
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <div class="container-fluid">
-                <!-- OVERVIEW -->
-                <div class="panel panel-headline">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-6 player_box">
-                                        <div class="metric effect5">
-                                            <span class="icon"><i class="fa fa-user-circle"
-                                                    aria-hidden="true"></i></span>
-                                            <p>
-                                                <span class="number">{{totalOnlinePlayers}}</span>
-                                                <span class="title">Active Online Players</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 player_box">
-                                        <div class="metric">
-                                            <span class="icon"><i class="fa fa-life-ring" aria-hidden="true"></i></span>
-                                            <p>
-                                                <span class="number">{{totalGamePlayed}}</span>
-                                                <span class="title">Total Game Played</span>
-                                            </p>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 player_box">
-                                        <div class="metric">
-                                            <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
-                                            <p>
-                                                <span class="number">{{totalRunningGame}} / {{totalPlayingPly}}</span>
-                                                <span class="title">Active Game / Active Player</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 player_box">
-                                        <div class="metric">
-                                            <span class="icon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
-                                            <p>
-                                                <span class="number">{{toalPlayer}}</span>
-                                                <span class="title">Total Playes</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <center>
-                                        <h3>Game Usage</h3>
-                                    </center>
-                                    <!-- <div class="panel-heading-home">
+<div class="container">
 
+    <div class="count_section">
+        <ul>
+            <li class="text_container">
+                <a href="#">
+                    <h3>{{totalOnlinePlayers}}</h3>
+                    <div class="name">Live Player</div>
+                </a>
+            </li>
+            <li class="text_container">
+                <a href="#">
+                    <h3>{{toalPlayer}}</h3>
+                    <div class="name">Total Players</div>
+                </a>
 
-                                        </centre>
-                                    </div> -->
-                                    <div class="panel-body">
-                                        <div class="box-body table-responsive p-0">
-                                            <table class="table table-striped table-valign-middle">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="game_usage">Android</td>
-                                                        <td class="game_usage pull-right text-green"><i class="fa fa-angle-up chartAndroid">
-                                                                0%
-                                                            </i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="game_usage">IOS</td>
-                                                        <td class="game_usage pull-right text-blue"><i class="fa fa-angle-up chartIos">
-                                                                0%
-                                                            </i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="game_usage">Other</td>
-                                                        <td class="game_usage  pull-right text-red"><i class="fa fa-angle-up chartOther">
-                                                                0%
-                                                            </i></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+            </li>
+            <li class="text_container">
+                <a href="#">
+                    <h3>{{totalGamePlayed}}</h3>
+                    <div class="name">Total Game Played</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Primary Checks</h3>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <table class="table table-striped">
+                                <div class="col-md-8" hidden>
+                                    <div class="chart-responsive">
+                                        <canvas id="gameUsages" height="150"></canvas>
                                     </div>
+                                    <!-- ./chart-responsive -->
                                 </div>
-                                <!-- <ul class="nav nav-pills nav-stacked">
-                                    <li>
-                                        <a href="#">Android
-                                            <span class="pull-right text-green">
-                                                <i class="fa fa-angle-up chartAndroid">
-                                                    0%
-                                                </i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">IOS
-                                            <span class="pull-right text-blue">
-                                                <i class="fa fa-angle-up chartIos">
-                                                    0%
-                                                </i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Other
-                                            <span class="pull-right text-red">
-                                                <i class="fa fa-angle-up chartOther">
-                                                    0%
-                                                </i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul> -->
-                            </div>
+                                <tbody>
+                                    <input type="hidden" id="settingId" name="settingId" value="{{setting.id}}">
+                                    <tr>
+                                        <td>Android App</td>
+                                        <td><span class="chartAndroid">0</span>% of Total Player</td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="androidApp" name="androidApp" value="{{setting.androidApp}}">
+                                            <button class="table_btn androidApp androidApp_true" onclick="action( true,'androidApp')"> YES</button>
+                                            <button class="table_btn androidApp androidApp_false" onclick="action( false,'androidApp')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>IOS App</td>
+                                        <td><span class="chartIos">0</span>% of Total Player</td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="iosApp" name="iosApp" value="{{setting.iosApp}}">
+                                            <button class="table_btn iosApp_true" onclick="action( true,'iosApp')"> YES</button>
+                                            <button class="table_btn iosApp_false" onclick="action( false,'iosApp')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Browser App</td>
+                                        <td><span class="chartOther">0</span>% of Total Player</td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="browserApp" name="browserApp" value="{{setting.browserApp}}">
+                                            <button class="table_btn browserApp_true" onclick="action( true,'browserApp')"> YES </button>
+                                            <button class="table_btn browserApp_false" onclick="action( false,'browserApp')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Social Money</td>
+                                        <td></td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="socialMoney" name="socialMoney" value="{{setting.socialMoney}}">
+                                            <button class="table_btn socialMoney_true" onclick="action( true,'socialMoney')"> YES </button>
+                                            <button class="table_btn socialMoney_false" onclick="action( false,'socialMoney')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Real Money</td>
+                                        <td></td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="realMoney" name="realMoney" value="{{setting.realMoney}}">
+                                            <button class="table_btn realMoney_true" onclick="action( true,'realMoney')"> YES </button>
+                                            <button class="table_btn realMoney_false" onclick="action( false,'realMoney')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cash</td>
+                                        <td></td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="cash" name="cash" value="{{setting.cash}}">
+                                            <button class="table_btn cash_true" onclick="action( true,'cash')"> YES </button>
+                                            <button class="table_btn cash_false" onclick="action( false,'cash')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BTC</td>
+                                        <td></td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="btc" name="btc" value="{{setting.btc}}">
+                                            <button class="table_btn btc_true" onclick="action( true,'btc')"> YES </button>
+                                            <button class="table_btn btc_false" onclick="action( false,'btc')"> NO </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Gateway</td>
+                                        <td></td>
+                                        <td class="action_btn">
+                                            <input type="hidden" id="paymentGateway" name="paymentGateway" value="{{setting.paymentGateway}}">
+                                            <button class="table_btn paymentGateway_true" onclick="action( true,'paymentGateway')"> YES </button>
+                                            <button class="table_btn paymentGateway_false" onclick="action( false,'paymentGateway')"> NO </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Game Overview (Games vs Time)</h3>
-                        <div class="box-tools pull-right">
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p class="text-center">
-                                    <strong>Game Played By User from: {{chartStartDate}} - {{chartEndDate}} </strong>
-                                </p>
-                                <div class="chart">
-                                    <canvas id="monthlyPlayedGameChart" style="height: 180px;"></canvas>
-                                </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Tables</h3>
+                            <div class="pull-right">
+                                <button class="table_btn pokerTables active" id="playerType" onclick="change('texas')"
+                                    selected>Texas</button>
+                                <button class="table_btn pokerTables" id="playerType"
+                                    onclick="change('omaha')">Omaha</button>
                             </div>
-                        </div>
+                        </span>
                     </div>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <!-- OVERVIEW -->
-                        <div class="panel panel-headline">
-                            <div class="panel-body panel-body-home">
-                                <div class="row">
-                                    <div class="panel-heading-home">
-                                        <h3 class="panel-title">Newly Joined Players</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="box-body table-responsive p-0">
-                                            <table class="table table-striped table-valign-middle">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Player Name</th>
-                                                        <th>Date</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {%for player in latestPalyer %}
-                                                    <tr>
-                                                        <td><img src="dist/img/user.png" class="img-circle img-size-32 mr-3" alt="User Image"><span class="users-list-name">{{player.username}} </span></td>
-                                                        <td><span class="users-list-date">{{player.createdAtFormated}}</span>
-                                                        </td>
-                                                    </tr>
-                                                    {%endfor%}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="box-footer text-center">
-                                            <a href="/player">View All Player</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <!-- OVERVIEW -->
-                        <div class="panel panel-headline">
-                            <div class="panel-body panel-body-home">
-                                <div class="row">
-                                    <div class="panel-heading-home">
-                                        <h3 class="panel-title">Players Ranking</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="box-body table-responsive p-0">
-                                            <table class="table table-striped table-valign-middle">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Player Name</th>
-                                                        <th>Chips</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for player in topPlayers %}
-                                                    <tr>
-                                                        <td><img src="dist/img/user.png" class="img-circle img-size-32 mr-3" alt="User Image"><a class="users-list-name">{{player.username}}</a></td>
-                                                        <td><span class="users-list-date">{{player.chips}} Chips</span>
-                                                        </td>
-                                                    </tr>
-                                                    {%endfor%}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="box-footer text-center">
-                                            <a href="/player">View All Player</a>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <!-- <select name="pokerTables" id="pokerTables" class="form-control">
+                                    <option value="omaha" >Omaha</option>
+                                    <option value="texas" selected>Texas</option>
+                                </select> -->
+                                <input type="hidden" id="gameType" name="gameType" value="normal">
+                                <input type="hidden" id="tableType" name="gameType" value="{{tableType}}">
+                                <table id="tables" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Small <br> Blind</th>
+                                            <th>Big <br> Blind</th>
+                                            <th>Min <br> Players</th>
+                                            <th>Max <br> Players</th>
+                                            <th>Min <br> BuyIn</th>
+                                            <th>Max <br> BuyIn</th>
+                                            <th>Type</th>
+                                            <th>CashGame</th>
+                                            <th>Status</th>
+                                            <th>Limit</th>
+                                            <th>Table Privacy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Small <br> Blind</th>
+                                            <th>Big <br> Blind</th>
+                                            <th>Min <br> Players</th>
+                                            <th>Max <br> Players</th>
+                                            <th>Min <br> BuyIn</th>
+                                            <th>Max <br> BuyIn</th>
+                                            <th>Type</th>
+                                            <th>CashGame</th>
+                                            <th>Status</th>
+                                            <th>Limit</th>
+                                            <th>Table Privacy</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <!-- OVERVIEW -->
-                        <div class="panel panel-headline">
-                            <div class="panel-body panel-body-home">
-                                <div class="row">
-                                    <div class="panel-heading-home">
-                                        <h3 class="panel-title">Recently Played Games</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered " id="myTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Game Number</th>
-                                                        <th>smallBlind</th>
-                                                        <th>bigBlind</th>
-                                                        <th>status</th>
-                                                        <th>Pot</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="box-footer text-center">
-                                            <a href="/game">View All History</a>
-                                        </div>
-                                    </div>
-                                </div>
+    </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Regular Tournament</h3>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <input type="hidden" id="gameType" name="gameType">
+                                <table id="myTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Speed</th>
+                                            <th>Fee</th>
+                                            <th>Status</th>
+                                            <th>Starts In</th>
+                                            <th>Registration Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Speed</th>
+                                            <th>Fee</th>
+                                            <th>Status</th>
+                                            <th>Starts In</th>
+                                            <th>Registration Status</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-4">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Game Usage</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-8"> -->
-            <div class="chart-responsive">
-                <canvas id="gameUsages" height="150" style="display: none;"></canvas>
-            </div>
-            <!-- </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div> -->
         </div>
     </div>
-    </div>
-    <!-- /.row -->
-</section>
 
-<!-- Footer -->
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 2.1.0
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Sit & Go Tournament</h3>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <input type="hidden" id="gameType" name="gameType">
+                                <table id="mySitnGoTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Game</th>
+                                            <th>Stack</th>
+                                            <th>Fee</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Game</th>
+                                            <th>Stack</th>
+                                            <th>Fee</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <strong>Copyright &copy; 2020 <a href="#">Byte Poker</a>.</strong> All rights reserved.
-</footer>
-<!-- /Footer -->
-
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 {% endblock %} {% block Jscript %}
+<script>
+    function action(value, type) {
+        if (value == true) {
+            $('.' + type + '_false').removeClass('active');
+            $('.' + type + '_true').addClass('active');
+        } else {
+            $('.' + type + '_true').removeClass('active');
+            $('.' + type + '_false').addClass('active');
+        }
+
+        // $('.' + value).(function() {
+        //     $(this).siblings().removeClass('active');
+        //     $(this).addClass('active');
+        // });
+
+
+        var settingId = $('#settingId').val();
+        $.ajax({
+            type: "POST",
+            url: "/updateDashboardSettings",
+            async: true,
+            data: {
+                id: settingId,
+                type: type,
+                value: value
+
+            }
+
+        });
+        return false
+    };
+
+    // $(document).ready(function() 
+    $(document).ready(function() {
+        mainSetting();
+        $('.pokerTables').click(function() {
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+        });
+
+    });
+
+    function mainSetting() {
+        var androidApp = $('#androidApp').val();
+        var iosApp = $('#iosApp').val();
+        var browserApp = $('#browserApp').val();
+        var socialMoney = $('#socialMoney').val();
+        var realMoney = $('#realMoney').val();
+        var cash = $('#cash').val();
+        var btc = $('#btc').val();
+        var paymentGateway = $('#paymentGateway').val();
+        // alert(androidApp);
+        if (androidApp == 'true') {
+            $('.androidApp_false').removeClass('active');
+            $('.androidApp_true').addClass('active');
+        } else {
+            $('.androidApp_true').removeClass('active');
+            $('.androidApp_false').addClass('active');
+        }
+
+        if (iosApp == 'true') {
+            $('.iosApp_false').removeClass('active');
+            $('.iosApp_true').addClass('active');
+        } else {
+            $('.iosApp_true').removeClass('active');
+            $('.iosApp_false').addClass('active');
+        }
+
+        if (browserApp == 'true') {
+            $('.browserApp_false').removeClass('active');
+            $('.browserApp_true').addClass('active');
+        } else {
+            $('.browserApp_true').removeClass('active');
+            $('.browserApp_false').addClass('active');
+        }
+
+        if (socialMoney == 'true') {
+            $('.socialMoney_false').removeClass('active');
+            $('.socialMoney_true').addClass('active');
+        } else {
+            $('.socialMoney_true').removeClass('active');
+            $('.socialMoney_false').addClass('active');
+        }
+
+        if (realMoney == 'true') {
+            $('.realMoney_false').removeClass('active');
+            $('.realMoney_true').addClass('active');
+        } else {
+            $('.realMoney_true').removeClass('active');
+            $('.realMoney_false').addClass('active');
+        }
+
+        if (cash == 'true') {
+            $('.cash_false').removeClass('active');
+            $('.cash_true').addClass('active');
+        } else {
+            $('.cash_true').removeClass('active');
+            $('.cash_false').addClass('active');
+        }
+
+        if (btc == 'true') {
+            $('.btc_false').removeClass('active');
+            $('.btc_true').addClass('active');
+        } else {
+            $('.btc_true').removeClass('active');
+            $('.btc_false').addClass('active');
+        }
+
+        if (paymentGateway == 'true') {
+            $('.paymentGateway_false').removeClass('active');
+            $('.paymentGateway_true').addClass('active');
+        } else {
+            $('.paymentGateway_true').removeClass('active');
+            $('.paymentGateway_false').addClass('active');
+        }
+    };
+
+    var tableType = $('#pokerTables').val();
+    if (tableType === undefined) {
+        var tableType = 'texas';
+    }
+    var orderTable = "";
+    var texasId = $('#gameType').val();
+    var host = window.location.origin;
+    let ajaxUrl = host + "/cashgames/getCashGamePoker/" + texasId + '/' + tableType;
+    $(document).ready(function() {
+        var host = window.location.origin;
+        var texasId = $('#gameType').val();
+    });
+
+    function change(value) {
+        let playerType = value;
+        var tableType = value;
+        var texasId = $('#gameType').val();
+        var host = window.location.origin;
+        let ajaxUrl = host + "/cashgames/getCashGamePoker/" + texasId + '/' + tableType;
+        console.log(ajaxUrl, 'pokerTables')
+        orderTable.ajax.url(ajaxUrl).load();
+    };
+    datatableDraw(ajaxUrl);
+    $(function() {
+        "use strict";
+        var SweetAlert = function() {};
+        SweetAlert.prototype.init = function() {
+                //Parameter
+                $('body').on('click', '.delete', function(e) {
+                    var id = $(this).attr('id');
+                    var thisElement = this;
+                    swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover this Table!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#e69a2a",
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel plx!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'POST',
+                                url: host + "/cashgames/CashPokerDelete",
+                                data: {
+                                    id: id
+                                },
+                                success: function(resultData) {
+                                    // alert(resultData)
+                                    console.log(resultData);
+                                    if (resultData == 'success') {
+                                        $(thisElement).parent().parent().hide(700);
+                                        swal("Deleted!",
+                                            "Your imaginary file has been deleted.",
+                                            "success");
+                                    } else {
+                                        alert("Something went wrong")
+                                    }
+                                    // alert("Save Complete")
+                                }
+                            });
+                            swal("Deleted!", "Table Deleted Succesfully.", "success");
+                            ResetData()
+
+                        } else {
+                            swal("Cancelled", "Table Not Deleted)", "error");
+                        }
+                    });
+                    return false;
+                });
+            },
+            $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+        $.SweetAlert.init();
+    });
+
+    function ResetData() {
+        var host = window.location.origin;
+        var texasId = $('#gameType').val();
+        var tableType = $('#pokerTables').val();
+        let ajaxUrl = host + "/cashgames/getCashGamePoker/" + texasId + '/' + tableType;
+        orderTable.ajax.url(ajaxUrl).load();
+    }
+
+    function datatableDraw(ajaxUrl) {
+        console.log("datatableDraw URL: " + ajaxUrl);
+        var host = window.location.origin;
+        var texasId = $('#gameType').val();
+        var tableType = $('#pokerTables').val();
+        orderTable = $('#tables').DataTable({
+            "oLanguage": {
+                "sSearch": "Search By Name"
+            },
+            // "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            // "searching": false,
+            "ordering": false,
+            "autoWidth": false,
+            "pageLength": 25,
+            "bDestroy": true,
+            "ajax": ajaxUrl,
+            "columns": [{
+                "data": "tableNumber"
+            }, {
+                "data": "name"
+            }, {
+                "data": "smallBlind"
+            }, {
+                "data": "bigBlind"
+            }, {
+                "data": "minPlayers"
+            }, {
+                "data": "maxPlayers"
+            }, {
+                "data": "minBuyIn"
+            }, {
+                "data": "maxBuyIn"
+            }, {
+                "data": "gameType"
+            }, {
+                "data": "isCashGame"
+            }, {
+                "data": "status"
+            }, {
+                "data": "limit",
+                render: function(data, type, row) {
+
+                    if (data == 'limit') {
+                        return 'Limit';
+                    } else if (data == 'no_limit') {
+                        return 'No Limit';
+                    } else if (data == 'pot_limit') {
+                        return 'Pot Limit';
+                    } else if (data == 'Hi-Lo') {
+                        return 'Hi-Lo No Limit';
+                    } else if (data == 'Hi-Lo-pot_limit') {
+                        return 'Hi-Lo Pot Limit';
+                    } else if (data == 'Hi-Lo-limit') {
+                        return 'Hi-Lo Limit';
+                    }
+                }
+            }, {
+                "data": "tablePrivacy"
+            }]
+
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        var host = window.location.origin;
+        $('#myTable').DataTable({
+            "oLanguage": {
+                "sSearch": "Search By Name"
+            },
+            "processing": true,
+            "serverSide": true,
+            "ordering": false,
+            "autoWidth": false,
+            "pageLength": 25,
+            "ajax": host + "/regular-tournament/getRegularTournament",
+            "columns": [{
+                    "data": "name"
+                }, {
+                    "data": "game_speed"
+                }, {
+                    "data": "fee"
+                }, {
+                    "data": "status"
+                }, {
+                    "data": "startsIn",
+
+                    render: function(data, type, row) {
+
+                        /* var d = new Date();
+  var n = d.getUTCDate();
+  var t = d.getUTCHours();
+  var m = d.getUTCMinutes(); */
+
+                        var date1 = new Date();
+
+                        let utcDate1 = new Date(
+                            date1.getUTCFullYear(),
+                            date1.getUTCMonth(),
+                            date1.getUTCDate(),
+                            date1.getUTCHours(),
+                            date1.getUTCMinutes(),
+                            date1.getUTCSeconds()
+                        );
+
+                        console.log("UTC ->", utcDate1);
+
+
+                        var date2 = new Date(row.tournament_date_time); // 10:09 to
+
+                        let utcDate2 = new Date(
+                            date2.getUTCFullYear(),
+                            date2.getUTCMonth(),
+                            date2.getUTCDate(),
+                            date2.getUTCHours(),
+                            date2.getUTCMinutes(),
+                            date2.getUTCSeconds()
+                        );
+                        console.log("tournament date utc", utcDate2);
+                        if (utcDate1 >= utcDate2) {
+                            return "-";
+                        } else {
+                            var one_day = 1000 * 60 * 60 * 24;
+                            // Convert both dates to milliseconds
+                            var date1_ms = utcDate1.getTime();
+                            var date2_ms = utcDate2.getTime();
+                            console.log(date1_ms);
+                            console.log(date2_ms);
+                            // Calculate the difference in milliseconds
+                            var difference_ms = date2_ms - date1_ms;
+                            //take out milliseconds
+                            difference_ms = difference_ms / 1000;
+                            var seconds = Math.floor(difference_ms % 60);
+                            difference_ms = difference_ms / 60;
+                            var minutess = Math.floor(difference_ms % 60);
+                            difference_ms = difference_ms / 60;
+                            var hours = Math.floor(difference_ms % 24);
+                            var days = Math.floor(difference_ms / 24);
+                            return startsIn = days + ' Days, ' + hours + ' Hours, ' + minutess +
+                                ' Minutes';
+                        }
+                    }
+                },
+
+                {
+                    "data": "status",
+                    render: function(data, type, row) {
+                        var current = new Date();
+                        var registration_start = new Date(row.register_from_date_time);
+                        var tournamnet_start = new Date(row.tournament_date_time);
+                        if (current < registration_start) {
+                            return 'Not Started Yet'
+                        } else if (tournamnet_start < current) {
+                            return 'Closed'
+                        } else if (registration_start <= current) {
+                            return 'Started'
+                        }
+
+                    },
+                }
+            ]
+        });
+
+        $(function() {
+            "use strict";
+
+            var SweetAlert = function() {};
+            SweetAlert.prototype.init = function() {
+                    //Parameter
+                    $('body').on('click', '.delete', function(e) {
+                        var id = $(this).attr('id');
+                        var thisElement = this;
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this Tournament!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#e69a2a",
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel plx!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + "/regular-tournament/delete",
+                                    data: {
+                                        id: id
+                                    },
+                                    success: function(resultData) {
+                                        // alert(resultData)
+                                        console.log(resultData);
+                                        if (resultData == 'success') {
+                                            $(thisElement).parent().parent()
+                                                .hide(700);
+                                            swal("Deleted!",
+                                                "Tournament status is cancel and this tournament is deleted.",
+                                                "success");
+                                        } else {
+                                            alert("Something went wrong")
+                                        }
+                                        // alert("Save Complete")
+                                    }
+                                });
+                                swal("Deleted!", "Tournament Already Canceled.",
+                                    "success");
+                            } else {
+                                swal("Cancelled", "Tournament Not Deleted", "error");
+                            }
+                        });
+                        return false;
+                    });
+
+                },
+                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+            $.SweetAlert.init();
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        var host = window.location.origin;
+        $('#mySitnGoTable').DataTable({
+            "oLanguage": {
+                "sSearch": "Search By Name"
+            },
+            // "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            // "searching": false,
+            "ordering": false,
+            "autoWidth": false,
+            "pageLength": 25,
+            "ajax": host + "/sng-tournament/getSngTournament",
+            "columns": [
+                // { "data": "_id" },
+                {
+                    "data": "name"
+                }, {
+                    "data": "game"
+                }, {
+                    "data": "stacks",
+                    render: function(data, type, row) {
+                        return data.minStack + '/' + data.maxStack;
+                    }
+                }, {
+                    "data": "fee"
+                }, {
+                    "data": "status"
+                }
+            ]
+        });
+
+        $(function() {
+            "use strict";
+
+            var SweetAlert = function() {};
+
+            SweetAlert.prototype.init = function() {
+
+                    //Parameter
+                    $('body').on('click', '.delete', function(e) {
+                        var id = $(this).attr('id');
+                        var thisElement = this;
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this Tournament!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#e69a2a",
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel plx!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + "/sng-tournament/delete",
+                                    data: {
+                                        id: id
+                                    },
+                                    success: function(resultData) {
+                                        // alert(resultData)
+                                        console.log(resultData);
+                                        if (resultData == 'success') {
+                                            $(thisElement).parent().parent()
+                                                .hide(700);
+                                            swal("Deleted!",
+                                                "Your imaginary file has been deleted.",
+                                                "success");
+                                        } else {
+                                            alert("Something went wrong")
+                                        }
+                                        // alert("Save Complete")
+                                    }
+                                });
+                                swal("Deleted!", "Tournament Deleted Succesfully.",
+                                    "success");
+                            } else {
+                                swal("Cancelled", "Tournament Not Deleted)", "error");
+                            }
+                        });
+                        return false;
+                    });
+
+                },
+                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+            $.SweetAlert.init();
+        });
+
+    });
+</script>
+
 <script>
     $(document).ready(function() {
 
         var host = window.location.origin;
 
-        $('#myTable').DataTable({
+        $('#Tournament').DataTable({
             // "scrollX": true,
             "searching": false,
             "ajax": host + "/game/history",

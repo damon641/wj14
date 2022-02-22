@@ -79,6 +79,9 @@ const PlayerSchema = new Schema({
 		type: 'number',
 		required: true
 	},
+	lastChipsAddedDate: {
+		type: 'string'
+	},
 	activationCode: {
 		type: 'string',
 		default: ''

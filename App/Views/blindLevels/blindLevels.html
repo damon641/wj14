@@ -1,163 +1,200 @@
 {% extends "partition/layout.html" %} {% block body %}
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Blind Levels</h1>
-            <ol class="breadcrumb">
-                <li><a href="/backend"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Blind Levels</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <div class="flash-msg" style="display: none;">
-        </div>
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Blind Levels</h6>
-                            </div>
+<div class="container nav_drop_menu " id="Settings ">
+    <ul>
+        <li class="text_container ">
+            <a href="/settings ">
+                <div class="name ">System Settings</div>
+            </a>
+        </li>
+        <!-- <li class="text_container ">
+            <a href="/blockedIp ">
+                <div class="name ">Location Security</div>
+            </a>
+
+        </li> -->
+        <li class="text_container ">
+            <a href="/cashgames/stacks ">
+                <div class="name ">Stack Setup</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/cashgames/rakecap ">
+                <div class="name ">Table Rake Cap</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a class="active" href="/blindLevels ">
+                <div class="name ">Blind Level</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/ad-banner ">
+                <div class="name ">Ad-Banner</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/currency ">
+                <div class="name ">Currency</div>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="container">
+
+    <div class="flash-msg" style="display: none;">
+    </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Blind Level</h3>
                             <div class="pull-right">
-                                <button type="button" class="btn btn-primary btn-md langSeting"><i class="fa fa-plus"></i>&nbsp;Add New Blind Levels</button>
+                                <button class="table_btn langSeting"><i class="fa fa-plus"></i> Add New Blind Level</button>
                             </div>
-                            <div class="clearfix"></div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="colSetClass">Name</th>
+                                            <th class="colSetClass">Levels</th>
+                                            <th class="colSetClass">minBlind</th>
+                                            <th class="colSetClass">maxBlind</th>
+                                            <th class="colSetClassNew">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bodySetWordWrap">
+                                        {% for items in blindLevels %}
+                                        <tr>
+                                            <td class="colSetClass">{{ items.blindLevelName }}</td>
+                                            <td class="colSetClass">{{ items.blindLevels[0].level }}</td>
+                                            <td class="colSetClass">{{ items.blindLevels[0].minBlind }}</td>
+                                            <td class="colSetClass">{{ items.blindLevels[0].maxBlind }}</td>
+                                            <td class="colSetClassNew">
+                                                <button type="button" class="btn btn-warning btn-xs btn-rounded editLangWord" name="edit" title="Edit Word" data-id="{{ items._id }}"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-danger btn-xs btn-rounded deleteLangWord" name="delete" title="Delete Word" data-id="{{ items._id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th class="colSetClass">Name</th>
+                                            <th class="colSetClass">Levels</th>
+                                            <th class="colSetClass">minBlind</th>
+                                            <th class="colSetClass">maxBlind</th>
+                                            <th class="colSetClassNew">Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
-                        <div class="panel-body">
-                            <table id="myTable" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="colSetClass">Name</th>
-                                        <th class="colSetClass">Levels</th>
-                                        <th class="colSetClass">minBlind</th>
-                                        <th class="colSetClass">maxBlind</th>
-                                        <th class="colSetClassNew">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bodySetWordWrap">
-                                    {% for items in blindLevels %}
-                                    <tr>
-                                        <td class="colSetClass">{{ items.blindLevelName }}</td>
-                                        <td class="colSetClass">{{ items.blindLevels[0].level }}</td>
-                                        <td class="colSetClass">{{ items.blindLevels[0].minBlind }}</td>
-                                        <td class="colSetClass">{{ items.blindLevels[0].maxBlind }}</td>
-                                        <td class="colSetClassNew">
-                                            <button type="button" class="btn btn-warning btn-xs btn-rounded editLangWord" name="edit" title="Edit Word" data-id="{{ items._id }}"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                                            <button type="button" class="btn btn-danger btn-xs btn-rounded deleteLangWord" name="delete" title="Delete Word" data-id="{{ items._id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th class="colSetClass">Name</th>
-                                        <th class="colSetClass">Levels</th>
-                                        <th class="colSetClass">minBlind</th>
-                                        <th class="colSetClass">maxBlind</th>
-                                        <th class="colSetClassNew">Action</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Add modal start -->
-            <div class="modal fade" id="addNewWordModal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form method="post" action="/addBlindLevels">
-                            <div class="panel panel-default card-view">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Add New Levels</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="pull-right">
-                                        <button type="button" class="btn btn-primary-main btn-md addnewlang"><i class="fa fa-plus"></i>&nbsp;Add Level</button>
-                                    </div><br><br>
-                                    <input type="text" name="blindLevelName" class="inputSetClass" placeholder="Enter Blind Level Name" required>
-                                    <table class="table table-borderless lang-table">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Level</th>
-                                                <th></th>
-                                                <th>Minimum Blind</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th>Maximum Blind</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="langField">
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="text-right hide formBtn">
-                                        <button class="btn btn-danger removeRow" type="button">Remove</button>&nbsp; &nbsp;
-                                        <button class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Add modal end -->
-            <!-- Edit modal start -->
-            <div class="modal fade" id="editWordModal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form action="">
-                            <div class="panel panel-default card-view">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Edit Blind Levels</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="pull-right">
-                                        <button type="button" class="btn btn-primary btn-md editnewlang"><i class="fa fa-plus"></i>&nbsp;Edit Level</button>
-                                    </div><br><br>
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Level</th>
-                                                <th></th>
-                                                <th>Minimum Blind</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th>Maximum Blind</th>
-                                                <th></th>
-                                                <th>Delete</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="lanBody" id="editField">
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="text-right">
-                                        <button class="btn btn-info" id="submit">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Edit modal end -->
-        </section>
+        </div>
     </div>
 </div>
+<!-- Add modal start -->
+<div class="modal fade" id="addNewWordModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" action="/addBlindLevels">
+                <div class="panel panel-default card-view">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Levels</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="pull-right">
+                            <button type="button" class="table_btn addnewlang"><i class="fa fa-plus"></i>&nbsp;Add Level</button>
+                        </div><br><br>
+                        <input type="text" name="blindLevelName" class="inputSetClass" placeholder="Enter Blind Level Name" required>
+                        <table class="table table-borderless lang-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Level</th>
+                                    <th></th>
+                                    <th>Minimum Blind</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Maximum Blind</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="langField">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-right hide formBtn">
+                            <button class="btn btn-danger removeRow" type="button">Remove</button>&nbsp; &nbsp;
+                            <button class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add modal end -->
+<!-- Edit modal start -->
+<div class="modal fade" id="editWordModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="">
+                <div class="panel panel-default card-view">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Blind Levels</h4>
+                        <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="pull-right">
+                            <button type="button" class="table_btn editnewlang"><i class="fa fa-plus"></i>&nbsp;Edit Level</button>
+                        </div><br><br>
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Level</th>
+                                    <th></th>
+                                    <th>Minimum Blind</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Maximum Blind</th>
+                                    <th></th>
+                                    <th>Delete</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="lanBody" id="editField">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-right">
+                            <button class="btn btn-success" id="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit modal end -->
 <style>
     .inputSetClass {
         width: 100%;
@@ -168,20 +205,17 @@
         border-radius: 4px;
         box-sizing: border-box;
     }
-    
-    .colSetClass {
+    /* .colSetClass {
         width: 22% !important;
         display: inline-block;
-    }
-    
-    .colSetClassNew {
+    } */
+    /* .colSetClassNew {
         width: 10% !important;
         display: inline-block;
-    }
-    
-    .bodySetWordWrap {
+    } */
+    /* .bodySetWordWrap {
         word-wrap: break-word;
-    }
+    } */
 </style>
 {% endblock %} {% block Jscript %}
 <script>

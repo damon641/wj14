@@ -1,103 +1,98 @@
 {% extends "partition/layout.html" %} {% block body %}
 
-<!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Poker Table</h1>
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Poker Table</li>
-            </ol>
-            <!-- /Breadcrumb -->
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Poker Table</h6>
-                            </div>
-                            <div class="pull-right">
-                                <a href="/table/add"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Table</button></a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="row" style="margin-top: 10px;">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10 col-sm-3" for="email">Table Type :</label>
-                                        <div class="col-sm-8">
-                                            <select name="pokerTables" id="pokerTables" class="form-control">
-													<option value="omaha">Omaha</option>
-													<option value="texas"selected>Texas</option>
-												</select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <input type="hidden" id="gameType" name="gameType" value="{{type}}">
-                                        <input type="hidden" id="tableType" name="gameType" value="{{tableType}}">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th>Name</th>
-                                                    <th>Small <br> Blind</th>
-                                                    <th>Big <br> Blind</th>
-                                                    <th>Min <br> Players</th>
-                                                    <th>Max <br> Players</th>
-                                                    <th>Min <br> BuyIn</th>
-                                                    <th>Max <br> BuyIn</th>
-                                                    <th>Type</th>
-                                                    <th>isCashGame</th>
-                                                    <th>Status</th>
-                                                    <th>Limit</th>
-                                                    <th>Table Privacy</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th>Name</th>
-                                                    <th>Small <br> Blind</th>
-                                                    <th>Big <br> Blind</th>
-                                                    <th>Min <br> Players</th>
-                                                    <th>Max <br> Players</th>
-                                                    <th>Min <br> BuyIn</th>
-                                                    <th>Max <br> BuyIn</th>
-                                                    <th>Type</th>
-                                                    <th>isCashGame</th>
-                                                    <th>Status</th>
-                                                    <th>Limit</th>
-                                                    <th>Table Privacy</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+<div class="container nav_drop_menu" id="Games">
+    <ul>
+        <li class="text_container">
+            <a class="active" href="/holdem">
+                <div class="name">Hold'em Table</div>
+            </a>
+        </li>
+        <li class="text_container">
+            <a href="/omaha">
+                <div class="name">Omaha Table</div>
+            </a>
+
+        </li>
+        <li class="text_container">
+            <a href="/table/add">
+                <div class="name"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Table</div>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Texas Hold'em Table</h3>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <select name="pokerTables" id="pokerTables" class="form-control" hidden>
+                                    <option value="omaha" >Omaha</option>
+                                    <option value="texas" selected>Texas</option>
+                                </select>
+                                <input type="hidden" id="gameType" name="gameType" value="{{type}}">
+                                <input type="hidden" id="tableType" name="gameType" value="{{tableType}}">
+                                <table id="myTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Small <br> Blind</th>
+                                            <th>Big <br> Blind</th>
+                                            <th>Min <br> Players</th>
+                                            <th>Max <br> Players</th>
+                                            <th>Min <br> BuyIn</th>
+                                            <th>Max <br> BuyIn</th>
+                                            <th>Type</th>
+                                            <th>CashGame</th>
+                                            <th>Status</th>
+                                            <th>Limit</th>
+                                            <th>Table Privacy</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Small <br> Blind</th>
+                                            <th>Big <br> Blind</th>
+                                            <th>Min <br> Players</th>
+                                            <th>Max <br> Players</th>
+                                            <th>Min <br> BuyIn</th>
+                                            <th>Max <br> BuyIn</th>
+                                            <th>Type</th>
+                                            <th>CashGame</th>
+                                            <th>Status</th>
+                                            <th>Limit</th>
+                                            <th>Table Privacy</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
+
 </div>
+<!-- Main Content -->
+
 
 {% endblock %} {% block Jscript %}
 <script>
@@ -187,7 +182,7 @@
         var tableType = $('#pokerTables').val();
         orderTable = $('#myTable').DataTable({
             "oLanguage": {
-                "sSearch": "Search Name"
+                "sSearch": "Search By Name"
             },
             // "scrollX": true,
             "processing": true,

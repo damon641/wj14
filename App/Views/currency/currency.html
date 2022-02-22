@@ -1,67 +1,98 @@
 {% extends "partition/layout.html" %} {% block body %}
 
+<div class="container nav_drop_menu " id="Settings ">
+    <ul>
+        <li class="text_container ">
+            <a href="/settings ">
+                <div class="name ">System Settings</div>
+            </a>
+        </li>
+        <!-- <li class="text_container ">
+            <a href="/blockedIp ">
+                <div class="name ">Location Security</div>
+            </a>
 
+        </li> -->
+        <li class="text_container ">
+            <a href="/cashgames/stacks ">
+                <div class="name ">Stakes Setup</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/cashgames/rakecap ">
+                <div class="name ">Table Rake Cap</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/blindLevels ">
+                <div class="name ">Blind Level</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/ad-banner ">
+                <div class="name ">Ad-Banner</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a class="active" href="/currency ">
+                <div class="name ">Currency</div>
+            </a>
+        </li>
+    </ul>
+</div>
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container">
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Currency Table</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Currency Table</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h5 class="panel-title txt-dark">{{setting.ratePerChip}} USD per Chip
-                                    <a data-toggle="modal" data-target="#responsive-modal"><button type="button"
-											class="btn btn-primary btn-md"><i class="fa fa-edit"> </i>
-											Change</button></a>
-                                </h5>
-                            </div>
+    <div class="flash-msg" style="display: none;">
+    </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Currency Table</h3>
                             <div class="pull-right">
-                                <a href="/getLiveCurrencyData"><button type="button" class="btn btn-primary btn-md"><i
-											class="fa fa-refresh"></i> Refresh Currency</button></a>
+                                <a href="/getLiveCurrencyData"><button class="table_btn"><i
+                                    class="fa fa-refresh"></i> Refresh Currency</button></a>
                             </div>
-                            <div class="clearfix"></div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="center">
+                            <h5 class="panel-title txt-dark">{{setting.ratePerChip}} USD per Chip
+                                <a data-toggle="modal" data-target="#responsive-modal" style="font-size: 0.8em;">
+                                    <button class="table_btn"><i class="fa fa-edit"></i> Change</button></a>
+                            </h5>
                         </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Currency Code</th>
-                                                    <th>Conversation Rate</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Country Code</th>
-                                                    <th>Conversation Rate</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Currency Code</th>
+                                            <th>Conversation Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Country Code</th>
+                                            <th>Conversation Rate</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>
 <section class="content">
@@ -69,13 +100,14 @@
     <div class="row">
         <!-- /.modal -->
         <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <form method="POST" action="/updateCurrencySetting">
                         <input type="hidden" name="id" value="{{setting.id}}">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
                             <h5 class="modal-title">Change rate per chip in USD</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
                             <div id="chipsAdd"> </div>
@@ -84,7 +116,7 @@
 
                                 <div class='input-group'>
                                     <input type="text" name="ratePerChip" class="form-control" value="{{setting.ratePerChip}}" required>
-                                    <span class="input-group-addon">
+                                    <span class="inline-text">
 										USD
                                     </span>
                                 </div>

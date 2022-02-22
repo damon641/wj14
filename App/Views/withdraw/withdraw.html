@@ -5,71 +5,80 @@
     }
 </style>
 {% block body %}
+<div class="container nav_drop_menu " id="Finance ">
+    <ul>
+        <!-- <li class="text_container ">
+            <a href="/promocode ">
+                <div class="name ">Coupon Management</div>
+            </a>
+        </li> -->
+        <li class="text_container ">
+            <a href="/deposit-receipt ">
+                <div class="name ">Deposit Request</div>
+            </a>
 
+        </li>
+        <li class="text_container ">
+            <a class="active" href="/withdraw ">
+                <div class="name ">Withdraw Request</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/inapppurchase ">
+                <div class="name ">In-App Purchase</div>
+            </a>
+
+        </li>
+    </ul>
+</div>
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Withdraw Request</h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
-                </li>
-                <li class="active" href="/withdraw">Withdraw</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Withdraw</h6>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+<div class="container">
 
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>UID</th>
-                                                    <th>Username</th>
-                                                    <th>Current Chips</th>
-                                                    <th>WithdrawAmount</th>
-                                                    <th>Bank Account</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>UID</th>
-                                                    <th>Username</th>
-                                                    <th>Current Chips</th>
-                                                    <th>WithdrawAmount</th>
-                                                    <th>Bank Account</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+            <h3 class="panel-title">Withdraw Request</h3>
+          </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>UID</th>
+                                            <th>Username</th>
+                                            <th>Current Chips</th>
+                                            <th>WithdrawAmount</th>
+                                            <th>Bank Account</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>UID</th>
+                                            <th>Username</th>
+                                            <th>Current Chips</th>
+                                            <th>WithdrawAmount</th>
+                                            <th>Bank Account</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-    </section>
-</div>
+
 </div>
 <section class="content">
     <!-- Row -->
@@ -254,9 +263,7 @@
           render: function (data, type, row) {
             if (row.action == false) {
               return (
-                '<button type="button" title="Delete" name="delete" id="' +
-                row._id +
-                '" class="btn btn-primary btn-xs btn-rounded response">Delete</button>'
+                '<button type="button" title="Delete" name="delete" id="' + row._id + '" class="table_btn_red response">Delete</button>'
               );
               /* return (
                 '<button type="button" title="Done Payment" name="delete" id="' +

@@ -1,0 +1,207 @@
+{% extends "partition/layout.html" %} {% block body %}
+<div class="container nav_drop_menu " id="Settings ">
+    <ul>
+        <li class="text_container ">
+            <a href="/settings ">
+                <div class="name ">System Settings</div>
+            </a>
+        </li>
+        <!-- <li class="text_container ">
+            <a href="/blockedIp ">
+                <div class="name ">Location Security</div>
+            </a>
+
+        </li> -->
+        <li class="text_container ">
+            <a href="/cashgames/stacks ">
+                <div class="name ">Stack Setup</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/cashgames/rakecap ">
+                <div class="name ">Table Rake Cap</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/blindLevels ">
+                <div class="name ">Blind Level</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a class="active" href="/ad-banner ">
+                <div class="name ">Ad-Banner</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/currency ">
+                <div class="name ">Currency</div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Ad Banner</h3>
+                            <div class="pull-right">
+                                <a href="/addNewAd"><button type="button" class="table_btn pokerTables active"><i
+                                            class="fa fa-plus"></i> Add New Ad</button></a>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th>Id</th> -->
+                                            <th>Name</th>
+                                            <th>Chips</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <!-- <th>Id</th> -->
+                                            <th>Name</th>
+                                            <th>Chips</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function () {
+        var host = window.location.origin;
+        $('#myTable').DataTable({
+            "oLanguage": {
+                "sSearch": "Search Video Name"
+            },
+            // "scrollX": true,
+            // "searching": false,
+            "processing": true,
+            "serverSide": true,
+            "ordering": false,
+            "autoWidth": false,
+            "pageLength": 25,
+            "ajax": host + "/adbanner/getAd",
+            "columns": [
+                // { "data": "_id" },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "chips"
+                }, {
+                    "data": "status",
+                    render: function (data, type, row) {
+                        if (row.status == 'primary')
+                         {
+                            return 'Primary Ad';
+                        }
+                        if (row.status == 'secondary') 
+                        {
+                            return 'Secondary Ad';
+                        }
+                        else {
+                            return 'Inactive'
+                        }
+
+                    }
+                },
+                {
+                    "data": "action",
+                    render: function (data, type, row) {
+                        return '<a href="/editAd/' + row._id + '"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit"><i class="fa fa-edit" aria-hidden="true"></i></button></a> <button type="button" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs delete btn-rounded"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+                    }
+                }
+            ]
+        });
+
+        $(function () {
+            "use strict";
+
+            var SweetAlert = function () { };
+
+            SweetAlert.prototype.init = function () {
+
+                //Parameter
+                $('body').on('click', '.delete', function (e) {
+                    var id = $(this).attr('id');
+                    var thisElement = this;
+                    swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover this Video!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#e69a2a",
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel plx!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: 'POST',
+                                url: host + "/ad-banner/getAdDelete",
+                                data: {
+                                    id: id
+                                },
+                                success: function (resultData) {
+                                    // alert(resultData)
+                                    console.log(resultData);
+                                    if (resultData == 'success') {
+                                        $(thisElement).parent().parent().hide(700);
+                                        swal("Deleted!", "Your video file has been deleted.", "success");
+                                    } else if (resultData == 'isActive') {
+                                        swal("Rejected!", "Sorry! cannot delete, because this is active video file.", "error");
+                                    } else {
+                                        alert("Something went wrong")
+                                    }
+                                    // alert("Save Complete")
+                                }
+                            });
+                            swal("Deleted!", "Video Deleted Succesfully.", "success");
+                        } else {
+                            swal("Cancelled", "Video Not Deleted", "error");
+                        }
+                    });
+                    return false;
+                });
+
+            },
+                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+
+            $.SweetAlert.init();
+        });
+
+    });
+</script>
+{% endblock %}

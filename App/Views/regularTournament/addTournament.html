@@ -2,373 +2,381 @@
 
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Regular Tournament </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="/regular-tournament/tournament">Regular Tournament</a></li>
-                {% if tournament %}
-                <li class="active"><span>Edit Regular Tournament</span></li>
-                {% else %}
-                <li class="active"><span>Add Regular Tournament</span></li>
-                {% endif %}
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                {% if tournament %}
-                                <h6 class="panel-title txt-dark">Edit Regular Tournament</h6>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            {% if tournament %}
+                            <h3 class="panel-title">Edit Regular Tournament</h3>
+                            {% else %}
+                            <h3 class="panel-title">Add Regular Tournament</h3>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if tournament %}
+                            <form method="POST" action="/regular-tournament/editRegularTournament/{{tournament.id}}" class="form-horizontal" id="tableForm">
                                 {% else %}
-                                <h6 class="panel-title txt-dark">Add Regular Tournament</h6>
-                                {% endif %}
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        {% if tournament %}
-                                        <form method="POST" action="/regular-tournament/editRegularTournament/{{tournament.id}}" class="form-horizontal" id="tableForm">
-                                            {% else %}
-                                            <form method="POST" action="/regular-tournament/postToAddTournament" class="form-horizontal" id="tableForm">
-                                                {% endif %}
-                                                <table border="0" class="table display  pb-30">
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="name">Name:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" data-validation="required" data-validation-allowing=" " data-validation-error-msg="Name is required" placeholder="Name" name="name" type="text" id="" value="{{tournament.name}}">
-                                                                    </div>
-                                                                </div>
-                                                                {% if not tournament %}
+                                <form method="POST" action="/regular-tournament/postToAddTournament" class="form-horizontal" id="tableForm">
+                                    {% endif %}
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
 
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Buy-in:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" data-validation-allowing="float" class="form-control" placeholder="BuyIn" name="buy_in" type="text" id="buy_in" value="{{tournament.buy_in}}">
-                                                                    </div>
-                                                                </div>
+                                                <div class="panel-wrapper">
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="name">Name:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" data-validation="required" data-validation-allowing=" " data-validation-error-msg="Name is required" placeholder="Name" name="name" type="text" id="" value="{{tournament.name}}">
+                                                            </div>
+                                                        </div>
+                                                        {% if not tournament %}
 
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Start Stacks Chips:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" data-validation="number stackChips" class="form-control" placeholder="Stacks Chips" name="stacks_chips" type="text" id="stacks_chips" value="{{tournament.stacks_chips}}">
-                                                                    </div>
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Buy-in:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" data-validation-allowing="float" class="form-control" placeholder="BuyIn" name="buy_in" type="text" id="buy_in" value="{{tournament.buy_in}}">
+                                                            </div>
+                                                        </div>
 
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Entry Fee:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" data-validation="number" data-validation-allowing="float" class="form-control" placeholder="Entry Fee" onchange="calculatFee()" name="entry_fee" type="text" id="entry_fee" value="{{tournament.entry_fee}}">
-                                                                    </div>
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Start
+                                                            Stacks Chips:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" data-validation="number stackChips" class="form-control" placeholder="Stacks Chips" name="stacks_chips" type="text" id="stacks_chips" value="{{tournament.stacks_chips}}">
+                                                            </div>
+                                                        </div>
 
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Fee:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" placeholder="Fee" readonly="" name="fee" type="text" id="fee">
-                                                                    </div>
-                                                                </div>
-                                                                {#
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="isFreeRoll">Is FreeRoll:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="isFreeRoll" id="isFreeRoll">
-																				<option value="false" {{ "selected" if tournament.isFreeRoll== false else "" }} >No</option>
-																				<option value="true" {{ "selected" if tournament.isFreeRoll== true else "" }} >Yes</option>
-																			</select>
-                                                                    </div>
-                                                                </div>#} {% endif %}
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="pwd_hr">Rebuy Time [Minutes]:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" id="rebuy_time" name="rebuy_time">
-																			<option selected="selected" value="">Rebuy Time</option>  
-																			{% for item in reBuyMinutes %}
-																			<option value="{{ item }}" {% if  item == tournament.rebuy_time %} selected {% endif %}  >{{ item }}
-																			</option>
-																			{% endfor %}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Break Time  [Minutes]:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select required="required" data-validation="number" class="form-control" id="breaks_time" name="breaks_time">
-																			<option selected="selected" value="">Break Time
-																			</option> 
-																			{% for item in minutes %}
-																			<option value="{{ item }}" {% if  item == tournament.breaks_time %} selected {% endif %}  >{{ item }}
-																			</option>
-																			{% endfor %}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="gameType">Game Type:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="gameType" id="gameType">
-																				<option value="texas" {{ "selected" if tournament.gameType=='texas' else "" }} >Texas</option>
-																				<option value="omaha" {{ "selected" if tournament.gameType=='omaha' else "" }} >Omaha</option>
-																			</select>
-                                                                    </div>
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Entry
+                                                            Fee:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" data-validation="number" data-validation-allowing="float" class="form-control" placeholder="Entry Fee" onchange="calculatFee()" name="entry_fee" type="text" id="entry_fee" value="{{tournament.entry_fee}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Fee:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" placeholder="Fee" readonly="" name="fee" type="text" id="fee">
+                                                            </div>
+                                                        </div>
+                                                        {#
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="isFreeRoll">Is FreeRoll:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="isFreeRoll" id="isFreeRoll">
+                                                                    <option value="false" {{ "selected" if tournament.isFreeRoll== false else "" }} >No</option>
+                                                                    <option value="true" {{ "selected" if tournament.isFreeRoll== true else "" }} >Yes</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>#} {% endif %}
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="pwd_hr">Rebuy
+                                                            Time [Minutes]:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" id="rebuy_time" name="rebuy_time">
+                                                                <option selected="selected" value="">Rebuy Time</option>
+                                                                {% for item in reBuyMinutes %}
+                                                                <option value="{{ item }}"
+                                                                    {% if  item == tournament.rebuy_time %} selected
+                                                                    {% endif %}>{{ item }}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Break
+                                                            Time [Minutes]:</label>
+                                                            <div class="col-sm-12">
+                                                                <select required="required" data-validation="number" class="form-control" id="breaks_time" name="breaks_time">
+                                                                <option selected="selected" value="">Break Time
+                                                                </option>
+                                                                {% for item in minutes %}
+                                                                <option value="{{ item }}"
+                                                                    {% if  item == tournament.breaks_time %} selected
+                                                                    {% endif %}>{{ item }}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="gameType">Game
+                                                            Type:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="gameType" id="gameType">
+                                                                <option value="texas"
+                                                                    {{ "selected" if tournament.gameType=='texas' else "" }}>
+                                                                    Texas</option>
+                                                                <option value="omaha"
+                                                                    {{ "selected" if tournament.gameType=='omaha' else "" }}>
+                                                                    Omaha</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="game_speed">Game Speed:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="game_speed" id="game_speed">
+                                                                <option value="regular"
+                                                                    {{ "selected" if tournament.game_speed=='regular' else "" }}>
+                                                                    Regular</option>
+                                                                <option value="turbo"
+                                                                    {{ "selected" if tournament.game_speed=='turbo' else "" }}>
+                                                                    Turbo</option>
+                                                                <option value="hyper_turbo"
+                                                                    {{ "selected" if tournament.game_speed=='hyper_turbo' else "" }}>
+                                                                    Hyper Turbo</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+
+                                                        {% if not tournament %}
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="limit">Limit:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="limit" id="limit">
+                                                                <option value="limit"
+                                                                    {{ "selected" if tournament.limit=='limit' else "" }}>
+                                                                    Limit</option>
+                                                                <option value="no_limit"
+                                                                    {{ "selected" if tournament.limit=='no_limit' else "" }}>
+                                                                    No Limit</option>
+                                                                <option value="pot_limit"
+                                                                    {{ "selected" if tournament.limit=='pot_limit' else "" }}>
+                                                                    Pot Limit</option>
+                                                                <option value="Hi-Lo"
+                                                                    {{ "selected" if room.isLimitGame=='Hi-Lo' else "" }}
+                                                                    style="display: none;">Hi-Lo No Limit</option>
+                                                                <option value="Hi-Lo-pot_limit"
+                                                                    {{ "selected" if room.isLimitGame=='Hi-Lo-pot_limit' else "" }}
+                                                                    style="display: none;">Hi-Lo Pot Limit</option>
+                                                                <option value="Hi-Lo-limit"
+                                                                    {{ "selected" if room.isLimitGame=='Hi-Lo-limit' else "" }}
+                                                                    style="display: none;">Hi-Lo Limit</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %} {% if not tournament %}
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="isCashGame">Game Type:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" name="isCashGame" id="type">
+                                                                <option value="true"
+                                                                    {{ "selected" if tournament.isCashGame== true else "" }}>
+                                                                    Cash</option>
+                                                                <option value="false"
+                                                                    {{ "selected" if tournament.isCashGame== false else "" }}>
+                                                                    Chips</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="min_players">Minimum Players:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" placeholder="Min Player" name="min_players" type="number" id="min_players" autocomplete="off" value="{{ tournament.min_players if tournament.min_players else " 3 "}}" data-validation="minStrict">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="max_players">Max Players:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" placeholder="Max Player" name="max_players" type="number" id="max_players" autocomplete="off" value="{{tournament.max_players if tournament.max_players else " 10 "}}" data-validation="minStrict">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="register_from_date_time">Register From:</label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" placeholder="Register From" name="register_from_date_time" type="text" id="register_from_date_time" autocomplete="off" data-date-format="YYYY-MM-DD HH:mm" value="{{tournament_registration_start}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="tournament_date">Tournament Date/Time: </label>
+                                                            <div class="col-sm-12">
+                                                                <input required="required" class="form-control" placeholder="Tournament Date" name="tournament_date_time" type="text" id="tournament_date_time" autocomplete="off" data-date-format="YYYY-MM-DD HH:mm" value="{{tournament_start}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="blindLevels">Blind Levels:</label>
+                                                            <div class="col-sm-12">
+                                                                <select required="required" class="form-control" id="blindLevels" name="blindLevels">
+
+                                                                {% for item in blindLevels %}
+
+                                                                <option value="{{ item._id }}"
+                                                                    {{ "selected" if item._id.equals(tournament.blindLevels) else "" }}>
+                                                                    {{ item.blindLevelName }}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="username">Blind
+                                                            Level Raise Time [Minutes]:</label>
+                                                            <div class="col-sm-12">
+                                                                <select required="required" class="form-control" data-validation="number" id="blind_levels_rise_time" name="blind_levels_rise_time">
+                                                                <option selected="selected" value="">Blind Level Raise
+                                                                    Time
+                                                                </option>
+
+                                                                {% for item in minutes %}
+                                                                <option value="{{ item }}"
+                                                                    {% if  item == tournament.blind_levels_rise_time %}
+                                                                    selected {% endif %}>{{ item }}</option>
+                                                                {% endfor %}
+
+
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="email">Description:</label>
+                                                            <div class="col-sm-12">
+                                                                <textarea required="required" class="form-control" data-validation="letternumeric" data-validation-allowing=" " data-validation-error-msg="Description is required" name="description">{{tournament.description}}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="game_speed">Game Speed:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="game_speed" id="game_speed">
-																			<option value="regular" {{ "selected" if tournament.game_speed=='regular' else "" }} >Regular</option>
-																			<option value="turbo" {{ "selected" if tournament.game_speed=='turbo' else "" }} >Turbo</option>
-																			<option value="hyper_turbo" {{ "selected" if tournament.game_speed=='hyper_turbo' else "" }} >Hyper Turbo</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                {% if not tournament %}
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="limit">Limit:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="limit" id="limit">
-																			<option value="limit" {{ "selected" if tournament.limit=='limit' else "" }} >Limit</option>
-																			<option value="no_limit" {{ "selected" if tournament.limit=='no_limit' else "" }} >No Limit</option>
-																			<option value="pot_limit" {{ "selected" if tournament.limit=='pot_limit' else "" }} >Pot Limit</option>
-																			<option value="Hi-Lo" {{ "selected" if room.isLimitGame=='Hi-Lo' else "" }} style="display: none;" >Hi-Lo No Limit</option>
-																			<option value="Hi-Lo-pot_limit" {{ "selected" if room.isLimitGame=='Hi-Lo-pot_limit' else "" }}  style="display: none;">Hi-Lo Pot Limit</option>
-																			<option value="Hi-Lo-limit" {{ "selected" if room.isLimitGame=='Hi-Lo-limit' else "" }} style="display: none;">Hi-Lo Limit</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                {% endif %} {% if not tournament %}
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="isCashGame">Game Type:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select class="form-control" name="isCashGame" id="type">
-																			<option value="true" {{ "selected" if tournament.isCashGame== true else "" }} >Cash</option>
-																			<option value="false" {{ "selected" if tournament.isCashGame== false else "" }} >Chips</option>
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                {% endif %}
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="min_players">Minimum Players:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" placeholder="Min Player" name="min_players" type="number" id="min_players" autocomplete="off" value="{{ tournament.min_players if tournament.min_players else " 3 "}}" data-validation="minStrict">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="max_players">Max Players:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" placeholder="Max Player" name="max_players" type="number" id="max_players" autocomplete="off" value="{{tournament.max_players if tournament.max_players else " 10 "}}" data-validation="minStrict">
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="register_from_date_time">Register From:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" placeholder="Register From" name="register_from_date_time" type="text" id="register_from_date_time" autocomplete="off" data-date-format="YYYY-MM-DD HH:mm" value="{{tournament_registration_start}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="tournament_date">Tournament Date/Time: </label>
-                                                                    <div class="col-sm-8">
-                                                                        <input required="required" class="form-control" placeholder="Tournament Date" name="tournament_date_time" type="text" id="tournament_date_time" autocomplete="off" data-date-format="YYYY-MM-DD HH:mm" value="{{tournament_start}}">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="blindLevels">Blind Levels:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select required="required" class="form-control" id="blindLevels" name="blindLevels">
-	
-																				{% for item in blindLevels %}
-	
-																				<option value="{{ item._id }}" 
-																				{{ "selected" if item._id.equals(tournament.blindLevels) else "" }}	
-																				>
-																				{{ item.blindLevelName }}
-																				</option>
-																				{% endfor %}
-																			</select>
-                                                                    </div>
-
-
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="username">Blind Level Raise Time [Minutes]:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <select required="required" class="form-control" data-validation="number" id="blind_levels_rise_time" name="blind_levels_rise_time">
-																			<option selected="selected" value="">Blind Level Raise Time
-																			</option>
-
-																			{% for item in minutes %}
-																			<option value="{{ item }}" {% if  item == tournament.blind_levels_rise_time %} selected {% endif %}  >{{ item }}</option>
-																			{% endfor %}
-
-
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-4" for="email">Description:</label>
-                                                                    <div class="col-sm-8">
-                                                                        <textarea required="required" class="form-control" data-validation="letternumeric" data-validation-allowing=" " data-validation-error-msg="Description is required" name="description">{{tournament.description}}</textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <tr>
-                                                        <td colspan="2">
-                                                            <div class="pull-right">
-                                                                <input type="submit" class="btn    btn-flat  btn-success " value="Submit" id="btnsubmit">
-                                                                <a href="/regular-tournament" class="btn btn-danger btn-flat" id="btncancel">Cancel</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr> -->
-                                                </table>
-                                                <div class="box-footer">
-                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
-                                                    <a href="/regular-tournament" class="btn btn-danger float-right">Cancel</a>
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/regular-tournament" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn" value="Submit">
+                                                </div>
+                                            </div>
+                                        </center>
                                     </div>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        {% endblock %} {% block Jscript %} {#
-        <link rel="stylesheet" href="/vendors/bootstrap-timepicker/bootstrap-clockpicker.min.css" /> #}
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" /> -->
+</div>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                if (!$('#tournament_date_time').val() && !$('#register_from_date_time').val())
-                    $('#tournament_date_time , #register_from_date_time').datetimepicker({
-                        minDate: new Date()
-                    });
-                else
-                    $('#tournament_date_time, #register_from_date_time').datetimepicker();
-                var host = window.location.origin;
-            });
+{% endblock %} {% block Jscript %} {#
+<link rel="stylesheet" href="/vendors/bootstrap-timepicker/bootstrap-clockpicker.min.css" /> #}
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" /> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<script>
+    $(document).ready(function() {
+     $('#tournament_date_time , #register_from_date_time').datetimepicker();
+    });
 
 
 
-            function calculatFee() {
+    function calculatFee() {
 
-                var buy_in = $('#buy_in').val();
-                var entry_fee = $('#entry_fee').val();
+        var buy_in = $('#buy_in').val();
+        var entry_fee = $('#entry_fee').val();
 
-                if (buy_in != '' && entry_fee != '') {
-                    if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
-                        var fee = parseFloat(buy_in) + parseFloat(entry_fee);
-                        fee += ' (Buy-in : ' + buy_in + ' + ' + entry_fee + ' Entry Fee)';
-                        $('#fee').val(fee);
-                    } else {
-                        // alert('Plese enter numeric value for buy-in and entry fee.');
-                    }
-                }
+        if (buy_in != '' && entry_fee != '') {
+            if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
+                var fee = parseFloat(buy_in) + parseFloat(entry_fee);
+                fee += ' (Buy-in : ' + buy_in + ' + ' + entry_fee + ' Entry Fee)';
+                $('#fee').val(fee);
+            } else {
+                // alert('Plese enter numeric value for buy-in and entry fee.');
             }
+        }
+    }
 
-            function calculatOmhFee() {
+    function calculatOmhFee() {
 
-                var buy_in = $('#buy_in').val();
-                var entry_fee = $('#entry_fee').val();
+        var buy_in = $('#buy_in').val();
+        var entry_fee = $('#entry_fee').val();
 
-                if (buy_in != '' && entry_fee != '') {
-                    if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
-                        var feemain = parseFloat(buy_in) * (parseFloat(entry_fee) / 100);
-                        var fee = parseFloat(buy_in) + parseFloat(feemain);
-                        fee += ' (Buy-in : ' + buy_in + ' + ' + feemain + ' Entry Fee)';
-                        $('#omh_fee').val(fee);
-                    } else {
-                        // alert('Plese enter numeric value for buy-in and entry fee.');
-                    }
-                }
+        if (buy_in != '' && entry_fee != '') {
+            if ($.isNumeric(buy_in) && $.isNumeric(entry_fee)) {
+                var feemain = parseFloat(buy_in) * (parseFloat(entry_fee) / 100);
+                var fee = parseFloat(buy_in) + parseFloat(feemain);
+                fee += ' (Buy-in : ' + buy_in + ' + ' + feemain + ' Entry Fee)';
+                $('#omh_fee').val(fee);
+            } else {
+                // alert('Plese enter numeric value for buy-in and entry fee.');
             }
+        }
+    }
 
-            calculatOmhFee();
+    calculatOmhFee();
 
-            calculatFee();
+    calculatFee();
 
-            // custom validation
-            $.formUtils.addValidator({
-                name: 'minStrict',
-                validatorFunction: function(value, $el, config, language, $form) {
-                    return value > 2;
-                },
-                errorMessage: 'Minimum 3 players required.',
-                errorMessageKey: 'badMinNumber'
-            });
-            $.formUtils.addValidator({
-                name: 'minBuyIn',
-                validatorFunction: function(value, $el, config, language, $form) {
-                    return value >= 0.1;
-                },
-                errorMessage: 'Minimum 0.1 Buy-In required.',
-                errorMessageKey: 'badBuyIn'
-            });
-            $.formUtils.addValidator({
-                name: 'stackChips',
-                validatorFunction: function(value, $el, config, language, $form) {
-                    return value >= 1;
-                },
-                errorMessage: 'Minimum 1 stacks chips required.',
-                errorMessageKey: 'badStackChips'
-            });
+    // custom validation
+    $.formUtils.addValidator({
+        name: 'minStrict',
+        validatorFunction: function(value, $el, config, language, $form) {
+            return value > 2;
+        },
+        errorMessage: 'Minimum 3 players required.',
+        errorMessageKey: 'badMinNumber'
+    });
+    $.formUtils.addValidator({
+        name: 'minBuyIn',
+        validatorFunction: function(value, $el, config, language, $form) {
+            return value >= 0.1;
+        },
+        errorMessage: 'Minimum 0.1 Buy-In required.',
+        errorMessageKey: 'badBuyIn'
+    });
+    $.formUtils.addValidator({
+        name: 'stackChips',
+        validatorFunction: function(value, $el, config, language, $form) {
+            return value >= 1;
+        },
+        errorMessage: 'Minimum 1 stacks chips required.',
+        errorMessageKey: 'badStackChips'
+    });
 
-            // Initiate form validation
-            $.validate({
-                form: '#tableForm',
-                onSuccess: function($form) {
-                    $('#btnsubmit').val('Please wait ...')
-                        .attr('disabled', 'disabled');
-                    $('#btncancel').hide();
-                }
-            });
+    // Initiate form validation
+    $.validate({
+        form: '#tableForm',
+        onSuccess: function($form) {
+            $('#btnsubmit').val('Please wait ...')
+                .attr('disabled', 'disabled');
+            $('#btncancel').hide();
+        }
+    });
 
-            $('#gameType').change(function() {
-                var gameType = $('#gameType  option:selected').val();
-                if (gameType == "omaha") {
-                    $("#limit option[value=Hi-Lo]").show();
-                    $("#limit option[value=Hi-Lo-pot_limit]").show();
-                    $("#limit option[value=Hi-Lo-limit]").show();
-                    $("#limit option[value=limit]").attr("selected", false);
-                } else {
-                    $("#limit option[value=limit]").attr("selected", true);
-                    $("#limit option[value=Hi-Lo]").hide();
-                    $("#limit option[value=Hi-Lo-pot_limit]").hide();
-                    $("#limit option[value=Hi-Lo-limit]").hide();
-                }
-            });
-        </script>
+    $('#gameType').change(function() {
+        var gameType = $('#gameType  option:selected').val();
+        if (gameType == "omaha") {
+            $("#limit option[value=Hi-Lo]").show();
+            $("#limit option[value=Hi-Lo-pot_limit]").show();
+            $("#limit option[value=Hi-Lo-limit]").show();
+            $("#limit option[value=limit]").attr("selected", false);
+        } else {
+            $("#limit option[value=limit]").attr("selected", true);
+            $("#limit option[value=Hi-Lo]").hide();
+            $("#limit option[value=Hi-Lo-pot_limit]").hide();
+            $("#limit option[value=Hi-Lo-limit]").hide();
+        }
+    });
+</script>
 
-        {% endblock %}
+{% endblock %}

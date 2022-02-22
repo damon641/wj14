@@ -2,129 +2,117 @@
 
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container">
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Rake Cap Table</h1>
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb">
-                <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Add Rake Cap</li>
-            </ol>
-            <!-- /Breadcrumb -->
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Add Rake Cap</h6>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        {% if rackCap %}
-                                        <form method="POST" action="/cashGames/RakeCapEdit/{{rackCap.id}}" class="form-horizontal" id="tableForm">
-                                            {% else %}
-                                            <form method="POST" action="/cashGames/addRakeCap" class="form-horizontal" id="tableForm">
-                                                {% endif %}
-                                                <table border="0" class="table display  pb-30">
-                                                    <div class="col-sm-12">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <!-- <input type="hidden" name="id" value="{{stacks.id}}"> -->
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="stacks">Stacks:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <select id="stack" name="stack" selected="{{rackCap.stack}}" class="form-control">
-																		{%for stack in stacks %}
-																		<option  {{ "selected" if rackCap.stack==stack.stack else "" }} value={{stack.stack}}>{{stack.stack}}</option>
-																		{%endfor%}
-																		</select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="Rake">%Rake:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="number" class="form-control" id="rake" data-validation="number" data-validation-allowing="float" placeholder="Enter Rake" required name="rake" value="{{rackCap.rake}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="player2Cap">2Player Cap:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" data-validation="number rackCap" data-validation-allowing="float" id="player2Cap" placeholder="Enter 2 player Cape " name="player2Cap" value="{{rackCap.player2Cap}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="player3Cap">3-4 Player Cap:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" data-validation="number rackCap" data-validation-allowing="float" id="player3Cap" placeholder="Enter 3 player Cape" name="player3Cap" value="{{rackCap.player3Cap}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="player5Cap">5+ Player Cap:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control" data-validation="number rackCap" data-validation-allowing="float" id="player5Cap" placeholder="Enter 5 Player Cap" name="player5Cap" value="{{rackCap.player5Cap}}">
-                                                                    </div>
-                                                                </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            {% if rackCap %}
+                            <h3 class="panel-title">Edit Rake Cap</h3>
+                            {% else %}
+                            <h3 class="panel-title">Add Rake Cap</h3>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if rackCap %}
+                            <form method="POST" action="/cashGames/RakeCapEdit/{{rackCap.id}}" class="form-horizontal" id="tableForm">
+                                {% else %}
+                                <form method="POST" action="/cashGames/addRakeCap" class="form-horizontal" id="tableForm">
+                                    {% endif %}
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
+                                                <div class="panel-wrapper">
 
+                                                    <div class="panel-body">
+                                                        <!-- <input type="hidden" name="id" value="{{stacks.id}}"> -->
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="stacks">Stacks:</label>
+                                                            <div class="col-sm-12">
+                                                                <select id="stack" name="stack" selected="{{rackCap.stack}}" class="form-control">
+                                                            {%for stack in stacks %}
+                                                            <option  {{ "selected" if rackCap.stack==stack.stack else "" }} value={{stack.stack}}>{{stack.stack}}</option>
+                                                            {%endfor%}
+                                                            </select>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="Rake">%Rake:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="number" class="form-control" id="rake" data-validation="number" data-validation-allowing="float" placeholder="Enter Rake" required name="rake" value="{{rackCap.rake}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="player2Cap">2Player Cap:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" data-validation="number rackCap" data-validation-allowing="float" id="player2Cap" placeholder="Enter 2 player Cape " name="player2Cap" value="{{rackCap.player2Cap}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="player3Cap">3-4 Player Cap:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" data-validation="number rackCap" data-validation-allowing="float" id="player3Cap" placeholder="Enter 3 player Cape" name="player3Cap" value="{{rackCap.player3Cap}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="player5Cap">5+ Player Cap:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" data-validation="number rackCap" data-validation-allowing="float" id="player5Cap" placeholder="Enter 5 Player Cap" name="player5Cap" value="{{rackCap.player5Cap}}">
+                                                            </div>
+                                                        </div>
+
                                                     </div>
-                                                    <!-- <tr>
-														<td colspan="2">
-															<input type="submit" class="btn btn-success btn-flat" value="Submit" id="btnsubmit">
-															<a href="/cashgames/rakeCap" class="btn btn-danger btn-flat" id="btncancel">Cancel</a>
-														</td>
-													</tr> -->
-                                                </table>
-                                                <div class="box-footer">
-                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
-                                                    <a href="/cashgames/rakeCap" class="btn btn-danger float-right">Cancel</a>
+
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/cashgames/rakeCap" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn" value="Submit">
+                                                </div>
+                                            </div>
+                                        </center>
                                     </div>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
-
-                <!-- /Row -->
             </div>
-        </section>
+        </div>
+    </div>
+</div>
 
-        {% endblock %} {% block Jscript %}
-        <script>
-            $(document).ready(function() {
-                var host = window.location.origin;
-            });
-            $.formUtils.addValidator({
-                name: 'rackCap',
-                validatorFunction: function(value, $el, config, language, $form) {
-                    return value >= 0.1;
-                },
-                errorMessage: 'Minimum value 0.1 required.',
-                errorMessageKey: 'badRackCap'
-            });
+{% endblock %} {% block Jscript %}
+<script>
+    $(document).ready(function() {
+        var host = window.location.origin;
+    });
+    $.formUtils.addValidator({
+        name: 'rackCap',
+        validatorFunction: function(value, $el, config, language, $form) {
+            return value >= 0.1;
+        },
+        errorMessage: 'Minimum value 0.1 required.',
+        errorMessageKey: 'badRackCap'
+    });
 
-            // Initiate form validation
-            $.validate({
-                form: '#tableForm',
-                onSuccess: function($form) {
-                    $('#btnsubmit').val('Please wait ...')
-                        .attr('disabled', 'disabled');
-                    $('#btncancel').hide();
-                }
-            });
-        </script>
-        {% endblock %}
+    // Initiate form validation
+    $.validate({
+        form: '#tableForm',
+        onSuccess: function($form) {
+            $('#btnsubmit').val('Please wait ...')
+                .attr('disabled', 'disabled');
+            $('#btncancel').hide();
+        }
+    });
+</script>
+{% endblock %}

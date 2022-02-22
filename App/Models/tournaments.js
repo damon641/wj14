@@ -50,12 +50,12 @@ const TournamentSchema = new Schema({
             },
             register_from_date_time: {
 				type: Date,
-				timezone: 'Europe/Lisbon',
+		    timezone: 'Europe/Lisbon',
 				required: true
             },
             tournament_date_time: {
 				type: Date,
-				timezone: 'Europe/Lisbon',
+		    timezone: 'Europe/Lisbon',
 				required: true
 			},
             description: {

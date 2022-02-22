@@ -1,234 +1,268 @@
 {% extends "partition/layout.html" %} {% block body %}
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Agent Table</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active" href="/agents">Agents</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Agents</h6>
-                            </div>
-                            <div class="pull-right">
-                                {% if agentLevel
-                                < 100 %} <a href="/addAgent"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Agent</button></a>
-                                    {% endif %}
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="row" style="margin-top: 10px;">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-10 col-sm-3" for="email">Status :</label>
-                                        <div class="col-sm-8">
-                                            <select name="pokerTables" id="pokerTables" class="form-control">
-												<option value="active"selected>Active</option>
-												<option value="Block">Block</option>
-											</select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <!-- <th></th> -->
-                                                    <th>Username</th>
-                                                    <!-- <th>First Name</th>
-														<th>Last Name</th> -->
-                                                    <th>Email</th>
-                                                    <th>Rake(%)</th>
-                                                    <th>Chips</th>
-                                                    <th>Rake Chips</th>
-                                                    <th>Admin InOut</th>
-                                                    <th>Agent Player In</th>
-                                                    <th>Agent Type</th>
-                                                    <th>Created At</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <!-- <th></th> -->
-                                                    <th>Username</th>
-                                                    <!-- <th>First Name</th>
-														<th>Last Name</th> -->
-                                                    <th>Email</th>
-                                                    <th>Rake(%)</th>
-                                                    <th>Chips</th>
-                                                    <th>Rake Chips</th>
-                                                    <th>Admin InOut</th>
-                                                    <th>Agent Player In</th>
-                                                    <th>Agent Type</th>
-                                                    <th>Created At</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Request MOney -->
-        <section class="content">
-            <!-- Row -->
-            <div class="row">
-                <!-- /.modal -->
-                <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form method="POST" name="adduser" id="cashAddFrm" action="/agent/requestCash">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h5 class="modal-title">Add/Deduct Cash</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="requestCash"> </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label mb-10">Cash:</label>
-                                        <input type="text" name="chips" class="form-control" id="action_chips" required>
-                                        <span class="help-block form-error" id="displayError" style="display: none;">The input value was not a correct number</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="chips_note" class="control-label mb-10">Note:</label>
-                                        <textarea name="chips_note" class="form-control" id="chips_note" placeholder="please enter chips notes" rows="3"></textarea>
-                                    </div>
+<div class="container nav_drop_menu " id="Agents ">
+    <ul>
+        <li class="text_container ">
+            <a class="myagent" href="/agents ">
+                <div class="name ">My Agents</div>
+            </a>
+        </li>
+        {% if session.role == 'admin'%}
+        <li class="text_container ">
+            <a class="allagent" href="/allagents ">
+                <div class="name ">All Agents</div>
+            </a>
 
-                                </div>
-                                <input type="hidden" name="requestType" id="requestType" value="">
-                                <div class="modal-footer">
-                                    <input type="button" onclick="checkAmount('add')" name="requestType" class="btn btn-success playerChipsAction" value="Add">
-                                    <input type="button" onclick="checkAmount('deduct')" class="btn btn-danger playerChipsAction" name="requestType" value="Deduct">
-                                    <!-- <input type="submit" name="requestType" class="btn btn-success playerChipsAction" value="Add">
-										<input type="submit" class="btn btn-danger playerChipsAction" name="requestType" value="Deduct"> -->
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Button trigger modal -->
-            </div>
-            <!-- /Row -->
-        </section>
+        </li>
 
-        <section class="content">
-            <!-- Row -->
-            <div class="row">
-                <!-- /.modal -->
-                <div id="chips-note-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form method="POST" name="adduser" action="/agent/update/chipNotes">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h5 class="modal-title">Edit Chips Note</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="editChipsNote"> </div>
-                                    <div class="form-group">
-                                        <label for="edit_chips_note" class="control-label mb-10">Note:</label>
-                                        <textarea name="edit_chips_note" class="form-control" id="edit_chips_note" placeholder="please enter chips notes" rows="3"></textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="submit" name="requestType" class="btn btn-success chipsNoteAction" value="Update">
-                                    <input type="button" class="btn btn-danger playerChipsAction" name="requestType" value="Close" data-dismiss="modal">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Button trigger modal -->
-                <div id="transfer-Chips-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form method="POST" name="transfer" action="/agent/update/chipTransfer">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h5 class="modal-title">Transfer Chips</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="transferChips"> </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="control-label mb-10 col-sm-4">Transfer Chips Block:</label>
-                                            <div class="col-sm-6">
-                                                <select class="form-control" name="isTransferAllow" id="isTransferAllow">
-																		<option id="all" value="" >---Please select --- </option>
-																		<option id="true" value="true" {{ "selected" if isTransferAllow=='true' else "" }} >Inactive</option>
-																		<option id="false" value="false" {{ "selected" if isTransferAllow=='false' else "" }} >Active</option>
-																	</select>
-                                            </div>
-                                            <br>
-                                            <br>
-                                            <label class="control-label mb-10 col-sm-4" for="multitable_status">Transfer Rake Chips :</label>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="recipient-name" class="control-label mb-10">Cash:</label> {# <input type="hidden" name="agent" class="form-control" id="chips"> #}
-                                                    <input type="number" name="rake_chips" class="form-control" step="0.01" id="rake_chips">
-                                                    <span class="help-block form-error" id="displayError" style="display: none;">The input value was not a correct number</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="chips_note" class="control-label mb-10">Note:</label>
-                                                    <textarea name="chips_note" class="form-control" id="chips_note" placeholder="please enter chips notes" rows="3"></textarea>
-                                                </div>
+        <li class="text_container ">
+            <a href="/my-rack-history ">
+                <div class="name ">My Rake</div>
+            </a>
+        </li>
+        {% endif %}
+	<li class="text_container ">
+		            <a href="/my-rack-history ">
+				                    <div class="name ">My Rake</div>
+						                </a>
+								        </li>
+        <li class="text_container ">
+            <a href="/my-chips-transactions ">
+                <div class="name ">Chips Transactions</div>
+            </a>
 
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                    </div>
-                                </div>
-                                <div class="modal-footer" style="border-top: 0px">
-                                    <input disabled="disabled" type="submit" name="requestType" onClick="this.form.submit(); this.disabled=true; this.value='Processing…';" class="btn btn-success chipsNoteAction" value="Update">
-                                    <input type="button" class="btn btn-danger" name="requestType" value="Close" data-dismiss="modal">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Row -->
-        </section>
-    </div>
+        </li>
+        <li class="text_container ">
+            <a href="/addAgent ">
+                <div class="name "><i class="fa fa-plus-circle " aria-hidden="true "></i> Add Agents</div>
+            </a>
+
+        </li>
+    </ul>
 </div>
+<div class="container">
 
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Agents</h3>
+                            <div class="pull-right">
+                                <!-- Agents Type : -->
+                                <button class="table_btn pokerTables active" name="pokerTables" id="pokerTables" onclick="change('active')" value="active" selected>Active</button>
+                                <button class="table_btn pokerTables " name="pokerTables" id="pokerTables" onclick="change('Block')" value="block">Blocked</button>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th></th> -->
+                                            <th>Username</th>
+                                            <!-- <th>First Name</th>
+                                                <th>Last Name</th> -->
+                                            <th>Email</th>
+                                            <th>Rake(%)</th>
+                                            <th>Chips</th>
+                                            <th>Rake Chips</th>
+                                            <th>Admin InOut</th>
+                                            <th>Agent Player In</th>
+                                            <th>Agent Type</th>
+                                            <th>Created At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <!-- <th></th> -->
+                                            <th>Username</th>
+                                            <!-- <th>First Name</th>
+                                                <th>Last Name</th> -->
+                                            <th>Email</th>
+                                            <th>Rake(%)</th>
+                                            <th>Chips</th>
+                                            <th>Rake Chips</th>
+                                            <th>Admin InOut</th>
+                                            <th>Agent Player In</th>
+                                            <th>Agent Type</th>
+                                            <th>Created At</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<section class="content">
+    <!-- Row -->
+    <div class="row">
+        <!-- /.modal -->
+        <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST" name="adduser" id="cashAddFrm" action="/agent/requestCash">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add/Deduct Cash</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                        </div>
+                        <div class="modal-body">
+                            <div id="requestCash"> </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label mb-10">Cash:</label>
+                                <input type="text" name="chips" class="form-control" id="action_chips" required>
+                                <span class="help-block form-error" id="displayError" style="display: none;">The input value was not a correct number</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="chips_note" class="control-label mb-10">Note:</label>
+                                <textarea name="chips_note" class="form-control" id="chips_note" placeholder="please enter chips notes" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                        <input type="hidden" name="requestType" id="requestType" value="">
+                        <div class="modal-footer">
+                            <input type="button" onclick="checkAmount('add')" name="requestType" class="btn btn-success playerChipsAction" value="Add">
+                            <input type="button" onclick="checkAmount('deduct')" class="btn btn-danger playerChipsAction" name="requestType" value="Deduct">
+                            <!-- <input type="submit" name="requestType" class="btn btn-success playerChipsAction" value="Add">
+                                <input type="submit" class="btn btn-danger playerChipsAction" name="requestType" value="Deduct"> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+    </div>
+    <!-- /Row -->
+</section>
+
+<section class="content">
+    <!-- Row -->
+    <div class="row">
+        <!-- /.modal -->
+        <div id="chips-note-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST" name="adduser" action="/agent/update/chipNotes">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Chips Note</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                        </div>
+                        <div class="modal-body">
+                            <div id="editChipsNote"> </div>
+                            <div class="form-group">
+                                <label for="edit_chips_note" class="control-label mb-10">Note:</label>
+                                <textarea name="edit_chips_note" class="form-control" id="edit_chips_note" placeholder="please enter chips notes" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" name="requestType" class="btn btn-success chipsNoteAction" value="Update">
+                            <input type="button" class="btn btn-danger playerChipsAction" name="requestType" value="Close" data-dismiss="modal">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <div id="transfer-Chips-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="POST" name="transfer" action="/agent/update/chipTransfer">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Transfer Chips</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                        </div>
+                        <div class="modal-body">
+                            <div id="transferChips"> </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label col-lg-12">Transfer Chips Block:</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="isTransferAllow" id="isTransferAllow">
+                                                                <option id="all" value="" >---Please select --- </option>
+                                                                <option id="true" value="true" {{ "selected" if isTransferAllow=='true' else "" }} >Inactive</option>
+                                                                <option id="false" value="false" {{ "selected" if isTransferAllow=='false' else "" }} >Active</option>
+                                                            </select>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <label class="control-label  col-lg-12" for="multitable_status">Transfer Rake Chips :</label>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="control-label ">Cash:</label> {# <input type="hidden" name="agent" class="form-control" id="chips"> #}
+                                            <input type="number" name="rake_chips" class="form-control" step="0.01" id="rake_chips">
+                                            <span class="help-block form-error" id="displayError" style="display: none;">The input value was not a correct number</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="chips_note" class="control-label ">Note:</label>
+                                            <textarea name="chips_note" class="form-control" id="chips_note" placeholder="please enter chips notes" rows="3"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="border-top: 0px">
+                            <input disabled="disabled" type="submit" name="requestType" onClick="this.form.submit(); this.disabled=true; this.value='Processing…';" class="btn btn-success chipsNoteAction" value="Update">
+                            <input type="button" class="btn btn-danger" name="requestType" value="Close" data-dismiss="modal">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+</section>
 
 {% endblock %} {% block Jscript %}
 <script>
     var orderTable = "";
     var host = window.location.origin;
-    var tableType = $('#pokerTables').val();
+    $('.pokerTables').click(function() {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    });
 
+    var tableType = $('#pokerTables').val();
+    if (!tableType) {
+        var tableType = 'active';
+    }
     let ajaxUrl = host + "/agents/getAgents/" + tableType;
     let isAllAgents = "{{allAgents}}";
+    if (isAllAgents !== 'true') {
+        $(function() {
+            $('.myagent').addClass('active');
+            $('.allagent').removeClass('active');
+        });
+    }
     if (isAllAgents == 'true') {
+        $(function() {
+            $('.allagent').addClass('active');
+            $('.myagent').removeClass('active');
+        });
         ajaxUrl = host + "/agents/getAllAgents/" + tableType;
     }
     $(document).ready(function() {
+
         var host = window.location.origin;
         checkAmount = function(type) {
             var chips = $('#action_chips').val();
@@ -393,7 +427,7 @@
                                             //location.reload();
                                             var changeText = 'Block';
                                             if ($(thisElement).parent().parent().find('td  .agentTransfer').text() == 'Block') {
-                                                changeText = 'UnBlock';
+                                                changeText = 'Unblock';
                                             }
                                             console.log($(thisElement).parent().parent().find('td .agentTransfer').text(changeText));
                                             //$(thisElement).parent().parent().hide(700);
@@ -417,6 +451,8 @@
 
                     $('body').on('click', '.agentActive', function(e) {
                         var id = $(this).attr('id');
+                        var status = $(this).attr('status');
+                        // alert(status);
                         var thisElement = this;
                         swal({
                             title: "Are you sure?",
@@ -439,29 +475,15 @@
                                     success: function(resultData, data) {
                                         console.log(data);
                                         if (resultData == 'success') {
-                                            //location.reload();
-                                            var changeText = 'active';
-
-                                            if ($(thisElement).parent().parent().find('li  .agentActive').text() == 'active') {
-                                                changeText = 'Block';
-                                            }
-
-                                            let icon = changeText == 'Block' ? 'fa fa-lock' : 'fa fa-unlock';
-
-                                            $(thisElement).parent().parent().find('li .agentActive').html('<i class="' + icon + '" aria-hidden="true"></i>' + changeText);
-
-
-                                            //console.log( $(thisElement).parent().parent().find('li .agentActive i').addClass(icon) );
-                                            //$(thisElement).parent().parent().hide(700);
-                                            //swal("Update!", "Player Status Updated Successfully..", "success");
+                                            change(status);
                                         } else {
-                                            alert("Something went wrong")
+                                            alert("Something went wrong");
                                         }
 
                                     }
                                 });
                                 swal("Success!", "Agent Status Updated Succesfully.", "success");
-                                ResetData()
+
                             } else {
                                 swal("Cancelled", "Agent Status not Updated)", "error");
                             }
@@ -551,8 +573,9 @@
         }); */
 
     });
-    $('#pokerTables').change(function() {
-        var tableType = $('#pokerTables').val();
+
+    function change(value) {
+        var tableType = value;
         ajaxUrl = host + "/agents/getAgents/" + tableType;
         isAllAgents = "{{allAgents}}";
         if (isAllAgents == 'true') {
@@ -560,7 +583,7 @@
         }
         orderTable.ajax.url(ajaxUrl).load();
 
-    })
+    };
 
     function ResetData() {
         var tableType = $('#pokerTables').val();
@@ -595,9 +618,9 @@
                 }},*/
                 {
                     "data": "username",
-                    render: function(data, type, row) {
-                        return '<a href="/agent/' + row._id + '">' + row.username + '</a>'
-                    }
+                    // render: function(data, type, row) {
+                    //     return '<a href="/agent/' + row._id + '">' + row.username + '</a>'
+                    // }
                 },
                 // { "data": "firstname" },
                 // { "data": "lastname" },
@@ -624,8 +647,7 @@
                         let admin = row.agentAndPlayersChips != '' ? row.agentAndPlayersChips : '--'
                         return admin
                     }
-                },
-                {
+                }, {
                     "data": "agentType",
                     render: function(data, type, row) {
                         let admin = row.role != '' ? row.role : '--'
@@ -651,23 +673,30 @@
                     "data": "action",
                     render: function(data, type, row) {
                         console.log(row.isTransfer, 'row', row.status)
-                        let icon = row.status == 'Block' ? 'fa fa-lock' : 'fa fa-unlock'
+                        var active = 'Unblock';
+                        if (row.status == 'active') {
+                            active = 'Block';
+                        } else {
+                            active = 'Unblock';
+                        }
+                        let icon = row.status == 'active' ? 'fa fa-lock' : 'fa fa-unlock'
                             //		let transferIcon = row.isTransfer == true ? 'fa fa-unlock' :'fa fa-lock'
                             //		let transferStatus = row.isTransfer == true ? 'Is Not Chips Transfer' :'Is Chips Transfer'
-                        let liAction = '<li><a href="/agentEdit/' + row._id + '" title="Edit Agent" class="btn-success-main"><i class="fa fa-edit" aria-hidden="true"></i>Edit Agent</a></li>'
+                        let liAction = '<li><a href="/agent/' + row._id + '" title="Agent Project" class="btn-success-main"><i class="fa fa-users" aria-hidden="true"></i>Sub Agents</a></li>'
+                        liAction += '<li><a href="/agentEdit/' + row._id + '" title="Edit Agent" class="btn-success-main"><i class="fa fa-edit" aria-hidden="true"></i>Edit Profile</a></li>'
+                            //<li><a href="JavaScript:Void(0);"  id="'+row._id+'"  class="agentTransfer btn-success"><i class="'+transferIcon+'" aria-hidden="true"></i>'+transferStatus+'</a></li>
 
-                        //<li><a href="JavaScript:Void(0);"  id="'+row._id+'"  class="agentTransfer btn-success"><i class="'+transferIcon+'" aria-hidden="true"></i>'+transferStatus+'</a></li>
-
-                        liAction += '<li><a href="JavaScript:Void(0);"  id="' + row._id + '"  class="agentActive btn-success-main"><i class="' + icon + '" aria-hidden="true"></i>' + row.status + '</a></li><li><a href="/agent/rack/' + row._id + '" class="btn-success-main" title="Rake History"><i class="fa fa-money" aria-hidden="true"></i>Rake History</a></li><li><a href="/my-chips-Transactions/' + row._id + '" class="btn-success-main" title="Cash History"><i class="fa fa-history" aria-hidden="true"></i>Cash History</a></li>'
-                        liAction += '<li><a  onclick="transferChipsAgent(this.id)" class="btn-success-main " id="' + row._id + '" title="Transfer Chips"><i class="fa fa-exchange" aria-hidden="true"></i>Transfer Chips</a></li>'
+                        liAction += '<li><a href="/agent/rack/' + row._id + '" class="btn-success-main" title="Rake History"><i class="fa fa-money" aria-hidden="true"></i>Rake History</a></li><li><a href="/my-chips-Transactions/' + row._id + '" class="btn-success-main" title="Cash Transactions"><i class="fa fa-history" aria-hidden="true"></i>Cash Transactions</a></li>'
+                        liAction += '<li><a  onclick="transferChipsAgent(this.id)" class="btn-success-main " id="' + row._id + '" title="Manage Rake Chips"><i class="fa fa-exchange" aria-hidden="true"></i>Manage Rake Chips</a></li>'
                             // var ReturnAction = '<a href="/agentEdit/'+row._id+'"><button type="button" class="btn btn-warning btn-xs btn-rounded" name="edit" title="Edit Agent"><i class="fa fa-edit" aria-hidden="true"></i></button></a><button type="button" name="active" id="'+row._id+'" class="btn btn-success btn-xs agentActive btn-rounded">'+row.status+'</input></button><a href="/agent/rack/'+row._id+'" class="btn btn-info btn-xs btn-rounded" title="Rake History"><i class="fa fa-history" aria-hidden="true"></i></a><a href="/my-chips-Transactions/'+row._id+'" class="btn btn-info btn-xs btn-rounded" title="Cash History"><i class="fa fa-history" aria-hidden="true"></i></a>'
-                        liAction += '<li><a data-toggle="modal" data-target="#responsive-modal" class="btn-success-main addChips " id="' + row._id + '" title="Request Cash"><i class="fa fa-dollar" aria-hidden="true"></i>Request Cash</a></li>';
+                        liAction += '<li><a data-toggle="modal" data-target="#responsive-modal" class="btn-success-main addChips " id="' + row._id + '" title="Manage Cash"><i class="fa fa-dollar" aria-hidden="true"></i>Manage Cash</a></li>';
                         if (isAllAgents != 'true') {
                             var onclick = "getChipsNote('" + row._id + "')";
                             /*liAction +='<li><a data-toggle="modal" data-target="#responsive-modal" class="btn-success addChips " id="'+row._id+'" title="Request Cash"><i class="fa fa-dollar" aria-hidden="true"></i>Request Cash</a></li>';*/
-                            liAction += '<li><a onclick="' + onclick + '" data-toggle="modal" data-target="#chips-note-modal" class="btn-success-main editChipsNote" id="' + row._id + '" title="Edit Chips Note"><i class="fa fa-edit" aria-hidden="true"></i>Edit Chips Notes</a></li>';
+                            // liAction += '<li><a onclick="' + onclick + '" data-toggle="modal" data-target="#chips-note-modal" class="btn-success-main editChipsNote" id="' + row._id + '" title="Edit Chips Note"><i class="fa fa-edit" aria-hidden="true"></i>Edit Chips Notes</a></li>';
                             // ReturnAction +='<a data-toggle="modal" data-target="#responsive-modal" class="btn btn-default btn-xs addChips btn-rounded" id="'+row._id+'" title="Request Cash"><i class="fa fa-dollar" aria-hidden="true"></i></a>'
                         }
+                        liAction += '<li><a href="JavaScript:Void(0);"  id="' + row._id + '" status="' + row.status + '" class="agentActive btn-success-main"><i class="' + icon + '" aria-hidden="true"></i>' + active + '</a></li>'
                         let ReturnAction = '<div class="btn-group pull-right" style="width:-webkit-fill-available;"><button type="button" class="btn btn-primary-main btn-sm dropdown-toggle" data-toggle="dropdown" style="width:-webkit-fill-available;"> Action <span class="caret"> </span></button><ul class="dropdown-menu" role="menu">' + liAction + '</ul></div>'
 
                         return ReturnAction;

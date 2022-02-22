@@ -11,8 +11,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/dist/img/head_logo.png">
+    <link rel="icon" href="/dist/img/head_logo.png" type="image/x-icon">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="/vendors/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -39,14 +39,14 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <img class="brand-img" src="dist/img/logo.png" alt="brand" height="200px" />
+            <img class="brand-img" src="/dist/img/login_logo.png" alt="brand" height="200px" />
             <!-- <a href="/"><b>{{ App.name }}</a> -->
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
             <!-- <p class="login-box-msg">Sign in to start your session</p> -->
             <!-- Alert if error while loggin in -->
-            {% include "partition/notification.html" %}
+
 
             <form action="/" method="post">
                 <div class="form-group has-feedback">
@@ -63,13 +63,12 @@
           <option >Agent</option>
         </select>
       </div> -->
-                <div class="row">
+                <div class="row login_footer">
                     <div class="col-lg-7">
-
                         <div class="checkbox">
                             <label>
-                <input type="checkbox"> Remember Me
-              </label>
+                                <input type="checkbox"> Remember Me
+                            </label>
                         </div>
                     </div>
                     <!-- /.col -->
@@ -116,11 +115,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <script>
         $(function() {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' /* optional */
-            });
+            // $('input').iCheck({
+            //     checkboxClass: 'icheckbox_square-blue',
+            //     radioClass: 'iradio_square-blue',
+            //     increaseArea: '10%' /* optional */
+            // });
             $.validate({
                 modules: 'location, date, security, file',
             });

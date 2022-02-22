@@ -2,278 +2,252 @@
 
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container">
 
-        <!-- Breadcrumb -->
-        <section class="content-header">
-            <h1>Regular Tournament Pricepool Table</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Add Regular Price Pool</li>
-            </ol>
-        </section>
-        <!-- /Breadcrumb -->
-
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                {% if pricepool %}
-                                <h6 class="panel-title txt-dark">Edit Regular Tournament Price Pool</h6>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            {% if pricepool %}
+                            <h3 class="panel-title">Edit Regular Tournament Prize Pool</h3>
+                            {% else %}
+                            <h3 class="panel-title">Add Regular Tournament Prize Pool</h3>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            {% if pricepool %}
+                            <form method="POST" action="/price-pool/regularTournament/edit/{{pricepool.id}}" class="form-horizontal">
                                 {% else %}
-                                <h6 class="panel-title txt-dark">Add Regular Tournament Price Pool</h6>
-                                {% endif %}
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        {% if pricepool %}
-                                        <form method="POST" action="/price-pool/regularTournament/edit/{{pricepool.id}}" class="form-horizontal">
-                                            {% else %}
-                                            <form method="POST" action="/price-pool/regularTournament/add" class="form-horizontal">
-                                                {% endif %}
-                                                <table border="0" class="table display  pb-30">
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body" id="numberbox">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="minPlayers">Minimum Players:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="number" class="form-control xyz" id="minPlayers" placeholder="Enter Minimum players" required data-validation="number" name="minPlayers" {% if pricepool %} readonly {% endif %} value="{{pricepool.minPlayers}}">
-                                                                    </div>
-                                                                </div>
-                                                                {#
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="isFreeRoll">Is FreeRoll:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <select class="form-control freeRollSelect" name="isFreeRoll" id="isFreeRoll">
-																				<option value="false" {{ "selected" if pricepool.isFreeRoll== false else "" }} >No</option>
-																				<option value="true" {{ "selected" if pricepool.isFreeRoll== true else "" }} >Yes</option>
-																			</select>
-                                                                    </div>
-                                                                </div>#}
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeFirst">First Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For First Winnner" name="placeFirst" value="{{pricepool.place_1}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeSecond">Second Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Second Winnner" name="placeSecond" value="{{pricepool.place_2}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeThird">Third Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Third Winnner" name="placeThird" value="{{pricepool.place_3}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeForth">Forth Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Forth Winnner" name="placeForth" value="{{pricepool.place_4}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeFifth">Fifth Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Fifth Winnner" name="placeFifth" value="{{pricepool.place_5}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeSixth">Sixth Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Sixth Winnner" name="placeSixth" value="{{pricepool.place_6}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeSeventh">Seventh Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Seventh Winnner" name="placeSeventh" value="{{pricepool.place_7}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeEigth">Eigth Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Eigth Winnner" name="placeEigth" value="{{pricepool.place_8}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeNine">Ninth Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Ninth Winnner" name="placeNine" value="{{pricepool.place_9}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="placeten">Tenth Winner:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Tenth Winnner" name="placeten" value="{{pricepool.place_10}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place11_15">11-15 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="place11_15" placeholder="Enter Percentage For 11-15 Winnners" name="place11_15" value="{{pricepool.place_11_15}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place16_20">16-20 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="place16_20" placeholder="Enter Percentage For 16-20 Winnners" name="place16_20" value="{{pricepool.place_16_20}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place21_27">21-27 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="place21_27" placeholder="Enter Percentage For 21-27 Winnners" name="place21_27" value="{{pricepool.place_21_27}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place28_36">28-36 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="place28_36" placeholder="Enter Percentage For 28-36 Winnners" name="place28_36" value="{{pricepool.place_28_36}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place37_45">37-45 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="place37_45" placeholder="Enter Percentage For 37-45 Winnners" name="place37_45" value="{{pricepool.place_37_45}}">
-                                                                    </div>
-                                                                </div>
-
+                                <form method="POST" action="/price-pool/regularTournament/add" class="form-horizontal">
+                                    {% endif %}
+                                    <div class="form_table">
+                                        <center>
+                                            <div class="col-sm-8">
+                                                <div class="panel-wrapper">
+                                                    <div class="panel-body" id="numberbox">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="minPlayers">Minimum Players:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="number" class="form-control xyz" id="minPlayers" placeholder="Enter Minimum players" required data-validation="number" name="minPlayers" {% if pricepool %} readonly {% endif %} value="{{pricepool.minPlayers}}">
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="col-sm-6">
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="maxPlayers">Maximum Players:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="number" class="form-control xyz" id="maxPlayers" placeholder="Enter Maximum players" required data-validation="number" name="maxPlayers" {% if pricepool %} readonly {% endif %} value="{{pricepool.maxPlayers}}">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place46_63">46-63 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 46-63 Winners" name="place46_63" value="{{pricepool.place_46_63}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place64_81">64-81 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 64-81 Winners" name="place64_81" value="{{pricepool.place_64_81}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place82_99">82-99 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 82-99 Winners" name="place82_99" value="{{pricepool.place_82_99}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place100_126">100-126 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 100-126 Winnners" name="place100_126" value="{{pricepool.place_100_126}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place127_153">127-153 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 127-153 Winnners" name="place127_153" value="{{pricepool.place_127_153}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place154_189">154-189 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 154-189 Winnners" name="place154_189" value="{{pricepool.place_154_189}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place190_225">190-225 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 190-225 Winnners" name="place190_225" value="{{pricepool.place_190_225}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place226_306">226-306 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 226-306 Winnners" name="place226_306" value="{{pricepool.place_226_306}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place307_378">307-378 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 307-378 Winnners" name="place307_378" value="{{pricepool.place_307_378}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place379_450">379-450 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 379-450 Winnners" name="place379_450" value="{{pricepool.place_379_450}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place451_600">451-600 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 451-600 Winnners" name="place451_600" value="{{pricepool.place_451_600}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place601_750">601-750 Winners:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 601-750 Winnners" name="place601_750" value="{{pricepool.place_601_750}}">
-                                                                    </div>
-                                                                </div>
-
-                                                                {#
-                                                                <div class="form-group">
-                                                                    <label class="control-label mb-10 col-sm-2" for="place201_300">Total value:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <input type="text" class="total" value="" />
-                                                                    </div>
-                                                                </div> #}
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="maxPlayers">Maximum Players:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="number" class="form-control xyz" id="maxPlayers" placeholder="Enter Maximum players" required data-validation="number" name="maxPlayers" {% if pricepool %} readonly {% endif %} value="{{pricepool.maxPlayers}}">
                                                             </div>
                                                         </div>
+
+
+                                                        {#
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="isFreeRoll">Is FreeRoll:</label>
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control freeRollSelect" name="isFreeRoll" id="isFreeRoll">
+                                                                    <option value="false" {{ "selected" if pricepool.isFreeRoll== false else "" }} >No</option>
+                                                                    <option value="true" {{ "selected" if pricepool.isFreeRoll== true else "" }} >Yes</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>#}
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeFirst">First Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For First Winnner" name="placeFirst" value="{{pricepool.place_1}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeSecond">Second Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Second Winnner" name="placeSecond" value="{{pricepool.place_2}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeThird">Third Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Third Winnner" name="placeThird" value="{{pricepool.place_3}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeForth">Forth Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Forth Winnner" name="placeForth" value="{{pricepool.place_4}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeFifth">Fifth Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Fifth Winnner" name="placeFifth" value="{{pricepool.place_5}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeSixth">Sixth Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Sixth Winnner" name="placeSixth" value="{{pricepool.place_6}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeSeventh">Seventh Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Seventh Winnner" name="placeSeventh" value="{{pricepool.place_7}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeEigth">Eigth Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Eigth Winnner" name="placeEigth" value="{{pricepool.place_8}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeNine">Ninth Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Ninth Winnner" name="placeNine" value="{{pricepool.place_9}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="placeten">Tenth Winner:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For Tenth Winnner" name="placeten" value="{{pricepool.place_10}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place11_15">11-15 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="place11_15" placeholder="Enter Percentage For 11-15 Winnners" name="place11_15" value="{{pricepool.place_11_15}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place16_20">16-20 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="place16_20" placeholder="Enter Percentage For 16-20 Winnners" name="place16_20" value="{{pricepool.place_16_20}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place21_27">21-27 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="place21_27" placeholder="Enter Percentage For 21-27 Winnners" name="place21_27" value="{{pricepool.place_21_27}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place28_36">28-36 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="place28_36" placeholder="Enter Percentage For 28-36 Winnners" name="place28_36" value="{{pricepool.place_28_36}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place37_45">37-45 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="place37_45" placeholder="Enter Percentage For 37-45 Winnners" name="place37_45" value="{{pricepool.place_37_45}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place46_63">46-63 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 46-63 Winners" name="place46_63" value="{{pricepool.place_46_63}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place64_81">64-81 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 64-81 Winners" name="place64_81" value="{{pricepool.place_64_81}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place82_99">82-99 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 82-99 Winners" name="place82_99" value="{{pricepool.place_82_99}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place100_126">100-126 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 100-126 Winnners" name="place100_126" value="{{pricepool.place_100_126}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place127_153">127-153 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 127-153 Winnners" name="place127_153" value="{{pricepool.place_127_153}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place154_189">154-189 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 154-189 Winnners" name="place154_189" value="{{pricepool.place_154_189}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place190_225">190-225 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 190-225 Winnners" name="place190_225" value="{{pricepool.place_190_225}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place226_306">226-306 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 226-306 Winnners" name="place226_306" value="{{pricepool.place_226_306}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place307_378">307-378 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 307-378 Winnners" name="place307_378" value="{{pricepool.place_307_378}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place379_450">379-450 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 379-450 Winnners" name="place379_450" value="{{pricepool.place_379_450}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place451_600">451-600 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 451-600 Winnners" name="place451_600" value="{{pricepool.place_451_600}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place601_750">601-750 Winners:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control abc" id="winner" placeholder="Enter Percentage For 601-750 Winnners" name="place601_750" value="{{pricepool.place_601_750}}">
+                                                            </div>
+                                                        </div>
+
+                                                        {#
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-10 col-sm-12" for="place201_300">Total value:</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="total" value="" />
+                                                            </div>
+                                                        </div> #}
                                                     </div>
-                                                    <!-- <tr>
-														<td colspan="2">
-															<div class="pull-right">
-																<input disabled="disabled" type="submit" name="submite" id="btnflatt" class="btn btn-success btn-flat" value="Submit">
-															<a href="/price-pool/regularTournament" class="btn btn-danger btn-flat">Cancel</a>
-															</div>
-														</td>
-													</tr> -->
-                                                </table>
-                                                <div class="box-footer">
-                                                    <input type="submit" class="btn btn-success btn-poker float-right ml-2" value="Submit">
-                                                    <a href="/price-pool/regularTournament" class="btn btn-danger float-right">Cancel</a>
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-lg-8 row form_footer">
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <a href="/price-pool/regularTournament" class="btn btn-danger form_btn">Cancel</a>
+                                                </div>
+                                                <div class="col-lg-6 form_footer_box">
+                                                    <input type="submit" class="btn btn-success btn-poker form_btn" value="Submit">
+                                                </div>
+                                            </div>
+                                        </center>
                                     </div>
-                                </div>
-                            </div>
+                                </form>
                         </div>
                     </div>
                 </div>
-                <!-- /Row -->
             </div>
-        </section>
-        <!-- /Row -->
+        </div>
     </div>
+
 </div>
 
 {% endblock %} {% block Jscript %}

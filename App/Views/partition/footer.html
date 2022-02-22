@@ -1,180 +1,209 @@
+<script src="/dist/js/jquery.min.js">
+</script>
+<script src="/dist/js/popper.min.js"></script>
+<script src="/dist/js/bootstrap.min.js"></script>
+<script src="/dist/js/jquery.easing.min.js"></script>
+<script src="/dist/js/swiper.min.js"></script>
+<script src="/dist/js/jquery.magnific-popup.js"></script>
+<script src="/dist/js/validator.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+<script>
+    $(document).ready(function() {
+        $('#loading').hide();
 
-	<!-- jQuery 3 -->
-	<script src="/vendors/bower_components/jquery/dist/jquery.min.js"></script>
-	<!-- Bootstrap 3.3.7 -->
-	<script src="/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- FastClick -->
-	<script src="/vendors/bower_components/fastclick/lib/fastclick.js"></script>
-	<!-- AdminLTE App -->
-	<script src="/dist/js/adminlte.min.js"></script>
-	<!-- Sparkline -->
-	<script src="/vendors/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-	<!-- jvectormap  -->
-	<script src="/vendors//jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="/vendors//jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-	<!-- SlimScroll -->
-	<script src="/vendors/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<!-- ChartJS -->
-	<!-- <script src="/vendors/bower_components/chart.js/Chart.js"></script> -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
-	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-	<!-- <script src="/dist/js/pages/dashboard2.js"></script> -->
-	<!-- AdminLTE for demo purposes -->
-	<!-- <script src="dist/js/demo.js"></script> -->
+    });
+    $(document).click(function(e) {
+        if (!$(e.target).is('.panel-body')) {
+            $('.collapse').collapse('hide');
+        }
+    });
+</script>
+<script src="js/js8.js"></script>
+<!-- jQuery 3 -->
+<!-- <script src="/vendors/bower_components/jquery/dist/jquery.min.js"></script> -->
+<!-- Bootstrap 3.3.7 -->
+<!-- <script src="/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+<!-- FastClick -->
+<script src="/vendors/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<!-- Sparkline -->
+<script src="/vendors/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap  -->
+<script src="/vendors//jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="/vendors//jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- SlimScroll -->
+<script src="/vendors/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- ChartJS -->
+<!-- <script src="/vendors/bower_components/chart.js/Chart.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<!-- <script src="/dist/js/pages/dashboard2.js"></script> -->
+<!-- AdminLTE for demo purposes -->
+<!-- <script src="dist/js/demo.js"></script> -->
 
-	<!-- Form validator -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+<!-- Form validator -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
-	<!-- Data table JavaScript -->
-	<script src="/vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="/vendors/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Data table JavaScript -->
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+<!-- <script src="/vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/vendors/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script> -->
 
-	  <!-- Sweet-Alert  -->
-	<script src="/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="/dist/js/sweetalert-data.js"></script>
+<!-- Sweet-Alert  -->
+<script src="/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/dist/js/sweetalert-data.js"></script>
 
-	<!-- datepicker -->
-	<!-- <script src="/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-	<script src="/vendors/bootstrap-timepicker/bootstrap-clockpicker.min.js"></script> -->
-	
+<!-- datepicker -->
+<!-- <script src="/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/vendors/bootstrap-timepicker/bootstrap-clockpicker.min.js"></script> -->
 
-	
-	<script src="/dist/js/moment.min.js"></script>
-	<script src="/dist/js/daterangepicker.js"></script>
-	<script src="/dist/js/bootstrap-datepicker.min.js"></script>
-	<script src="/dist/js/bootstrap3-wysihtml5.all.min.js"></script>
-	<!-- Bootstrap WYSIHTML5 -->
+
+
+<script src="/dist/js/moment.min.js"></script>
+<script src="/dist/js/daterangepicker.js"></script>
+<script src="/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/dist/js/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
-	<!-- Switchery JavaScript -->
-	<script src="/vendors/bower_components/switchery/dist/switchery.min.js"></script>
+<!-- Switchery JavaScript -->
+<script src="/vendors/bower_components/switchery/dist/switchery.min.js"></script>
 
-	<script>
-	
-	  $.validate({
-	    modules : 'location, date, security, file',
-		});
-		function transferChips(){
-					$(".transferChips").attr("disabled", true);
-			var host = window.location.origin;
-			var agent= "{{Agent.id}}";
-			var role = "{{Agent.is_admin}}";
-				if(role == 'yes'){
-				var isAdmin = 'yes'
-			}else{
-				var isAdmin = 'no'
-			}
-			if($('#userChips').val() !='' && parseFloat($('#userChips').val()) > 0){
-				$.ajax({
-					dataType:"json",
-					type:"POST",
-					url:host + "/agent/loginuser/transfer",
-					data:{'userChips':$('#userChips').val()},
-					success: function(response){
-						console.log("response: test", response);
-						if(response.status == "success"){
-								alert(response.message)
-							window.location.reload()
-						}else{
-							alert(response.message);
-						}
-					}
-				});
-			}
-			else{
-				alert('Please enter chips amount')
-			}
-		}
-	</script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script>
-		$(document).ready(function(params) {
-			$.ajax({
-					type:"GET",
-					url:"/getNotificationCount",
-					success: function(response){
-						if (response.withdrawCount) {
-							$("#withdrawNotification").text(response.withdrawCount)
-						}
-						if (response.depositCount) {
-							$("#depositNotification").text(response.depositCount)
-						}
-					}
-				});
-		})
-	  var host = window.location.origin;
-	  const socket = io(host);
-	  socket.on('connect', function(){
-		//   alert('connect')
-	  });
-	  socket.on('withdrawNotification', function(data){
-		$("#withdrawNotification").text(data.count);
-	  });
-	  socket.on('depositNotification', function(data){
-		$("#depositNotification").text(data.count);
-	  });
-  	  socket.on('disconnect', function(){});
+<script>
+    $.validate({
+        modules: 'location, date, security, file',
+    });
 
-  	function transferChips(){
-			$(".transferChips").attr("disabled", true);
-			var host = window.location.origin;
-			var agent= "{{Agent.id}}";
-			var role = "{{Agent.is_admin}}";
-				if(role == 'yes'){
-				var isAdmin = 'yes'
-			}else{
-				var isAdmin = 'no'
-			}
-			if($('#userChips').val() !='' && parseFloat($('#userChips').val()) > 0){
-				$.ajax({
-					dataType:"json",
-					type:"POST",
-					url:host + "/agent/loginuser/transfer",
-					data:{'userChips':$('#userChips').val()},
-					success: function(response){
-						console.log("response: test", response);
-						if(response.status == "success"){
-							alert(response.message)
-							window.location.reload()
-						}else  {
-							console.log(response.message);
-							alert(response.message)
-							window.location.reload();
-						}
-					}
-				});
-			}
-			else{
-				alert('Please enter chips amount')
-				$(".extratransferChips").attr("disabled", false);
-			}
-	}
-	function extratransferChips(){
-		$(".extratransferChips").attr("disabled", true);
-		var host = window.location.origin;
-		if($('#extraChips').val() !='' && parseFloat($('#extraChips').val()) > 0){
-			$.ajax({
-				dataType:"json",
-				type:"POST",
-				url:host + "/agent/loginuser/userextraChips",
-				data:{'extraChips':$('#extraChips').val()},
-				success: function(response){
-					console.log("response: test", response);
-					if(response.status == "success"){
-						alert(response.message)
-						window.location.reload();
-					}else{
-						console.log(response.message);
-						alert(response.message)
-						window.location.reload();
-					}
-				}
-			});
-		}
-		else{
-			alert('Please enter chips amount')
-			$(".extratransferChips").attr("disabled", false);
-		}
-	}  
-	</script>
+    function transferChips() {
+        $(".transferChips").attr("disabled", true);
+        var host = window.location.origin;
+        var agent = "{{Agent.id}}";
+        var role = "{{Agent.is_admin}}";
+        if (role == 'yes') {
+            var isAdmin = 'yes'
+        } else {
+            var isAdmin = 'no'
+        }
+        if ($('#userChips').val() != '' && parseFloat($('#userChips').val()) > 0) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: host + "/agent/loginuser/transfer",
+                data: {
+                    'userChips': $('#userChips').val()
+                },
+                success: function(response) {
+                    console.log("response: test", response);
+                    if (response.status == "success") {
+                        alert(response.message)
+                        window.location.reload()
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        } else {
+            alert('Please enter chips amount')
+        }
+    }
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    $(document).ready(function(params) {
+        $.ajax({
+            type: "GET",
+            url: "/getNotificationCount",
+            success: function(response) {
+                if (response.withdrawCount) {
+                    $("#withdrawNotification").text(response.withdrawCount)
+                }
+                if (response.depositCount) {
+                    $("#depositNotification").text(response.depositCount)
+                }
+            }
+        });
+    })
+    var host = window.location.origin;
+    const socket = io(host);
+    socket.on('connect', function() {
+        //   alert('connect')
+    });
+    socket.on('withdrawNotification', function(data) {
+        $("#withdrawNotification").text(data.count);
+    });
+    socket.on('depositNotification', function(data) {
+        $("#depositNotification").text(data.count);
+    });
+    socket.on('disconnect', function() {});
+
+    function transferChips() {
+        $(".transferChips").attr("disabled", true);
+        var host = window.location.origin;
+        var agent = "{{Agent.id}}";
+        var role = "{{Agent.is_admin}}";
+        if (role == 'yes') {
+            var isAdmin = 'yes'
+        } else {
+            var isAdmin = 'no'
+        }
+        if ($('#userChips').val() != '' && parseFloat($('#userChips').val()) > 0) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: host + "/agent/loginuser/transfer",
+                data: {
+                    'userChips': $('#userChips').val()
+                },
+                success: function(response) {
+                    console.log("response: test", response);
+                    if (response.status == "success") {
+                        alert(response.message)
+                        window.location.reload()
+                    } else {
+                        console.log(response.message);
+                        alert(response.message)
+                        window.location.reload();
+                    }
+                }
+            });
+        } else {
+            alert('Please enter chips amount')
+            $(".extratransferChips").attr("disabled", false);
+        }
+    }
+
+    function extratransferChips() {
+        $(".extratransferChips").attr("disabled", true);
+        var host = window.location.origin;
+        if ($('#extraChips').val() != '' && parseFloat($('#extraChips').val()) > 0) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: host + "/agent/loginuser/userextraChips",
+                data: {
+                    'extraChips': $('#extraChips').val()
+                },
+                success: function(response) {
+                    console.log("response: test", response);
+                    if (response.status == "success") {
+                        alert(response.message)
+                        window.location.reload();
+                    } else {
+                        console.log(response.message);
+                        alert(response.message)
+                        window.location.reload();
+                    }
+                }
+            });
+        } else {
+            alert('Please enter chips amount')
+            $(".extratransferChips").attr("disabled", false);
+        }
+    }
+</script>

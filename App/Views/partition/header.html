@@ -1,152 +1,342 @@
 <header class="main-header">
 
-    <!-- Logo -->
-    <a href="/" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">
-    <img src="http://18.225.32.71/dist/img/Head_logo.png" class="img-circle brand-image elevation-3" alt="Agent Image"
-      width="50px" height="50px">
-  </span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><img class="brand-img brand-image img-circle elevation-3"
-      src="http://18.225.32.71/dist/img/head_logo.png" alt="ToGo Poker" width="50px" height="50px" /></span>
-        <span class="brand-text font-weight-light"> BYTE <span style="color: #dc3545;">POKER</span></span>
-    </a>
-    <!-- <a href="/" class="brand-link">
-    <img src="http://18.224.137.228/dist/img/logo.png" class="img-circle brand-image elevation-3" alt="Agent Image" width="50px" height="50px">
-    <span class="brand-text font-weight-light"> ToGo Poker</span>
-</a> -->
-    <input value="{{App.maintenanceMode}}" hidden type="text" id="maintenanceMode">
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-        <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-                <li class="dropdown user user-menu">
-                    {% if Agent.isTransferAllow == true or Agent.isTransferAllow == "true" %}
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa fa-exchange" style="color:green;"></i>
-                    </a>
-                    <!-- <button  type="button" class="dropdown-toggle btn btn-success btn-flat btn-sm transf-mony" data-toggle="dropdown">Transfer</button> -->
-                    {% endif %}
-                    <ul class="dropdown-menu dropdown-menu-right">
+    <div class="first-load">
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class=container>
+                <a class="navbar-brand logo-image" href="/"><img src="/dist/img/logo.png" alt=PokerScript></a>
+                <div class="profile">
 
-                        <li class="user-footer">
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-12 text-left">
-                                        <div class="form-group">
-                                            <label class="control-label text-black">Enter Chips</label>
-                                            <input type="number" id="userChips" name="userChips" class="form-control" min="0.01" step="1" max="{{Agent.rake_chips}}" placeholder="Chips amount should be under {{(Agent.rake_chips).toFixed(2)}}">
+                    <li class="dropdown user user-menu">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <span class="social-icons">
+                                <span class="profile">
+                                    <img src="/dist/img/poker/img_avatar.png" class="profile_img" alt="Avatar">
+                                    <p class="user_name">{{session.name}} </p>
+                                </span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <Center>
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <a href="#" class="dropdown-item dropdown-footer">
+                                        <!-- Message Start -->
+                                        <div class="media">
+                                            <div class="media-body">
+                                                {% if session.role == 'admin'%}
+                                                <img src="/profile/{{session.avatar}}" class="img-size-50 img-circle" alt="User Image" width="50px" height="50px"> {%else%}
+                                                <img src="/profile/agents/{{session.avatar}}" class="img-size-50 img-circle" alt="Agent Image" width="50px" height="50px"> {%endif%}
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <input type="submit" class="btn btn-primary-main btn-block transferChips " onclick="transferChips()" name="Transfer" value="Transfer">
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-                {% if App.maintenanceMode %}
-                <li style="padding: 0 40px; top: 5px; color: #000000;">
-                    <span>Maintenance Mode </span>
-                    <div style="text-align: center; background-color: green;">
-                        <span> ON </span>
-                    </div>
-                </li>
-                {% endif %}
+                                        <br>
+                                        <p class="text-sm">{{session.name}}</p>
+                                        {% if session.role == 'admin' %} {% if session.admin_type == 'admin' %}
+                                        <p class="text-sm">Admin</p>
+                                        {% elseif session.admin_type == 'senioradmin' %}
+                                        <p class="text-sm">Senior Admin</p>
+                                        {% elseif session.admin_type == 'regularadmin' %}
+                                        <p class="text-sm">Regular Admin</p>
+                                        {% endif %} {% endif %}
+                                        <p class="text-sm text-muted">{{(Agent.chips).toFixed(2)}}</p>
+                                        <!-- Message End -->
+                                    </a>
+                                </li>
+                                <hr> {%if session.role == 'admin' %} {%if session.admin_type == 'admin' %}
+                                <li class="user-header">
+                                    <a href="/user" class="dropdown-item dropdown-footer"><i class="fa fa-users"></i>
+                                        Users</a>
+                                </li>
+                                <hr> {%endif%} {%endif%}
+                                <li class="user-header">
+                                    <!-- <a href="javascript:void(0);" class="dropdown-item dropdown-footer">
+                                        <span class="">Rake Account [ <span id="rootChips">000</span> ]</span>
 
-
-
-
-
-                <!-- User Account: style can be found in dropdown.less -->
-                {% if Agent.isSuperAdmin == true %}
-                <li>
-                    <a href="javascript:void(0);">
-          {% if Agent.extraRakeChips %}
-          <span class=""> Admin Rake Account [ <span id="rootChips">{{(Agent.extraRakeChips).toFixed(2)}}</span>
-            ]</span>
-          {%else%}
-          <span class="">Admin Rake Account [ <span id="rootChips">000</span> ]</span>
-          {%endif%}
-        </a>
-                </li>
-                {%endif%} {% if App.maintenanceMode %}
-                <li style="padding: 0 40px; top: 5px; color: #ffffff;">
-                    <span>Maintenance Mode </span>
-                    <div style="text-align: center; background-color: green;">
-                        <span> ON </span>
-                    </div>
-                </li>
-                {% endif %}
-
-
-                <li class="dropdown user user-menu">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user-circle" style="color: #dc3545;"></i>
+                                    </a> -->
+                                    <a href="javascript:void(0);" class="dropdown-item dropdown-footer">
+                                        {% if Agent.rake_chips %}
+                                        <span class="">Rake Account [ <span
+                                                id="rootChips">{{(Agent.rake_chips).toFixed(2)}}</span>
+                                            ]</span>
+                                        {%else%}
+                                        <span class="">Rake Account [ <span id="rootChips">000</span> ]</span>
+                                        {%endif%}
+                                    </a>
+                                </li>
+                                <hr>
+                                <li class="user-header">
+                                    <!-- <a href="#" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out"></i>
+                                    My Profile</a> -->
+                                    {% if session.role == 'admin'%}
+                                    <a href="/profile" class="dropdown-item dropdown-footer"><i
+                                            class="fa fa-user-circle"></i> My Profile</a> {%else%}
+                                    <a href="/agent/profile" class="dropdown-item dropdown-footer"><i
+                                            class="fa fa-user-circle"></i> My Profile</a> {%endif%}
+                                </li>
+                                <hr>
+                                <li class="user-header">
+                                    <!-- <a href="#" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out"></i>
+                                    Sing
+                                    Out</a> -->
+                                    <a href="/logout" class="dropdown-item dropdown-footer"><i
+                                            class="fa fa-sign-out"></i> Sing
+                                        Out</a>
+                                </li>
+                            </Center>
+                        </ul>
+                    </li>
+                </div>
+            </div>
+        </nav>
+        {% if session.role == 'admin'%}
+        <div class="container main_nav">
+            <ul>
+                <li class="text_container">
+                    <a href="/">
+                        <img src="/dist/img/poker/Poker_icon/Dashboard.png" class="menu_icon" alt="Home">
+                        <div class="name">Home</div>
                     </a>
-                    <ul class="dropdown-menu">
+                </li>
+                <li class="text_container {{playerActive}}">
+                    <a href="/player">
+                        <img src="/dist/img/poker/Poker_icon/Players.png" class="menu_icon" alt="Player">
+                        <div class="name">Players</div>
+                    </a>
 
-                        <!-- User image -->
-                        <li class="user-header">
-                            <a href="#" class="dropdown-item dropdown-footer">
-                                <!-- Message Start -->
-                                <div class="media">
-                                    <div class="media-body">
-                                        {% if session.role == 'admin'%}
-                                        <img src="/profile/{{session.avatar}}" class="img-size-50 img-circle" alt="User Image" width="50px" height="50px"> {%else%}
-                                        <img src="/profile/agents/{{session.avatar}}" class="img-size-50 img-circle" alt="Agent Image" width="50px" height="50px"> {%endif%}
-                                    </div>
-                                </div>
-                                <p class="text-sm">{{session.name}}</p>
-                                <p class="text-sm text-muted">{{(Agent.chips).toFixed(2)}}</p>
-                                <!-- Message End -->
-                            </a>
-                        </li>
-                        <hr>
-                        <li class="user-header">
-                            <a href="javascript:void(0);" class="dropdown-item dropdown-footer">
-                            {% if Agent.rake_chips %}
-                            <span class="">Rake Account [ <span id="rootChips">{{(Agent.rake_chips).toFixed(2)}}</span>
-                                ]</span>
-                            {%else%}
-                            <span class="">Rake Account [ <span id="rootChips">000</span> ]</span>
-                            {%endif%}
-                            </a>
-                        </li>
-                        <hr>
-                        <li class="user-header">
-                            {% if session.role == 'admin'%}
-                            <a href="/profile"><i class="fa fa-user-circle"></i> My Profile</a> {%else%}
-                            <a href="/agent/profile"><i class="fa fa-user-circle"></i> My Profile</a> {%endif%}
-                        </li>
-                        <hr>
-                        <li class="user-header">
-                            <a href="/logout" class="dropdown-item dropdown-footer"><i class="fa fa-sign-out"></i> Sing
-              Out</a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="text_container">
+                    <a href="/holdem">
+                        <img src="/dist/img/poker/Poker_icon/Games.png" class="menu_icon" alt="Games">
+                        <div class="name">Tables</div>
+                    </a>
+                </li>
+                {% if session.admin_type == 'admin' %}
+                <li class=" text_container ">
+                    <a href="/deposit-receipt ">
+                        <img src="/dist/img/poker/Poker_icon/Finance.png " class=" menu_icon " alt=" Finance ">
+                        <div class=" name ">Finance</div>
+                    </a>
+                </li>
+                {%elseif session.admin_type == 'senioradmin' %}
+                <li class=" text_container ">
+                    <a href="/deposit-receipt ">
+                        <img src="/dist/img/poker/Poker_icon/Finance.png " class=" menu_icon " alt=" Finance ">
+                        <div class=" name ">Finance</div>
+                    </a>
+                </li>
+                {% endif %}
+                <li class=" text_container ">
+                    <a href="/selfReports ">
+                        <img src="/dist/img/poker/Poker_icon/Reports.png " class=" menu_icon " alt=" Reports ">
+                        <div class=" name ">Reports</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/settings ">
+                        <img src="/dist/img/poker/Poker_icon/Settings.png " class=" menu_icon " alt=" Settings ">
+                        <div class=" name ">Settings</div>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+        {% endif %} {% if session.role != 'admin' %}
+        <div class=" container main_nav ">
+            <ul>
+                <li class=" text_container {{playerActive}} ">
+                    <a href="/player ">
+                        <img src="/dist/img/poker/Poker_icon/Players.png " class=" menu_icon " alt=" Player ">
+                        <div class=" name ">Players</div>
+                    </a>
+
+                </li>
+                {% if session.role != 'agent'%}
+                <li class=" text_container ">
+                    <a href="/agents ">
+                        <img src="/dist/img/poker/Poker_icon/Agents.png " class=" menu_icon " alt=" Agents ">
+                        <div class=" name ">Agents</div>
+                    </a>
+                </li>
+                {#
+                <li class="text_container ">
+                    <a href="/selfReports ">
+                        <img src="/dist/img/poker/Poker_icon/Reports.png " class="menu_icon " alt="Reports ">
+                        <div class="name ">Reports</div>
+                    </a>
+                </li>
+                #}
+            </ul>
+
+        </div> {% endif %} {%endif%}
+
+
+
+
+        <div class=" container collapse nav_drop_menu " id=" Agents ">
+            <ul>
+                <li class=" text_container ">
+                    <a href="/agents ">
+                        <div class=" name ">My Agents</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/allagents ">
+                        <div class=" name ">All Agents</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/my-rack-history ">
+                        <div class=" name ">Admin Rake</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/my-chips-transactions ">
+                        <div class=" name ">My Chips History</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/addAgent ">
+                        <div class=" name "><i class=" fa fa-plus-circle " aria-hidden=" true "></i> Add Agents</div>
+                    </a>
+
+                </li>
+            </ul>
+        </div>
+        <div class=" container collapse nav_drop_menu " id=" Agents2 ">
+            <ul>
+                <li class=" text_container ">
+                    <a href="/agents ">
+                        <div class=" name ">Agents</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/my-rack-history ">
+                        <div class=" name ">Admin Rake</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/my-chips-transactions ">
+                        <div class=" name ">My Chips History</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/addAgent ">
+                        <div class=" name "><i class=" fa fa-plus-circle " aria-hidden=" true "></i> Add Agents</div>
+                    </a>
+
+                </li>
+            </ul>
+        </div>
+        <div class=" container collapse nav_drop_menu " id=" Finance ">
+            <ul>
+                <li class=" text_container ">
+                    <a href="/deposit-receipt ">
+                        <div class=" name ">Coupon Management</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/deposit-receipt ">
+                        <div class=" name ">Deposit Request</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/withdraw ">
+                        <div class=" name ">Withdraw Request</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/inapppurchase ">
+                        <div class=" name ">In-App Purchase</div>
+                    </a>
+
                 </li>
             </ul>
         </div>
 
-    </nav>
+        <div class=" container collapse nav_drop_menu " id=" Reports ">
+            <ul>
+                <li class=" text_container ">
+                    <a href="/selfReports ">
+                        <div class=" name ">Self Report</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/agentReports ">
+                        <div class=" name ">Agents Report</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/playerReports ">
+                        <div class=" name ">Player Report</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class=" container collapse nav_drop_menu " id=" Settings ">
+            <ul>
+                <li class=" text_container ">
+                    <a href="/settings ">
+                        <div class=" name ">System Settings</div>
+                    </a>
+                </li>
+                <!-- <li class=" text_container ">
+                    <a href="/blockedIp ">
+                        <div class=" name ">Location Security</div>
+                    </a>
+
+                </li> -->
+                <li class=" text_container ">
+                    <a href="/cashgames/stacks ">
+                        <div class=" name ">Stakes Setup</div>
+                    </a>
+                </li>
+                <li class=" text_container ">
+                    <a href="/cashgames/rakecap ">
+                        <div class=" name ">Table Rake Cap</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/blindLevels ">
+                        <div class=" name ">Blind Level</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/currency ">
+                        <div class=" name ">Currency Management</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class=" container collapse nav_drop_menu " id=" Settings2 ">
+            <ul>
+                <li class=" text_container ">
+                    <a href="/my-chips-transactions ">
+                        <div class=" name ">My Chips History</div>
+                    </a>
+
+                </li>
+                <li class=" text_container ">
+                    <a href="/my-rack-history ">
+                        <div class=" name ">Admin Rake</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </header>
-<script src="/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/vendors/bower_components/jquery/dist/jquery.min.js "></script>
 
 <script>
-    var Mode = $("#maintenanceMode").val();
-    console.log(Mode)
+    var Mode = $(" #maintenanceMode ").val();
     if ($('body').find('.navbar').length > 0) {
-        if (Mode == "true") {
+        if (Mode == " true ") {
             $('.navbar').addClass('hedarModeColor');
         } else {
             $('.navbar').removeClass('hedarModeColor');

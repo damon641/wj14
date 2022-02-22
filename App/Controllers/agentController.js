@@ -556,6 +556,20 @@ module.exports = {
     editAgent: async function(req, res) {
         try {
             let agent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: req.params.id });
+
+            let agentCommision = [];
+            if (req.session.details.is_admin != 'yes') {
+                let getLevel = await Sys.App.Services.agentServices.getSingleAgentData({ _id: req.session.details.id });
+                let agentCom = getLevel.commission;
+                for (let i = 1; i <= agentCom; i++) {
+                    agentCommision.push(i);
+                }
+            } else {
+                for (let i = 1; i <= 100; i++) {
+                    agentCommision.push(i);
+                }
+            }
+
             /*let agentCommision = [];
             if(req.session.details.is_admin != 'yes'){
               let getLevel = await Sys.App.Services.agentServices.getSingleAgentData({_id: req.session.details.id});
@@ -580,26 +594,33 @@ module.exports = {
                 agentCommision.push(i);
               }
             }*/
-            let agentCommision = [];
-            if (req.session.details.is_admin != 'yes') {
-                let getLevel = await Sys.App.Services.agentServices.getSingleAgentData({ _id: req.session.details.id });
-                let agentCom = getLevel.commission;
-                for (let i = 1; i <= agentCom; i++) {
-                    agentCommision.push(i);
-                }
-            } else {
-                if (agent.role != 'master' || agent.role != 'senior') {
-                    let parentAgent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: agent.parentId });
-                    for (let i = 1; i <= parentAgent.commission; i++) {
-                        agentCommision.push(i);
-                    }
-                } else {
-                    for (let i = 1; i <= 100; i++) {
-                        agentCommision.push(i);
-                    }
-                }
 
-            }
+            // if (req.session.details.is_admin == 'yes') {
+            //     let getLevel = await Sys.App.Services.agentServices.getSingleAgentData({ _id: req.session.details.id });
+            //     let agentCom = getLevel.commission;
+            //     for (let i = 1; i <= agentCom; i++) {
+            //         agentCommision.push(i);
+            //     }
+            // } else {
+            //     console.log(agent.role == 'senior');
+            //     console.log(agent.role != 'senior');
+            //     if (agent.role != 'master') {
+            //         let parentAgent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: agent.parentId });
+            //         for (let i = 1; i <= parentAgent.commission; i++) {
+            //             agentCommision.push(i);
+            //         }
+            //     } else if (agent.role != 'senior') {
+            //         let parentAgent = await Sys.App.Services.agentServices.getSingleAgentData({ _id: agent.parentId });
+            //         for (let i = 1; i <= parentAgent.commission; i++) {
+            //             agentCommision.push(i);
+            //         }
+            //     } else {
+            //         for (let i = 1; i <= 100; i++) {
+            //             agentCommision.push(i);
+            //         }
+            //     }
+
+            // }
             var data = {
                 App: Sys.Config.App.details,
                 Agent: req.session.details,

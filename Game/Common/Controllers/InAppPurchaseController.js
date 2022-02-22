@@ -414,8 +414,8 @@ module.exports = {
         		 
         	let message = {
         	  notification: {
-        	    title: 'Byte Poker',
-        	    body: 'Welcome to Byte Poker.Play & Win..',
+        	    title: 'White Poker',
+        	    body: 'Welcome to White Poker.Play & Win..',
 
         	  },
         	  android: {

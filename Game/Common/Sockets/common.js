@@ -16,6 +16,16 @@ module.exports = function (Socket) {
       responce(await Sys.Game.Common.Controllers.PlayerController.playerLogin(Socket,data));
     });
 
+    Socket.on("GetAddVideo",async function(data,responce) {
+      console.log("GetAddVideo called: ", data);
+      responce(await Sys.Game.Common.Controllers.PlayerController.getVideoLink(Socket,data));
+    });
+    
+    Socket.on("ClaimChips",async function(data,responce) {
+      console.log("ClaimChips called: ", data);
+      responce(await Sys.Game.Common.Controllers.PlayerController.claimChips(Socket,data));
+    });
+
     Socket.on("RegisterPlayer",async function(data,responce) {
       console.log("Register Player", data);
       responce(await Sys.Game.Common.Controllers.PlayerController.playerRegister(Socket,data));

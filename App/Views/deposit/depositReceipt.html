@@ -5,69 +5,80 @@
     }
 </style>
 {% block body %}
+<div class="container nav_drop_menu " id="Finance ">
+    <ul>
+        <!-- <li class="text_container ">
+            <a href="/promocode ">
+                <div class="name ">Coupon Management</div>
+            </a>
+        </li> -->
+        <li class="text_container ">
+            <a class="active" href="/deposit-receipt ">
+                <div class="name ">Deposit Request</div>
+            </a>
 
+        </li>
+        <li class="text_container ">
+            <a href="/withdraw ">
+                <div class="name ">Withdraw Request</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/inapppurchase ">
+                <div class="name ">In-App Purchase</div>
+            </a>
+
+        </li>
+    </ul>
+</div>
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Deposit Receipt</h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#"> <i class="fa fa-dashboard"></i> Dashboard</a>
-                </li>
-                <li class="active" href="/deposit-receipt">Deposit</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Deposite Receipt</h6>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>UID</th>
-                                                    <th>Username</th>
-                                                    <th>Deposit Receipt</th>
-                                                    <th>Deposit Amount</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>UID</th>
-                                                    <th>Username</th>
-                                                    <th>Deposit Receipt</th>
-                                                    <th>Deposit Amount</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+              <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+              <h3 class="panel-title">Deposit Receipt</h3>
+            </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>UID</th>
+                                            <th>Username</th>
+                                            <th>Deposit Amount</th>
+                                            <th>Deposit Receipt</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>UID</th>
+                                            <th>Username</th>
+                                            <th>Deposit Amount</th>
+                                            <th>Deposit Receipt</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-    </section>
+
 </div>
-</div>
+
 <section class="content">
     <!-- Row -->
     <div class="row">
@@ -137,58 +148,53 @@
                                     <div class="box-body">
                                         <strong>
                       <i class="fa fa-university" aria-hidden="true"></i> Bank
-                      Name</strong
-                    >
-                    <p class="text-muted" id="show-bank_name"></p>
+                      Name</strong>
+                                        <p class="text-muted" id="show-bank_name"></p>
 
-                    <hr />
+                                        <hr />
 
-                    <strong>
+                                        <strong>
                       <i class="fa fa-circle-o margin-r-5"></i> Account
-                      Number</strong
-                    >
+                      Number</strong>
 
-                    <p class="text-muted" id="show-accountNumber"></p>
+                                        <p class="text-muted" id="show-accountNumber"></p>
 
-                    <hr />
+                                        <hr />
 
-                    <strong>
+                                        <strong>
                       <i class="fa fa-circle-o margin-r-5"></i> Account
-                      Type</strong
-                    >
+                      Type</strong>
 
-                    <p class="text-muted" id="show-accountType"></p>
+                                        <p class="text-muted" id="show-accountType"></p>
 
-                    <hr />
+                                        <hr />
 
-                    <strong>
-                      <i class="fa fa-circle-o margin-r-5"></i> CPF</strong
-                    >
+                                        <strong>
+                      <i class="fa fa-circle-o margin-r-5"></i> CPF</strong>
 
-                    <p class="text-muted" id="show-CPF"></p>
+                                        <p class="text-muted" id="show-CPF"></p>
 
-                    <hr />
+                                        <hr />
 
-                    <strong>
+                                        <strong>
                       <i class="fa fa-circle-o margin-r-5"></i>Account Agency
-                      Number</strong
-                    >
+                      Number</strong>
 
-                    <p class="text-muted" id="show-agency"></p>
+                                        <p class="text-muted" id="show-agency"></p>
 
-                    <hr />
-                  </div>
-                  <!-- /.box-body -->
+                                        <hr />
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+        <!-- Button trigger modal -->
     </div>
-    <!-- Button trigger modal -->
-  </div>
-  <!-- /Row -->
+    <!-- /Row -->
 </section>
 
 {% endblock %} {% block Jscript %}
@@ -202,188 +208,182 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script>
-  $(document).ready(function () {
-    var host = window.location.origin;
-    $('#myTable').DataTable({
-      dom: 'Blfrtip',
-      buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-      processing: true,
-      serverSide: true,
-      ordering: false,
-      autoWidth: false,
-      pageLength: 10,
-      ajax: host + '/getDepositReceipt',
-      columns: [
-        {
-          data: 'playerId.uniqId',
-        },
-        {
-          data: 'playerId.username',
-        },
-        {
-          data: 'depositReceipt',
-          render: function (data, type, row) {
-            if (row.receipt == '') {
-              return 'No Receipt';
-            } else {
-              return (
-              '<a href="  ' + host +
-              row.receipt +
-              '" target="_blank"><button type="button" title="view Receipt" class="btn btn-primary btn-xs btn-rounded">view receipt</button></a>'
-            ); 
-            }
-            //return '<button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded response">Approve</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs btn-rounded deniedresponse">Denied</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded accountinfo">Account info</button>';
-          },
-        },
-        {
-          data: 'depositAmount',
-        },
-        {
-          data: 'action',
-          render: function (data, type, row) {
-            if (row.action == false) {
-              return (
-                '<button type="button" title="Approve" name="delete" id="' +
-                row._id +
-                '" class="btn btn-primary btn-xs btn-rounded response">Approve</button> <button type="button" title="Denied" name="delete" id="' +
-                row._id +
-                '" class="btn btn-danger btn-xs btn-rounded deniedresponse">Denied</button>'
-              );
-            } else {
-              return 'Done';
-            }
-            //return '<button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded response">Approve</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs btn-rounded deniedresponse">Denied</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded accountinfo">Account info</button>';
-          },
-        },
-      ],
-    });
-
-    $(function () {
-      'use strict';
-
-      var SweetAlert = function () {};
-
-      (SweetAlert.prototype.init = function () {
-        $('body').on('click', '.accountinfo', function (e) {
-          var id = $(this).attr('id');
-          var response = $(this).attr('accountinfo');
-          var thisElement = this;
-          $.ajax({
-            type: 'post',
-            url: host + '/player/account_info/',
-            data: { id: id },
-            success: function (response) {
-              if (response.status == 'success') {
-                for (let key in response.result) {
-                  if ($('#show-' + key).length) {
-                    $('#show-' + key).html(response.result[key]);
-                  }
-                }
-                $('#responsive-modal').modal('show');
-              }
-            },
-            error: function (resultData) {
-              alert('fail');
-            },
-          });
-        });
-
-        //Parameter
-        $('body').on('click', '.response', function (e) {
-          var id = $(this).attr('id');
-          console.log('id: ', id);
-          var response = $(this).attr('response');
-          var thisElement = this;
-          swal(
-            {
-              title: 'Are you sure?',
-              text: 'You will not be able to Revert this Action!',
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#e69a2a',
-              confirmButtonText: 'Yes,do it!',
-              cancelButtonText: 'No, cancel it!',
-              closeOnConfirm: false,
-              closeOnCancel: false,
-            },
-            function (isConfirm) {
-              if (isConfirm) {
-                $.ajax({
-                  type: 'POST',
-                  url: host + '/depositAction',
-                  data: {
-                    id: id,
-                    flag: 1,
-                  },
-                  success: function (resultData) {
-                    console.log(resultData.success);
-                    if (resultData.success == 'success') {
-                      $(thisElement).parent().parent().hide(700);
-                      swal('Done', resultData.message, 'success');
-                    //   window.location.reload();
-                    } else if (resultData.fail == 'fail') {
-                      swal('Alert', resultData.message, 'error');
-                    }
-                  },
-                });
-              } else {
-                swal('Cancelled', 'Something went wrong', 'error');
-              }
-            }
-          );
-          return false;
-        });
-
-        $('body').on('click', '.deniedresponse', function (e) {
-          var id = $(this).attr('id');
-          console.log('id: ', id);
-          var response = $(this).attr('deniedresponse');
-          var thisElement = this;
-          swal(
-            {
-              title: 'Are you sure?',
-              text: 'You will not be able to Revert this Action!',
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#e69a2a',
-              confirmButtonText: 'Yes,do it!',
-              cancelButtonText: 'No, cancel it!',
-              closeOnConfirm: false,
-              closeOnCancel: false,
-            },
-            function (isConfirm) {
-              if (isConfirm) {
-                $.ajax({
-                  type: 'POST',
-                  url: host + '/depositAction',
-                  data: {
-                    id: id,
-                    flag: 2,
-                  },
-                  success: function (resultData) {
-                    console.log(resultData);
-                    if (resultData.success == 'success') {
-                      $(thisElement).parent().parent().hide(700);
-                      swal('Done', resultData.message, 'success');
-                      //   window.location.reload();
+    $(document).ready(function() {
+        var host = window.location.origin;
+        $('#myTable').DataTable({
+            dom: 'Blfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            pageLength: 10,
+            ajax: host + '/getDepositReceipt',
+            columns: [{
+                data: 'playerId.uniqId',
+            }, {
+                data: 'playerId.username',
+            }, {
+                data: 'depositAmount',
+            }, {
+                data: 'depositReceipt',
+                render: function(data, type, row) {
+                    if (row.receipt == '') {
+                        return 'No Receipt';
                     } else {
-                      swal('Alert', 'Something went wrong.', 'error');
+                        return (
+                            '<a href="  ' + host +
+                            row.receipt +
+                            '" target="_blank"><button type="button" title="view Receipt" class="table_btn">View Receipt</button></a>'
+                        );
                     }
-                  },
-                });
-              } else {
-                swal('Cancelled', 'Something went wrong', 'error');
-              }
-            }
-          );
-          return false;
+                    //return '<button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded response">Approve</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs btn-rounded deniedresponse">Denied</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded accountinfo">Account info</button>';
+                },
+            }, {
+                data: 'action',
+                render: function(data, type, row) {
+                    if (row.action == false) {
+                        return (
+                            '<button type="button" title="Approve" name="delete" id="' +
+                            row._id +
+                            '" class="table_btn table_btn_green response">Approve</button> <button type="button" title="Denied" name="delete" id="' +
+                            row._id +
+                            '" class="table_btn table_btn_red deniedresponse">Denied</button>'
+                        );
+                    } else {
+                        return 'Done';
+                    }
+                    //return '<button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded response">Approve</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs btn-rounded deniedresponse">Denied</button> <button type="button" title="Done Payment" name="delete" id="' + row._id + '" class="btn btn-primary btn-xs btn-rounded accountinfo">Account info</button>';
+                },
+            }, ],
         });
-      }),
-        ($.SweetAlert = new SweetAlert()),
-        ($.SweetAlert.Constructor = SweetAlert);
 
-      $.SweetAlert.init();
+        $(function() {
+            'use strict';
+
+            var SweetAlert = function() {};
+
+            (SweetAlert.prototype.init = function() {
+                $('body').on('click', '.accountinfo', function(e) {
+                    var id = $(this).attr('id');
+                    var response = $(this).attr('accountinfo');
+                    var thisElement = this;
+                    $.ajax({
+                        type: 'post',
+                        url: host + '/player/account_info/',
+                        data: {
+                            id: id
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                for (let key in response.result) {
+                                    if ($('#show-' + key).length) {
+                                        $('#show-' + key).html(response.result[key]);
+                                    }
+                                }
+                                $('#responsive-modal').modal('show');
+                            }
+                        },
+                        error: function(resultData) {
+                            alert('fail');
+                        },
+                    });
+                });
+
+                //Parameter
+                $('body').on('click', '.response', function(e) {
+                    var id = $(this).attr('id');
+                    console.log('id: ', id);
+                    var response = $(this).attr('response');
+                    var thisElement = this;
+                    swal({
+                            title: 'Are you sure?',
+                            text: 'You will not be able to Revert this Action!',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#e69a2a',
+                            confirmButtonText: 'Yes,do it!',
+                            cancelButtonText: 'No, cancel it!',
+                            closeOnConfirm: false,
+                            closeOnCancel: false,
+                        },
+                        function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + '/depositAction',
+                                    data: {
+                                        id: id,
+                                        flag: 1,
+                                    },
+                                    success: function(resultData) {
+                                        console.log(resultData.success);
+                                        if (resultData.success == 'success') {
+                                            $(thisElement).parent().parent().hide(700);
+                                            swal('Done', resultData.message, 'success');
+                                            //   window.location.reload();
+                                        } else if (resultData.fail == 'fail') {
+                                            swal('Alert', resultData.message, 'error');
+                                        }
+                                    },
+                                });
+                            } else {
+                                swal('Cancelled', 'Something went wrong', 'error');
+                            }
+                        }
+                    );
+                    return false;
+                });
+
+                $('body').on('click', '.deniedresponse', function(e) {
+                    var id = $(this).attr('id');
+                    console.log('id: ', id);
+                    var response = $(this).attr('deniedresponse');
+                    var thisElement = this;
+                    swal({
+                            title: 'Are you sure?',
+                            text: 'You will not be able to Revert this Action!',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#e69a2a',
+                            confirmButtonText: 'Yes,do it!',
+                            cancelButtonText: 'No, cancel it!',
+                            closeOnConfirm: false,
+                            closeOnCancel: false,
+                        },
+                        function(isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: host + '/depositAction',
+                                    data: {
+                                        id: id,
+                                        flag: 2,
+                                    },
+                                    success: function(resultData) {
+                                        console.log(resultData);
+                                        if (resultData.success == 'success') {
+                                            $(thisElement).parent().parent().hide(700);
+                                            swal('Done', resultData.message, 'success');
+                                            //   window.location.reload();
+                                        } else {
+                                            swal('Alert', 'Something went wrong.', 'error');
+                                        }
+                                    },
+                                });
+                            } else {
+                                swal('Cancelled', 'Something went wrong', 'error');
+                            }
+                        }
+                    );
+                    return false;
+                });
+            }),
+            ($.SweetAlert = new SweetAlert()),
+            ($.SweetAlert.Constructor = SweetAlert);
+
+            $.SweetAlert.init();
+        });
     });
-  });
 </script>
 {% endblock %}

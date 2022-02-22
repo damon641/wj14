@@ -1,283 +1,239 @@
-{% extends "partition/layout.html" %}
+{% extends "partition/layout.html" %} {% block body %}
 
-{% block body %}
+<div class="container">
 
-<div class="page-wrapper">
-	<div class="container-fluid">
+    <div class="flash-msg" style="display: none;">
+    </div>
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+							<img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+							<h3 class="panel-title">Player Profile</h3>
+						</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-body box-profile">
+                                        <center>
+                                            <img class="profile-user-img  img-circle" src="/profile/user.png" alt="User profile picture">
 
+                                            <h3 class="profile-username text-center">{{player.username}} [{{player.uniqId}}]
+                                            </h3>
+                                            <h5 class="profile-username text-center" style="color: #f68627;">Chips: {{player.chips}}
+                                            </h5>
+                                            <div class="box box-primary col-md-4">
+                                                <!-- /.box-header -->
+                                                <div class="box-body">
+                                                    <a href="/player/cashTransactionHistory/{{player._id}}">
+                                                        <button class="profile_btn">Cash History </button>
+                                                    </a>
+                                                </div>
 
-		<section class="content-header">
-			<h1>Player Profile</h1>
-			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-				<li class="active" href="/player">player</li>
-				<li class="active" href="/player">profile</li>
-			</ol>
-		</section>
+                                                <div class="box-body">
+                                                    {% if session.role == 'admin'%}
+                                                    <a href="/player/gameHistory/{{player._id}}">
+                                                        <button class="profile_btn">Game History </button>
+                                                    </a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </center>
 
-		{% include "partition/notification.html" %}
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
 
-		<section class="content">
+                            </div>
 
-			<div class="row">
-				<div class="col-md-4">
-					<div class="box box-primary">
-						<div class="box-body box-profile">
-							<img class="profile-user-img img-responsive img-circle" src="/profile/user.png" alt="User profile picture">
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <b>Game Played</b> <a class="pull-right">{{ player.statistics.cashgame.noOfPlayedGames}}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Game Won</b> <a class="pull-right">{{ player.statistics.cashgame.totalWonGame}}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Game Lost</b> <a class="pull-right">{{ player.statistics.cashgame.totalLoseGame }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Tournament Played</b> <a class="pull-right">0</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Tournament Won</b> <a class="pull-right">0</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-							<h3 class="profile-username text-center">{{player.username}} [{{player.uniqId}}]</h3>
-							<button type="button" class="btn btn-block btn-success .btn-lg">Chips: {{player.chips}}</button>
-							<!-- <p class="text-muted text-center">{{player.email}}</p> -->
-
-							<ul class="list-group list-group-unbordered">
-								<li class="list-group-item">
-									<b>Game Played</b> <a class="pull-right">{{ player.statistics.cashgame.noOfPlayedGames}}</a>
-								</li>
-								<li class="list-group-item">
-									<b>Game Won</b> <a class="pull-right">{{ player.statistics.cashgame.totalWonGame}}</a>
-								</li>
-								<li class="list-group-item">
-									<b>Game Lost</b> <a class="pull-right">{{ player.statistics.cashgame.totalLoseGame }}</a>
-								</li>
-								<li class="list-group-item">
-									<b>Tournament Played</b> <a class="pull-right">0</a>
-								</li>
-								<li class="list-group-item">
-									<b>Tournament Won</b> <a class="pull-right">0</a>
-								</li>
-							</ul>
-
-						</div>
-						<!-- /.box-body -->
-					</div>
-
-				</div>
-
-				<div class="col-md-4">
-
-					<div class="box box-primary">
-						<div class="box-header with-border">
-							<h3 class="box-title">My Rake</h3>
-						</div>
-						
-						<div class="box-body">
-							<ul class="list-group list-group-unbordered">
-								<li class="list-group-item">
-									<b>Today Rake: </b> 
-									<a class="pull-right">{{ todayRakeTotal }}</a>
-								</li>
-								<li class="list-group-item">
-									<b>Week Rake</b>
-									<a class="pull-right">{{ weekallyRakeTotal }}</a>
-								</li>
-								<li class="list-group-item">
-									<b>Month Rake</b>
-									<a class="pull-right">{{ monthallyRakeTotal }}</a>
-								</li>
-							</ul>
-						</div>
-						<!-- /.box-body -->
-					</div>
-
-				</div>
-
-				<div class="col-md-4">
-
-					<div class="box box-primary">
-						<div class="box-header with-border">
-							<h3 class="box-title">Navigation Menu</h3>
-						</div>
-						<!-- /.box-header -->
-						<div class="box-body">
-							<a href="/player/cashTransactionHistory/{{player._id}}" class="btn btn-primary btn-block">Cash History</a>
-							{% if session.role == 'admin'%}
-							<a href="/player/gameHistory/{{player._id}}" class="btn btn-primary btn-block">Game History</a>
-							{% endif %}
-
-						</div>
-						<!-- /.box-body -->
-					</div>
-					<!-- <div class="box box-primary">
-						<div class="box-header with-border">
-							<h3 class="box-title">Notification</h3>
-						</div>
-						
-						<div class="box-body">
-							<a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myNotification">Send
-								Notification</a>
-
-						</div>
-						
-					</div> -->
-
-
-
-				</div>
-				<!-- /.col -->
-				<!-- <div class="col-md-12">
-					<div class="box">
-						<div class="box-header with-border">
-							<h3 class="box-title">Monthly Recap Report</h3>
-
-							<div class="box-tools pull-right">
-								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-								</button>
-								<div class="btn-group">
-									<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-										<i class="fa fa-wrench"></i></button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-									</ul>
-								</div>
-								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-							</div>
-						</div>
-						
-
-						<div class="box-body">
-							<div class="row">
-								<div class="col-md-12">
-									<p class="text-center">
-										<strong>Game Played By User from: Jan, {{curentYear}} - Today </strong>
-									</p>
-
-									<div class="chart">
-										
-										<canvas id="gamePlayedByPlayer" style="height: 180px;" data-player={{player.id}}></canvas>
-									</div>
-									
-								</div>
-								
-							</div>
-							
-						</div>
-
-
-
-					</div>
-				</div> -->
-			
-				
-			</div>
-			
-
-		</section>
-
-	</div>
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <b>Today Rake: </b>
+                                        <a class="pull-right">{{ todayRakeTotal }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Week Rake</b>
+                                        <a class="pull-right">{{ weekallyRakeTotal }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Month Rake</b>
+                                        <a class="pull-right">{{ monthallyRakeTotal }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <!-- <div class="col-md-12">
+                                <div class="box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Monthly Recap Report</h3>
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-wrench"></i></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Action</a></li>
+                                                    <li><a href="#">Another action</a></li>
+                                                    <li><a href="#">Something else here</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Separated link</a></li>
+                                                </ul>
+                                            </div>
+                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="text-center">
+                                                    <strong>Game Played By User from: Jan, {{curentYear}} - Today </strong>
+                                                </p>
+                                                <div class="chart">
+                                                    <canvas id="gamePlayedByPlayer" style="height: 180px;" data-player={{player.id}}></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Notification Modal -->
 <div id="myNotification" class="modal fade" role="dialog">
-	<div class="modal-dialog">
+    <div class="modal-dialog">
 
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Notification</h4>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<input type="text" name="notification_desc" class="form-control" id="notification_desc">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<input type="submit" name="Send" class="btn btn-success" value="Send">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Notification</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" name="notification_desc" class="form-control" id="notification_desc">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" name="Send" class="btn btn-success" value="Send">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
 
-	</div>
+    </div>
 </div>
 
 
 
 
-{% endblock %}
-
-{% block Jscript %}
+{% endblock %} {% block Jscript %}
 <script>
-
-	$(document).ready(function () {
-		var host = window.location.origin;
-
-
-		var theMonths = ["January", "February", "March", "April", "May",
-			"June", "July", "August", "September", "October", "November", "December"];
-		var labels = [];
-		for (var i = 0; i <= 11; i++) {
-			labels.push(theMonths[i]);
-		}
-
-		var host = window.location.origin;
-		
-		if( $('#gamePlayedByPlayer').length > 0 ){
-		  // Get context with jQuery - using jQuery's .get() method.
-		  var gameChartCanvas = $('#gamePlayedByPlayer').get(0).getContext('2d');
-		  // This will get the first returned node in the jQuery collection.
-	
-		  var playerId =$("#gamePlayedByPlayer").data('player');
-		  console.log("=========>",playerId);
-		  $.ajax({
-		    type: 'GET',
-		    url :host + "/playerChart/getMonthlyGamePlayedByPlayerChart/"+playerId,
-		    success:function(res){
-		      
-		    },
-		    complete: function(data){
-		      console.log(data.responseJSON);
-		     
-		      	var gameConfig = {
-		      	  	type: 'line',
-		      	  	data: {
-		      	  		labels  : labels,
-		      	  		datasets: [
-		      	  		{
-		      	  			label : 'Game Played By Player',
-		      	  			backgroundColor: "#3b8bba",
-		      	  			borderColor: "rgba(60,141,188,0.8)",
-		      	  			data: data.responseJSON.monthlyGamePlayed, // data.responseJSON
-		      	  			fill: false,
-		      	  		},
-		      	  		/*{
-		      	  			label : 'Game Won',
-		      	  			backgroundColor: "#008000",
-		      	  			borderColor: "rgba(60,141,188,0.8)",
-		      	  			data: data.responseJSON.monthlyWonGame, // data.responseJSON
-		      	  			fill: false,
-		      	  		},
-		      	  		{
-		      	  			label : 'Game Lost',
-		      	  			backgroundColor: "#FF0000",
-		      	  			borderColor: "rgba(60,141,188,0.8)",
-		      	  			data: data.responseJSON.monthlyLostGame, // data.responseJSON
-		      	  			fill: false,
-		      	  		}*/
-		      	  		],
-		      	  	},
-		      	  	options: {
-		      	  		display: false,
-		      	  		responsive: true,
-		      	  		legend: {
-		      	  			//position: 'top',
-		      	  			display: false,
-		      	  		},
-		      	  	}
-		      	};
-		       var chart = new Chart(gameChartCanvas, gameConfig)
-		      
-		      
-		    }
-		  })
-		}
-
-	});
+    $(document).ready(function() {
+        var host = window.location.origin;
 
 
+        var theMonths = ["January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October", "November", "December"
+        ];
+        var labels = [];
+        for (var i = 0; i <= 11; i++) {
+            labels.push(theMonths[i]);
+        }
 
+        var host = window.location.origin;
+
+        if ($('#gamePlayedByPlayer').length > 0) {
+            // Get context with jQuery - using jQuery's .get() method.
+            var gameChartCanvas = $('#gamePlayedByPlayer').get(0).getContext('2d');
+            // This will get the first returned node in the jQuery collection.
+
+            var playerId = $("#gamePlayedByPlayer").data('player');
+            console.log("=========>", playerId);
+            $.ajax({
+                type: 'GET',
+                url: host + "/playerChart/getMonthlyGamePlayedByPlayerChart/" + playerId,
+                success: function(res) {
+
+                },
+                complete: function(data) {
+                    console.log(data.responseJSON);
+
+                    var gameConfig = {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                    label: 'Game Played By Player',
+                                    backgroundColor: "#3b8bba",
+                                    borderColor: "rgba(60,141,188,0.8)",
+                                    data: data.responseJSON
+                                        .monthlyGamePlayed, // data.responseJSON
+                                    fill: false,
+                                },
+                                /*{
+                                	label : 'Game Won',
+                                	backgroundColor: "#008000",
+                                	borderColor: "rgba(60,141,188,0.8)",
+                                	data: data.responseJSON.monthlyWonGame, // data.responseJSON
+                                	fill: false,
+                                },
+                                {
+                                	label : 'Game Lost',
+                                	backgroundColor: "#FF0000",
+                                	borderColor: "rgba(60,141,188,0.8)",
+                                	data: data.responseJSON.monthlyLostGame, // data.responseJSON
+                                	fill: false,
+                                }*/
+                            ],
+                        },
+                        options: {
+                            display: false,
+                            responsive: true,
+                            legend: {
+                                //position: 'top',
+                                display: false,
+                            },
+                        }
+                    };
+                    var chart = new Chart(gameChartCanvas, gameConfig)
+
+
+                }
+            })
+        }
+
+    });
 </script>
 {% endblock %}

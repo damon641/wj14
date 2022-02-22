@@ -1,5 +1,5 @@
 module.exports = {
-    connectionType: 'local',
+    connectionType: 'production',
     option: {
         autoIndex: false, // Don't build indexes
         reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
@@ -7,7 +7,7 @@ module.exports = {
         poolSize: 10, // Maintain up to 10 socket connections
         // If not connected, return errors immediately rather than waiting for reconnect
         bufferMaxEntries: 0,
-        replicaSet: 'rs0',
+        // replicaSet: 'rs0',
         useNewUrlParser: true,
         //poolSize: 2,
         promiseLibrary: global.Promise
@@ -18,9 +18,9 @@ module.exports = {
         mongo: {
             host: 'localhost',
             port: 27017,
-            user: '',
+            user: 'root',
             password: '',
-            database: 'yufaPoker'
+            database: 'whitejoker'
         }
 
     },
@@ -29,9 +29,9 @@ module.exports = {
         mongo: {
             host: '157.175.127.156',
             port: 27061,
-            user: 'BytePoker',
+            user: 'WhitePoker',
             password: 'YVEzFDHz',
-            database: 'BytePoker'
+            database: 'WhitePoker'
         }
     },
     production: {
@@ -41,7 +41,7 @@ module.exports = {
             port: 27017,
             user: '',
             password: '',
-            database: 'BytePoker'
+            database: 'whitejoker'
         }
     }
 }

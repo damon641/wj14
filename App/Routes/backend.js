@@ -4,6 +4,9 @@ var Sys = require('../../Boot/Sys');
 
 // add passport modules for social media integration
 const passport = require('passport');
+const {
+    session
+} = require('passport');
 const passport_conf = require('../../Config/passport')(passport);
 
 // Load Your Cutom Middlewares
@@ -55,6 +58,7 @@ router.post('/user/getUserDelete', Sys.App.Middlewares.Backend.Authenticate, Sys
 // here mentioned id is fetched as req.params.id
 router.get('/userEdit/:id/', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.UserController.editUser);
 router.post('/userEdit/:id', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Middlewares.Validator.editUserPostValidate, Sys.App.Controllers.UserController.editUserPostData);
+
 
 router.get('/test/testing', Sys.App.Middlewares.Backend.loginCheck, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.Auth.login);
 
@@ -202,6 +206,18 @@ router.get('/currency', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Contro
 router.get('/getCurrencyData', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Controllers.CurrencyController.getCurrencyData);
 router.get('/getLiveCurrencyData', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Controllers.CurrencyController.getLiveCurrencyData);
 router.post('/updateCurrencySetting', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.CurrencyController.updateCurrencySetting);
+
+// addvideo
+
+router.get('/ad-banner', Sys.App.Middlewares.Backend.Authenticate,Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.AddVideoController.addVideo);
+router.get('/adbanner/getAd', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.AddVideoController.getAddVideo);
+router.get('/addNewAd', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.AddVideoController.addNewVideo);
+router.post('/addNewAd', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.AddVideoController.addNewVideoPostData);
+router.get('/editAd/:id/', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.AddVideoController.editVideo);
+router.post('/editAd/:id/', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'),Sys.App.Controllers.AddVideoController.editVideoPostData);
+router.post('/ad-banner/getAdDelete', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Controllers.AddVideoController.getVideoDelete);
+
+
 
 //vatsal code start
 
@@ -357,6 +373,8 @@ router.get('/game/allGameHistory/:id', Sys.App.Middlewares.Backend.Authenticate,
 /**
  * Table Master - Shubham
  */
+router.get('/holdem', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.RoomController.getHoldemTableList);
+router.get('/omaha', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.RoomController.getOmahaTableList);
 router.get('/table', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.RoomController.getTableList);
 router.get('/table/add', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.RoomController.getAddTable);
 router.post('/table/add', Sys.App.Middlewares.Backend.Authenticate, Sys.App.Middlewares.Backend.HasRole('admin'), Sys.App.Controllers.RoomController.saveTable);
@@ -640,5 +658,7 @@ router.get('/removePlayerFromGame', Sys.Game.CashGame.Texas.Controllers.PlayerCo
 
 
 router.get('/getNotificationCount', Sys.App.Controllers.Dashboard.getNotificationCount);
+
+router.post('/updateDashboardSettings', Sys.App.Controllers.Dashboard.updateDashboardSettings);
 
 module.exports = router

@@ -1,239 +1,295 @@
 {% extends "partition/layout.html" %} {% block body %}
 
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
+<div class="container nav_drop_menu " id="Reports ">
+    <ul>
+        <li class="text_container ">
+            <a href="/selfReports ">
+                <div class="name ">My Report</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/agentReports ">
+                <div class="name ">Agents Report</div>
+            </a>
 
-        <!-- Title -->
-        <section class="content-header">
-            <h1>All Users Chips History</h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> Dashboard</a>
-                </li>
-                <li class="active">All Users Chips History</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h6 class="panel-title txt-dark">Chips History</h6>
+        </li>
+        <li class="text_container ">
+            <a href="/playerReports ">
+                <div class="name ">Players Report</div>
+            </a>
+        </li>
+        <!-- <li class="text_container ">
+            <a href="/playerOldReports ">
+                <div class="name ">Player Old Report</div>
+            </a>
+
+        </li> -->
+        <li class="text_container ">
+            <a class="active" href="/allUsersChips ">
+                <div class="name ">Chips Report</div>
+            </a>
+
+        </li>
+        <li class="text_container">
+            <a href="/game">
+                <div class="name">Game Report</div>
+            </a>
+        </li>
+        <!-- <li class="text_container ">
+            <a href="/systemChips ">
+                <div class="name ">System Chips Report</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/errorReports ">
+                <div class="name ">Error Reports Report</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/errorReportValidation ">
+                <div class="name ">Error Reports Validation</div>
+            </a>
+
+        </li> -->
+    </ul>
+</div>
+
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="/dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">All Users Chips History</h3>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="filter_section row">
+                            {#
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-12" for="email">Type :</label>
+                                    <select id="types" class="form-control ">
+                                        {%for type in types %}
+                                        <option value={{type.name}}>{{type.value}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                            </div>#}
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-sm-12 mb-5">
+                                        <label class="control-label  col-sm-12" for="email">Select Date :</label>
+                                        <input type="text" class="form-control pull-right" id="reservation" name="range" placeholder="select range">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="clearfix"></div>
+                            <div class="form-group mt-3 col-md-1">
+
+                                <a id="submit"><button class="table_btn playerType active">Submit</button></a>
+
+                                <!-- <span>&nbsp;Submit</span></a> -->
+                            </div>
                         </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="row" style="padding: 10px;">
-                                {#
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="control-label mt-5 col-sm-4" for="email">Type :</label>
-                                        <div class="col-sm-8">
-                                            <select id="types" class="form-control ">
-																{%for type in types %}
-																<option value={{type.name}}>{{type.value}}</option>
-																{%endfor%}
-															</select>
-                                        </div>
-                                    </div>
-                                </div> #}
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control pull-right" id="reservation" name="range" placeholder="Select Range">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <a id="submit" class=" addAcBtn ladda-button btn btn-success btn-sm">
-                                        <span>&nbsp;Submit</span></a>
-                                </div>
-                            </div>
-
+                        <div class="box-body">
                             <div class="container" id="balance_div" style="display: none;">
-                                <div class="row" style="background-color: #d6d6d6;">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-3">
-                                        <label>Total Balance: </label> <span id="total_balance">0.00</span><br />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>System Balance: </label> <span id="system_balance">0.00</span>
-                                    </div>
-                                    <div class="col-md-3"></div>
+                                <div class="nav_drop_menu">
+                                    <ul>
+                                        <li class="text_container">
+                                            <div class="name">
+                                                <label>System Balance: </label> <span id="system_balance">0.00</span>
+                                            </div>
+                                        </li>
+                                        <li class="text_container">
+                                            <div class="name">
+                                                <label>Total Balance: </label> <span id="total_balance">0.00</span><br />
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <input type="hidden" id="gameType" name="gameType">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date & Time</th>
-                                                    <th>User Id</th>
-                                                    <th>Username</th>
-                                                    <th>Email</th>
-                                                    <th>Main Chips</th>
-                                                    <th>Rake Chips</th>
-                                                    <th>Chips</th>
-                                                    <th>Role</th>
+                            <div class="table-responsive">
+                                <input type="hidden" id="gameType" name="gameType">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date & Time</th>
+                                            <th>User Id</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Main Chips</th>
+                                            <th>Rake Chips</th>
+                                            <th>Chips</th>
+                                            <th>Role</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Date & Time</th>
-                                                    <th>User Id</th>
-                                                    <th>Username</th>
-                                                    <th>Email</th>
-                                                    <th>Main Chips</th>
-                                                    <th>Rake Chips</th>
-                                                    <th>Chips</th>
-                                                    <th>Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Date & Time</th>
+                                            <th>User Id</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Main Chips</th>
+                                            <th>Rake Chips</th>
+                                            <th>Chips</th>
+                                            <th>Role</th>
 
-                                                </tr>
-                                                </thead>
-                                        </table>
-                                    </div>
-                                </div>
+                                        </tr>
+                                        </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
-    {% endblock %} {% block Jscript %}
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var host = window.location.origin;
-            $('#myTable').dataTable({
+{% endblock %} {% block Jscript %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js">
+</script>
+<script>
+    $(document).ready(function() {
+        var host = window.location.origin;
+        $('#myTable').dataTable({
+            "ordering": false,
+            "autoWidth": false,
+            "oLanguage": {
+                "sSearch": "Username/User Id/Email",
+                "sEmptyTable": "No data available"
+            },
+        });
+        today = new Date();
+        today.setHours(00, 00, 00, 000);
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+        $('#reservation').datetimepicker({
+            format: 'YYYY/MM/DD',
+            defaultDate: today
+        })
+        $('body').on('click', '#submit', function() {
+            $('#myTable').dataTable().fnDestroy();
+            var date = $('#reservation').val()
+            let startDate = new Date(date)
+            let endDate = new Date(date)
+            startDate.setHours(00, 00, 00, 000);
+            endDate.setHours(23, 59, 59, 999);
+            $('#myTable').DataTable({
+                "oLanguage": {
+                    "sSearch": "Username/User Id/Email"
+                },
+                "processing": true,
+                "serverSide": true,
+                "searching": true,
                 "ordering": false,
                 "autoWidth": false,
-                "oLanguage": {
-                    "sSearch": "Username/User Id/Email",
-                    "sEmptyTable": "No data available"
+                "pageLength": 100,
+                "dom": 'Bfrtip',
+                "buttons": ['csv', 'excel'],
+                "ajax": {
+                    "type": "GET",
+                    "url": host + "/allUsersChips/getData?startDate=" + startDate +
+                        "&endDate=" + endDate,
+                    "dataSrc": function(json) {
+                        if (json.total_balance) {
+                            $('#total_balance').html(parseFloat(json.total_balance)
+                                .toFixed(2));
+                        } else {
+                            $('#total_balance').html('0.00');
+                        }
+                        if (json.system_balance) {
+                            $('#system_balance').html(parseFloat(json.system_balance)
+                                .toFixed(2));
+                        } else {
+                            $('#system_balance').html('0.00');
+                        }
+                        $('#balance_div').show();
+                        return json.data;
+                    }
+
                 },
+                "columns": [{
+                    "data": "createdAt",
+                    render: function(data, type, row) {
+                        let dt = new Date(row.createdAt);
+                        let date = dt.getDate();
+                        let month = parseInt(dt.getMonth() + 1);
+                        let year = dt.getFullYear();
+                        let hours = dt.getHours();
+                        let minutes = dt.getMinutes();
+                        let ampm = hours >= 12 ?
+                            'pm' :
+                            'am';
+                        hours = hours % 12;
+                        hours = hours ?
+                            hours :
+                            12;
+                        minutes = minutes < 10 ?
+                            '0' + minutes :
+                            minutes;
+                        let createdAt = year + '/' + month + '/' + date + ' ' +
+                            hours + ':' + minutes + ' ' + ampm;
+                        return createdAt;
+                    }
+                }, {
+                    "data": "userId"
+                }, {
+                    "data": "username",
+                    render: function(data, type, row) {
+                        return row.username = row.username ? row.username : row
+                            .role
+                    }
+                }, {
+                    "data": "email",
+                }, {
+                    "data": "main_chips",
+                    render: function(data, type, row) {
+                        return row.main_chips = row.main_chips ? parseFloat(row
+                            .main_chips).toFixed(2) : 0
+
+                    }
+                }, {
+                    "data": "rake_chips",
+                    render: function(data, type, row) {
+                        return row.rake_chips = row.rake_chips ? parseFloat(row
+                            .rake_chips).toFixed(2) : 0
+
+                    }
+                }, {
+                    "data": "chips",
+                    render: function(data, type, row) {
+                        return row.chips = row.chips ? parseFloat(row.chips)
+                            .toFixed(2) : 0
+
+                    }
+                }, {
+                    "data": "role",
+                    render: function(data, type, row) {
+                        return row.role = row.role ? row.role : "player"
+                    }
+
+                }, ]
             });
-            today = new Date();
-            today.setHours(00, 00, 00, 000);
-            var start = moment().subtract(29, 'days');
-            var end = moment();
-            $('#reservation').datetimepicker({
-                format: 'YYYY/MM/DD',
-                defaultDate: today
-            })
-            $('body').on('click', '#submit', function() {
-                $('#myTable').dataTable().fnDestroy();
-                var date = $('#reservation').val()
-                let startDate = new Date(date)
-                let endDate = new Date(date)
-                startDate.setHours(00, 00, 00, 000);
-                endDate.setHours(23, 59, 59, 999);
-                $('#myTable').DataTable({
-                    "oLanguage": {
-                        "sSearch": "Username/User Id/Email"
-                    },
-                    "processing": true,
-                    "serverSide": true,
-                    "searching": true,
-                    "ordering": false,
-                    "autoWidth": false,
-                    "pageLength": 100,
-                    "dom": 'Bfrtip',
-                    "buttons": ['csv', 'excel'],
-                    "ajax": {
-                        "type": "GET",
-                        "url": host + "/allUsersChips/getData?startDate=" + startDate + "&endDate=" + endDate,
-                        "dataSrc": function(json) {
-                            if (json.total_balance) {
-                                $('#total_balance').html(parseFloat(json.total_balance).toFixed(2));
-                            } else {
-                                $('#total_balance').html('0.00');
-                            }
-                            if (json.system_balance) {
-                                $('#system_balance').html(parseFloat(json.system_balance).toFixed(2));
-                            } else {
-                                $('#system_balance').html('0.00');
-                            }
-                            $('#balance_div').show();
-                            return json.data;
-                        }
 
-                    },
-                    "columns": [{
-                        "data": "createdAt",
-                        render: function(data, type, row) {
-                            let dt = new Date(row.createdAt);
-                            let date = dt.getDate();
-                            let month = parseInt(dt.getMonth() + 1);
-                            let year = dt.getFullYear();
-                            let hours = dt.getHours();
-                            let minutes = dt.getMinutes();
-                            let ampm = hours >= 12 ?
-                                'pm' :
-                                'am';
-                            hours = hours % 12;
-                            hours = hours ?
-                                hours :
-                                12;
-                            minutes = minutes < 10 ?
-                                '0' + minutes :
-                                minutes;
-                            let createdAt = year + '/' + month + '/' + date + ' ' + hours + ':' + minutes + ' ' + ampm;
-                            return createdAt;
-                        }
-                    }, {
-                        "data": "userId"
-                    }, {
-                        "data": "username",
-                        render: function(data, type, row) {
-                            return row.username = row.username ? row.username : row.role
-                        }
-                    }, {
-                        "data": "email",
-                    }, {
-                        "data": "main_chips",
-                        render: function(data, type, row) {
-                            return row.main_chips = row.main_chips ? parseFloat(row.main_chips).toFixed(2) : 0
-
-                        }
-                    }, {
-                        "data": "rake_chips",
-                        render: function(data, type, row) {
-                            return row.rake_chips = row.rake_chips ? parseFloat(row.rake_chips).toFixed(2) : 0
-
-                        }
-                    }, {
-                        "data": "chips",
-                        render: function(data, type, row) {
-                            return row.chips = row.chips ? parseFloat(row.chips).toFixed(2) : 0
-
-                        }
-                    }, {
-                        "data": "role",
-                        render: function(data, type, row) {
-                            return row.role = row.role ? row.role : "player"
-                        }
-
-                    }, ]
-                });
-
-            });
         });
-    </script>
-    </script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    {% endblock %}
+    });
+</script>
+</script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+{% endblock %}

@@ -1,90 +1,109 @@
 {% extends "partition/layout.html" %} {% block body %}
 
+<div class="container nav_drop_menu " id="Agents ">
+    <ul>
+        <li class="text_container ">
+            <a href="/agents ">
+                <div class="name ">My Agents</div>
+            </a>
+        </li>
+        {% if session.role == 'admin'%}
+        <li class="text_container ">
+            <a class="allagent" href="/allagents ">
+                <div class="name ">All Agents</div>
+            </a>
+
+        </li>
+	{% endif %}
+        <li class="text_container ">
+            <a class="active" href="/my-rack-history ">
+                <div class="name ">My Rake</div>
+            </a>
+        </li>
+        <li class="text_container ">
+            <a href="/my-chips-transactions ">
+                <div class="name ">Chips Transactions</div>
+            </a>
+
+        </li>
+        <li class="text_container ">
+            <a href="/addAgent ">
+                <div class="name "><i class="fa fa-plus-circle " aria-hidden="true "></i> Add Agents</div>
+            </a>
+
+        </li>
+    </ul>
+</div>
 <!-- Main Content -->
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <!-- Title -->
-        <section class="content-header">
-            <h1>Rake History Table</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active" href="/agents">Rake History</li>
-            </ol>
-        </section>
-        <!-- /Title -->
-        {% include "partition/notification.html" %}
-        <!-- Row -->
-        <section class="content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default card-view">
-                        <div class="panel-heading">
-                            <div class="pull-left">
-                                <h4 class="panel-title txt-dark">Rake History</h4>
-                            </div>
+<div class="container">
+
+    <div class="main-content">
+        <!-- OVERVIEW -->
+        <div class="panel panel-headline">
+            <div class="panel-body panel-body-home">
+                <div class="">
+                    <div class="panel-heading-home">
+                        <span>
+                            <img class="bullet_icon" src="dist/img/poker/Poker_icon/bullet.png">
+                            <h3 class="panel-title">Rake History</h3>
                             <div class="pull-right">
-                                <h5>Total Rake Received: <span id="total_rack">{{agentTotalRackReceived}}</span></h5>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-wrapper collapse in">
-                            <div class="row" style="margin-top: 10px;margin-left: 20px;">
-                                <div class="col-md-3">
-                                    <input type="hidden" id="is_datefilter" value="0">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right" id="reservation" name="range" placeholder="Select Range">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table id="myTable" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Player Username</th>
-                                                    <th>Game</th>
-                                                    <th>Rake From</th>
-                                                    <th>Rake To</th>
-                                                    <!-- <th>Won</th> -->
-                                                    <th>In</th>
-                                                    <th>Commission(%)</th>
-                                                    <th>Total Rake</th>
-                                                    <th>Created At</th>
-                                                    <!-- <th>Action</th> -->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Player Username</th>
-                                                    <th>Game</th>
-                                                    <th>Rake From</th>
-                                                    <th>Rake To</th>
-                                                    <!-- <th>Won</th> -->
-                                                    <th>In</th>
-                                                    <th>Commission(%)</th>
-                                                    <th>Total Rake</th>
-                                                    <th>Created At</th>
-                                                    <!-- <th>Action</th> -->
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                                <h6>Total Rake Received: <span id="total_rack">{{agentTotalRackReceived}}</span></h6>
+                    </div>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="hidden" id="is_datefilter" value="0">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control pull-right" id="reservation" name="range" placeholder="Select Range">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="myTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Player Username</th>
+                                        <th>Game</th>
+                                        <th>Rake From</th>
+                                        <th>Rake To</th>
+                                        <!-- <th>Won</th> -->
+                                        <th>In</th>
+                                        <th>Commission(%)</th>
+                                        <th>Total Rake</th>
+                                        <th>Created At</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Player Username</th>
+                                        <th>Game</th>
+                                        <th>Rake From</th>
+                                        <th>Rake To</th>
+                                        <!-- <th>Won</th> -->
+                                        <th>In</th>
+                                        <th>Commission(%)</th>
+                                        <th>Total Rake</th>
+                                        <th>Created At</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
+</div>
+
 </div>
 
 

@@ -9,7 +9,17 @@
 }
 
 .login-logo {
-    padding: 0px!important;
+    padding: 20px 0px!important;
+    /* background: rgb(56, 56, 56);
+    background: radial-gradient(circle, rgba(56, 56, 56, 1) 0%, rgba(25, 25, 25, 1) 62%, rgba(0, 0, 0, 1) 100%); */
+}
+
+.checkbox {
+    margin: 0px!important;
+}
+
+.login_footer {
+    margin-bottom: 10px;
 }
 
 .icheckbox_square-blue,
@@ -19,8 +29,8 @@
     vertical-align: middle;
     margin: 0;
     padding: 0;
-    width: 22px;
-    height: 22px;
+    width: 15px;
+    height: 15px;
     background: url(blue.png) no-repeat;
     border: none;
     cursor: pointer;
@@ -48,32 +58,32 @@
 }
 
 .form-error {
-    color: red!important;
+    color: #f68627(248, 242, 242)!important;
 }
 
 .login-box {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 450px;
     background: white;
-    background: rgb(56, 56, 56);
-    background: radial-gradient(circle, rgba(56, 56, 56, 1) 0%, rgba(25, 25, 25, 1) 62%, rgba(0, 0, 0, 1) 100%);
+    /* background: rgb(56, 56, 56);
+    background: radial-gradient(circle, rgba(56, 56, 56, 1) 0%, rgba(25, 25, 25, 1) 62%, rgba(0, 0, 0, 1) 100%); */
     padding: 10px 30px 10px 30px;
 }
 
 .form-group input {
     border: none!important;
     box-shadow: inset 0px 0px 0px 0px;
-    color: #ffffff!important;
+    color: #000000!important;
     border-radius: 0px!important;
     box-shadow: 0px!important;
     outline: none!important;
-    border-bottom: 2px solid #ce0d1b!important;
+    border-bottom: 2px solid #f68627!important;
     background: transparent!important;
 }
 
 .form-group .submit_btn {
     color: white!important;
-    background-color: #ce0d1b;
+    background-color: #f68627;
     /* background-image: linear-gradient(to right, #022954, #0262c9,  #007bff, #0262c9,#022954); */
     width: 100%;
     padding: 10px;
@@ -95,23 +105,11 @@
 }
 
 .for_pass a {
-    color: #ce0d1b;
+    color: #f68627;
 }
 
 .for_pass a:hover {
-    color: #ce0d1b;
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-only screen and (-moz-min-device-pixel-ratio: 1.5),
-only screen and (-o-min-device-pixel-ratio: 3/2),
-only screen and (min-device-pixel-ratio: 1.5) {
-    .icheckbox_square-blue,
-    .iradio_square-blue {
-        background-image: url(blue@2x.png);
-        -webkit-background-size: 240px 24px;
-        background-size: 240px 24px;
-    }
+    color: #f87c10;
 }
 
 

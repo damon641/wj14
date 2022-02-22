@@ -1,219 +1,220 @@
-{% extends "partition/layout.html" %}
-
-{% block body %}
-{{session}}
+{% extends "partition/layout.html" %} {% block body %} {{session}}
 <style>
-.classHide{
-	display: none;
-}
+    .classHide {
+        display: none;
+    }
 </style>
 
-		<!-- Main Content -->
-		<div id="load"></div>
-		<div class="page-wrapper">
-			<div class="container-fluid">
+<!-- Main Content -->
+<div id="load"></div>
+<div class="page-wrapper">
+    <div class="container-fluid">
 
-				<!-- Title -->
-				<div class="row heading-bg">
-					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-					  <h5 class="txt-dark">Request Table</h5>
-					</div>
-					<!-- Breadcrumb -->
-					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-					  <ol class="breadcrumb">
-						<li><a href="index.html">Dashboard</a></li>
-						<li><a href="#"><span>Request</span></a></li>
-					  </ol>
-					</div>
-					<!-- /Breadcrumb -->
-				</div>
-				<!-- /Title -->
-				{% include "partition/notification.html" %}
-				<!-- Row -->
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="panel panel-default card-view">
-							<!-- <div class="panel-heading">
+        <!-- Title -->
+        <div class="row heading-bg">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h5 class="txt-dark">Request Table</h5>
+            </div>
+            <!-- Breadcrumb -->
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="#"><span>Request</span></a></li>
+                </ol>
+            </div>
+            <!-- /Breadcrumb -->
+        </div>
+        <!-- /Title -->
+
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default card-view">
+                    <!-- <div class="panel-heading">
 								<div class="pull-left">
 									<h6 class="panel-title txt-dark">data Table</h6>
 								</div>
 								<div class="pull-right"> -->
-									<!-- <a href="/cashgames/addStacks"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Stack</button></a> -->
-								<!-- </div>
+                    <!-- <a href="/cashgames/addStacks"><button type="button" class="btn btn-primary btn-md"><i class="fa fa-plus"></i> Add Stack</button></a> -->
+                    <!-- </div>
 								<div class="clearfix"></div>
 							</div> -->
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body">
-									<div class="table-wrap">
-										<div class="table-responsive">
-										<input type="hidden" id="gameType"  name="gameType">
-											<table id="myTable" class="table table-hover display  pb-30" >
-												<thead>
-													<tr>
-														<th>Player Id</th>
-														<th>Player Name</th>
-														<th>Coin Type</th>
-														<th>Type</th>
-														<th>Amount</th>
-														<th>Flag</th>
-														<!-- <th>Action</th> -->
-													</tr>
-												</thead>
-												<tbody>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <input type="hidden" id="gameType" name="gameType">
+                                    <table id="myTable" class="table table-hover display  pb-30">
+                                        <thead>
+                                            <tr>
+                                                <th>Player Id</th>
+                                                <th>Player Name</th>
+                                                <th>Coin Type</th>
+                                                <th>Type</th>
+                                                <th>Amount</th>
+                                                <th>Flag</th>
+                                                <!-- <th>Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-{% endblock %}
+    {% endblock %} {% block Jscript %}
+    <script>
+        $(document).ready(function() {
+            var host = window.location.origin;
+            $('#myTable').DataTable({
+                // "oLanguage": {
+                // 	"sSearch": "Search Username"
+                // },
+                // "scrollX": true,
+                // "processing": true,
+                // "serverSide": true,
+                // // "searching": false,
+                "ordering": false,
+                "autoWidth": false,
+                // "pageLength": 25,
+                "ajax": host + "/getRequest",
+                "columns": [{
+                    "data": "userId"
+                }, {
+                    "data": "playerName"
+                }, {
+                    "data": "coin_type"
+                }, {
+                    "data": "pay_type"
+                }, {
+                    "data": "depositAmount"
+                }, {
+                    "data": "flag",
+                    render: function(data, type, row) {
+                        return '<button type="button" name="confirm" id="' + row._id + '" class="btn 	 btn-success btn-xs confirm btn-rounded">Confirm</button>' +
+                            '<button type="button" title="Cancel Player" name="delete" id="' + row._id + '" class="btn btn-danger btn-xs btn-rounded delete">Cancel</button>'
+                    }
+                }, ]
+            });
 
-{% block Jscript %}
-<script>
-$(document).ready( function () {
-	var host = window.location.origin;
-	$('#myTable').DataTable({
-		// "oLanguage": {
-		// 	"sSearch": "Search Username"
-		// },
-		// "scrollX": true,
-		// "processing": true,
-		// "serverSide": true,
-		// // "searching": false,
-		"ordering": false,
-		"autoWidth": false,
-		// "pageLength": 25,
-		"ajax": host + "/getRequest",
-		"columns": [
-			{ "data": "userId" },
-			{ "data": "playerName" },
-			{ "data": "coin_type" },
-			{ "data": "pay_type" },
-			{ "data": "depositAmount" },
-			{ "data": "flag",
-			   render : function(data, type, row){
-					return '<button type="button" name="confirm" id="'+row._id+'" class="btn 	 btn-success btn-xs confirm btn-rounded">Confirm</button>'+
-							'<button type="button" title="Cancel Player" name="delete" id="'+row._id+'" class="btn btn-danger btn-xs btn-rounded delete">Cancel</button>'
-				}
-			},
-		]
-	});
-	
-	$(function() {
-		"use strict";
-		$('#load').hide();
-		var SweetAlert = function() {};
-		
-		SweetAlert.prototype.init = function() {
-			let responce = [];
-			//Parameter
-			$('body').on('click', '.confirm', function(e){
-				var id = $(this).attr('id');
-				var thisElement = this;
-					swal({
-							title: "Are you sure?",
-							text: "",
-							type: "warning",
-							showCancelButton: true,
-							confirmButtonColor: "#e69a2a",
-							confirmButtonText: "Yes",
-							cancelButtonText: "No",
-							closeOnConfirm: false,
-							closeOnCancel: false
-					}, function(isConfirm){
-						// console.log("sdhfksjdhf",isConfirm)
-						// if(isConfirm == true){
-						$("div.showSweetAlert").remove();
-							if (isConfirm) {
-								$.ajax({
-									type: 'POST',
-									url: host + "/cloneRequest",
-									data: {id: id},
-									success: function(resultData) {
-										responce.push(resultData);
-										// alert(resultData)
-										console.log("resultData >>>>>>>>",resultData);
-										if (resultData == 'success') {
-											$(thisElement).parent().parent().hide(700);
-											swal("confirm!", "Your imaginary file has been confirm.", "success");
-										}else {
-											// alert("Something went wrong");
-											swal("confirm!", "Something went wrong.", "error");
-										}
-										// alert("Save Complete")
-									}
-								});
-								  if(responce){
-									  $('#load').show();
-									  setTimeout(function(){
-			                             $('#load').hide();
-			                          },5000);
-								 }else{
-									  $('#load').hide();
-									swal("Confirm!", "Request Confirm Succesfully.", "success");
+            $(function() {
+                "use strict";
+                $('#load').hide();
+                var SweetAlert = function() {};
 
-								 }
-							} else {
-									swal("Cancelled", "Request Confirm Cancelled)", "error");
-							}
-					});
-					return false;
-			});
+                SweetAlert.prototype.init = function() {
+                        let responce = [];
+                        //Parameter
+                        $('body').on('click', '.confirm', function(e) {
+                            var id = $(this).attr('id');
+                            var thisElement = this;
+                            swal({
+                                title: "Are you sure?",
+                                text: "",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#e69a2a",
+                                confirmButtonText: "Yes",
+                                cancelButtonText: "No",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm) {
+                                // console.log("sdhfksjdhf",isConfirm)
+                                // if(isConfirm == true){
+                                $("div.showSweetAlert").remove();
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: host + "/cloneRequest",
+                                        data: {
+                                            id: id
+                                        },
+                                        success: function(resultData) {
+                                            responce.push(resultData);
+                                            // alert(resultData)
+                                            console.log("resultData >>>>>>>>", resultData);
+                                            if (resultData == 'success') {
+                                                $(thisElement).parent().parent().hide(700);
+                                                swal("confirm!", "Your imaginary file has been confirm.", "success");
+                                            } else {
+                                                // alert("Something went wrong");
+                                                swal("confirm!", "Something went wrong.", "error");
+                                            }
+                                            // alert("Save Complete")
+                                        }
+                                    });
+                                    if (responce) {
+                                        $('#load').show();
+                                        setTimeout(function() {
+                                            $('#load').hide();
+                                        }, 5000);
+                                    } else {
+                                        $('#load').hide();
+                                        swal("Confirm!", "Request Confirm Succesfully.", "success");
 
-			// Delete 
+                                    }
+                                } else {
+                                    swal("Cancelled", "Request Confirm Cancelled)", "error");
+                                }
+                            });
+                            return false;
+                        });
 
-			$('body').on('click', '.delete', function(e){
-				var id = $(this).attr('id');
-				var thisElement = this;
-					swal({
-							title: "Are you sure?",
-							text: "You will not be able to recover this Player!",
-							type: "warning",
-							showCancelButton: true,
-							confirmButtonColor: "#e69a2a",
-							confirmButtonText: "Yes, delete it!",
-							cancelButtonText: "No, cancel plx!",
-							closeOnConfirm: false,
-							closeOnCancel: false
-					}, function(isConfirm){
-							if (isConfirm) {
-								$.ajax({
-									type: 'POST',
-									url: host + "/reqestDelete",
-									data: {id: id},
-									success: function(resultData) {
-										// alert(resultData)
-										console.log(resultData);
-										if (resultData == 'success') {
-											$(thisElement).parent().parent().hide(700);
-											swal("Cancelled!", "Your imaginary file has been cancel.", "success");
-										}else {
-												alert("Something went wrong")
-										}
-										// alert("Save Complete")
-									}
-								});
-									swal("Cancelled!", "Request Cancelle Succesfully.", "success");
-							} else {
-									swal("Cancelled", "Request Not Cancelle)", "error");
-							}
-					});
-					return false;
-			});
+                        // Delete 
 
-		},
-		$.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
+                        $('body').on('click', '.delete', function(e) {
+                            var id = $(this).attr('id');
+                            var thisElement = this;
+                            swal({
+                                title: "Are you sure?",
+                                text: "You will not be able to recover this Player!",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#e69a2a",
+                                confirmButtonText: "Yes, delete it!",
+                                cancelButtonText: "No, cancel plx!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function(isConfirm) {
+                                if (isConfirm) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: host + "/reqestDelete",
+                                        data: {
+                                            id: id
+                                        },
+                                        success: function(resultData) {
+                                            // alert(resultData)
+                                            console.log(resultData);
+                                            if (resultData == 'success') {
+                                                $(thisElement).parent().parent().hide(700);
+                                                swal("Cancelled!", "Your imaginary file has been cancel.", "success");
+                                            } else {
+                                                alert("Something went wrong")
+                                            }
+                                            // alert("Save Complete")
+                                        }
+                                    });
+                                    swal("Cancelled!", "Request Cancelle Succesfully.", "success");
+                                } else {
+                                    swal("Cancelled", "Request Not Cancelle)", "error");
+                                }
+                            });
+                            return false;
+                        });
 
-		$.SweetAlert.init();
-	});
+                    },
+                    $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert;
 
-} );
+                $.SweetAlert.init();
+            });
 
-
-</script>
-{% endblock %}
+        });
+    </script>
+    {% endblock %}
